@@ -4,10 +4,6 @@ using std::cout;
 using std::cin;
 using std::endl;
 
-void Menu::welcomeScreen(){
-    
-}
-
 void Menu::mainMenu(){
     system("CLS");
     std::string menuSelection = "";

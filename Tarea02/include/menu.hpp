@@ -11,7 +11,6 @@ class Menu{
     private:
         Inventory inventory;
 
-        void welcomeScreen();
         void mainMenu();
         void newProduct();
         void increaseStock();
