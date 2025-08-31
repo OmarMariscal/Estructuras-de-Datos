@@ -1,6 +1,7 @@
-#include <iostream>
+#include "menu.hpp"
 
-int main(int argc, char *argv[])
-{
-    std::cout << "Hello world!" << std::endl;
+int main() {
+  Menu menu;
+
+  return 0;
 }
