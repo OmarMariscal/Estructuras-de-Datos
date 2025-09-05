@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include <iostream>
 
 class Name{
     private:
@@ -22,8 +21,17 @@ class Name{
 
         Name& operator = (const Name&);
 
-        friend std::ostream& operator << (std::ostream&, const Name&);
-        friend std::istream& operator >> (std::istream&, Name&);
+        bool operator == (const Name&) const;
+        bool operator != (const Name&) const;
+        bool operator < (const Name&) const;
+        bool operator > (const Name&) const;
+        bool operator <= (const Name&) const;
+        bool operator >=(const Name&) const;
 
+        int compareTo(const Name&) const;
+        static int compare(const Name&, const Name&);
+
+
+        Name& operator = (const Name&);
 };
 

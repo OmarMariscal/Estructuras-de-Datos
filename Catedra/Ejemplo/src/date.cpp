@@ -23,7 +23,11 @@ int Date::getDay() const{
 }
 
 string Date::toString() const{
-    return to_string(this->day) + "/" + to_string(this->month) + "/" + to_string(this->year);
+    char myDate[12];
+
+    sprintf(myDate, "%02i/%02i/&04i", this->day, this->month, this->year);
+
+    return myDate;
 }
 
 void Date::setYear(const int&y){
@@ -37,3 +41,26 @@ void Date::setMonth(const int&m){
 void Date::setDay(const int&d){
     this->day = d; //Hacer Validaciones
 }
+
+ostream& operator << (ostream& os, const Date& d){
+    os << d.year << endl;
+    os << d.month << endl;
+    os << d.day << endl;
+
+    return os;
+}
+
+istream& operator >> (istream& is, Date& d){
+    string myStr;
+
+    getline(is, myStr);
+    d.year = stoi(myStr);
+    getline(is, myStr);
+    d.month = stoi(myStr);
+    getline(is, myStr);
+    d.day = stoi(myStr);
+
+    return is;
+}
+
+

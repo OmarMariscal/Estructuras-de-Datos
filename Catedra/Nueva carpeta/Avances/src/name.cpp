@@ -26,27 +26,32 @@ void Name::setFirst(const string& f){
     this->fist = f;
 }
 
-std::istream& operator >> (std::istream& is, Name& n){
-    getline(is, n.last);
-    getline(is, n.fist);
-
-    return is;
+bool Name::operator == (const Name& other) const{
+    return this->toString() == other.toString();
 }
 
-std::ostream& operator << (std::ostream&, const Name&)
-{
-    
+bool Name::operator != (const Name& other) const {
+    return !(*this == other);
 }
 
-std::istream& operator >> (istream& os, Name& n){
-    
+bool Name::operator < (const Name& other) const {
+    return *this < other || *this == other;
 }
 
-std::ostream& operator << (ostream& os, const Name& n){
-    os << n.last << endl;
-    os << n.fist;
+bool Name::operator >(const Name& other) const{
+    return !(*this <= other);
+}
 
-    return os;
+bool Name::operator >=(const Name& other) const{
+    return !(*this < other);
+}
+
+int Name::compareTo(const Name& other) const{
+    return this->toString().compare(other.toString());
+}
+
+int Name::compare(const Name& a, const Name& b){
+    return a.toString().compare(b.toString());
 }
 
 void Name::setLast(const string& l){

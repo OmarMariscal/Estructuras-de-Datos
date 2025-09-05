@@ -1,12 +1,15 @@
 #pragma once
 #include <iostream>
-#include <string>
 
 class Date{
     private:
         int year;
         int month;
         int day;
+
+        int toInt() const;
+        bool isValid() const;
+        
     public:
         Date();
         Date(const Date&);
@@ -22,8 +25,17 @@ class Date{
         void setMonth(const int&);
         void setDay(const int&);
 
+        bool operator == (const Date&) const;
+        bool operator != (const Date&) const;
+        bool operator < (const Date&) const;
+        bool operator > (const Date&) const;
+        bool operator <= (const Date&) const;
+        bool operator >=(const Date&) const;
+
+        int compareTo(const Date&) const;
+        static int compare(const Date&, const Date&);
+
+
         Date& operator = (const Date&);
 
-        friend std::ostream& operator << (std::ostream&, const Date&);
-        friend std::istream& operator >> (std::istream&, Date&);
 }; 
