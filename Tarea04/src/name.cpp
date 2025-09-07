@@ -37,19 +37,19 @@ Name& Name::operator=(const Name& other) {
   return *this;
 }
 
-bool Name::operator==(const Name& other) const{
+bool Name::operator==(const Name& other) const {
   return this->toString() == other.toString();
 }
 
-bool Name::operator != (const Name& other) const{
+bool Name::operator!=(const Name& other) const {
   return !(*this == other);
 }
 
-bool Name::operator < (const Name& other) const{
+bool Name::operator<(const Name& other) const {
   return this->toString() < other.toString();
 }
 
-bool Name::operator > (const Name& other) const{
+bool Name::operator>(const Name& other) const {
   return this->toString() > other.toString();
 }
 
@@ -61,14 +61,13 @@ bool Name::operator>=(const Name& other) const {
   return (*this > other) || (*this == other);
 }
 
-std::ostream& operator<<(std::ostream& os, const Name& name){
-  os << name.first <<","
-      << name.last;
+std::ostream& operator<<(std::ostream& os, const Name& name) {
+  os << name.first << "," << name.last;
 
   return os;
 }
 
-std::istream& operator >> (std::istream& is, Name& name){
+std::istream& operator>>(std::istream& is, Name& name) {
   std::string dataString;
   getline(is, dataString, ',');
   name.first = dataString;

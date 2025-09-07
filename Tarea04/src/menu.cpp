@@ -2,8 +2,7 @@
 
 using namespace std;
 
-Menu::Menu() : songList(*new List<Song>){
-  
+Menu::Menu() : songList(*new List<Song>) {
   mainMenu();
 }
 
@@ -15,8 +14,9 @@ Menu::Menu(List<Song>& s) : songList(s) {
   mainMenu();
 }
 
-
-int Menu::readInteger(string oss, const int& lowerLimit, const int& upperLimit) {
+int Menu::readInteger(string oss,
+                      const int& lowerLimit,
+                      const int& upperLimit) {
   string aux("");
   int result;
   while (true) {
@@ -71,164 +71,164 @@ string Menu::readLinePrompt(const string& prompt, bool allowEmpty) {
   }
 }
 
-string Menu::windowHeader(const int& widthBorder, const string& prompt){
+string Menu::windowHeader(const int& widthBorder, const string& prompt) {
   ostringstream oss;
 
-    oss << left << setfill('=') << setw(widthBorder) << "" << endl;
-    oss << setfill(' ');
+  oss << left << setfill('=') << setw(widthBorder) << "" << endl;
+  oss << setfill(' ');
 
-    // Título de Ventana
-    oss << setw(widthBorder / 2 - (prompt.size()/2)) << "| " << prompt
-        << setw((widthBorder / 2) - (prompt.size()/2)) << "" << "|" << endl;
-    oss << setfill('-') << setw(widthBorder) << "" << endl;
-    oss << setfill(' ');
+  // Título de Ventana
+  oss << setw(widthBorder / 2 - (prompt.size() / 2)) << "| " << prompt
+      << setw((widthBorder / 2) - (prompt.size() / 2)) << "" << "|" << endl;
+  oss << setfill('-') << setw(widthBorder) << "" << endl;
+  oss << setfill(' ');
 
-    return oss.str();
+  return oss.str();
 }
 
 bool Menu::handleOption(const std::string& promt) {
   std::string response;
 
-    system("CLS");
-    std::cout << promt;
-    std::getline(std::cin, response);
+  system("CLS");
+  std::cout << promt;
+  std::getline(std::cin, response);
 
-    if (response.empty())
-      return true;
-
-    // Hacer las letras mayúsculas
-    char option = static_cast<char>(
-        std::toupper(static_cast<unsigned char>(response[0])));
-
-    // buscar primer dígito después de la letra (saltando espacios)
-    std::size_t pos = 1;
-    while (pos < response.size() &&
-           std::isspace(static_cast<unsigned char>(response[pos])))
-      ++pos;
-
-    bool hasNumber = false;
-    int index = -1;
-    if (pos < response.size() &&
-        std::isdigit(static_cast<unsigned char>(response[pos]))) {
-      std::size_t start = pos;
-      std::size_t end = start;
-      while (end < response.size() &&
-             std::isdigit(static_cast<unsigned char>(response[end])))
-        ++end;
-      std::string numstr = response.substr(start, end - start);
-      try {
-        index = std::stoi(numstr);
-        hasNumber = true;
-      } catch (...) {
-        hasNumber = false;
-      }
-    }
-
-    switch (option) {
-      case 'A':
-        insertSong();
-        break;
-
-      case 'B':
-        if (!hasNumber) {
-          system("CLS");
-          std::cout << "Falta numero de posicion. Ej: B2\n";
-          system("PAUSE");
-          break;
-        }
-        if (!songList.isValidPosition(index)) {
-          system("CLS");
-          std::cout << "Posicion de lista invalida\n";
-          system("PAUSE");
-          break;
-        }
-        editSong(index);
-        break;
-
-      case 'C':
-        if (!hasNumber) {
-          system("CLS");
-          std::cout << "Falta numero de posicion. Ej: C12\n";
-          system("PAUSE");
-          break;
-        }
-        if (!songList.isValidPosition(index)) {
-          system("CLS");
-          std::cout << "Posicion de lista invalida\n";
-          system("PAUSE");
-          break;
-        }
-        deleteSong(index);
-        break;
-
-      case 'D':
-        if (!hasNumber) {
-          system("CLS");
-          std::cout << "Falta numero de posiciin. Ej: D12\n";
-          system("PAUSE");
-          break;
-        }
-        if (!songList.isValidPosition(index)) {
-          system("CLS");
-          std::cout << "Posicion de lista invalida\n";
-          system("PAUSE");
-          break;
-        }
-        system("CLS");
-        {
-          Song* s = songList.retrieve(index);
-          if (s)
-            std::cout << s->toString();
-          else
-            std::cout << "Cancion no encontrada\n";
-        }
-        system("PAUSE");
-        break;
-      case 'E':
-        deleteAllSongs();
-        break;
-      case 'F':
-        saveToDisk();
-        break;
-      case 'G':
-        readFromDisk();
-        break;
-      case 'H':
-        exitProgram();
-        return false;
-
-      default:
-        system("CLS");
-        std::cout << "Comando invalido\nIntentelo nuevamente.\n";
-        system("PAUSE");
-        break;
-    }  // switch
-
+  if (response.empty())
     return true;
-  
+
+  // Hacer las letras mayúsculas
+  char option =
+      static_cast<char>(std::toupper(static_cast<unsigned char>(response[0])));
+
+  // buscar primer dígito después de la letra (saltando espacios)
+  std::size_t pos = 1;
+  while (pos < response.size() &&
+         std::isspace(static_cast<unsigned char>(response[pos])))
+    ++pos;
+
+  bool hasNumber = false;
+  int index = -1;
+  if (pos < response.size() &&
+      std::isdigit(static_cast<unsigned char>(response[pos]))) {
+    std::size_t start = pos;
+    std::size_t end = start;
+    while (end < response.size() &&
+           std::isdigit(static_cast<unsigned char>(response[end])))
+      ++end;
+    std::string numstr = response.substr(start, end - start);
+    try {
+      index = std::stoi(numstr);
+      hasNumber = true;
+    } catch (...) {
+      hasNumber = false;
+    }
+  }
+
+  switch (option) {
+    case 'A':
+      insertSong();
+      break;
+
+    case 'B':
+      if (!hasNumber) {
+        system("CLS");
+        std::cout << "Falta numero de posicion. Ej: B2\n";
+        system("PAUSE");
+        break;
+      }
+      if (!songList.isValidPosition(index)) {
+        system("CLS");
+        std::cout << "Posicion de lista invalida\n";
+        system("PAUSE");
+        break;
+      }
+      editSong(index);
+      break;
+
+    case 'C':
+      if (!hasNumber) {
+        system("CLS");
+        std::cout << "Falta numero de posicion. Ej: C12\n";
+        system("PAUSE");
+        break;
+      }
+      if (!songList.isValidPosition(index)) {
+        system("CLS");
+        std::cout << "Posicion de lista invalida\n";
+        system("PAUSE");
+        break;
+      }
+      deleteSong(index);
+      break;
+
+    case 'D':
+      if (!hasNumber) {
+        system("CLS");
+        std::cout << "Falta numero de posiciin. Ej: D12\n";
+        system("PAUSE");
+        break;
+      }
+      if (!songList.isValidPosition(index)) {
+        system("CLS");
+        std::cout << "Posicion de lista invalida\n";
+        system("PAUSE");
+        break;
+      }
+      system("CLS");
+      {
+        Song* s = songList.retrieve(index);
+        if (s)
+          std::cout << s->toString();
+        else
+          std::cout << "Cancion no encontrada\n";
+      }
+      system("PAUSE");
+      break;
+    case 'E':
+      deleteAllSongs();
+      break;
+    case 'F':
+      saveToDisk();
+      break;
+    case 'G':
+      readFromDisk();
+      break;
+    case 'H':
+      exitProgram();
+      return false;
+
+    default:
+      system("CLS");
+      std::cout << "Comando invalido\nIntentelo nuevamente.\n";
+      system("PAUSE");
+      break;
+  }  // switch
+
+  return true;
 }
 
 void Menu::mainMenu() {
   ostringstream oss;
-  bool running = true; 
+  bool running = true;
 
-  while(running){
+  while (running) {
     system("CLS");
 
-    //Limpiar el ostringstream
+    // Limpiar el ostringstream
     oss.str("");
     oss.clear();
 
     oss << songList.toString();
     oss << "Opciones: \n";
-    oss << "[A] Agregar una Cancion.  [B<n>] Editar una Cancion [C<n>] Eliminar "
-          "una Cancion. [D<n>] Mostrar Detalles de Cancion. [E] Eliminar Todas las Canciones. \n"
-          "[F] Guardar la Database [G] Leer del Disco   [H] Salir.\n";
+    oss << "[A] Agregar una Cancion.  [B<n>] Editar una Cancion [C<n>] "
+           "Eliminar "
+           "una Cancion. [D<n>] Mostrar Detalles de Cancion. [E] Eliminar "
+           "Todas las Canciones. \n"
+           "[F] Guardar la Database [G] Leer del Disco   [H] Salir.\n";
     oss << "Seleccione un Comando: ";
 
-    running = handleOption(oss.str());    
+    running = handleOption(oss.str());
   }
-
 }
 
 void Menu::insertSong() {
@@ -323,7 +323,6 @@ void Menu::insertSong() {
     oss.str("");
     oss.clear();
   } while (myInt != 2);
-
 }
 
 void Menu::deleteSong(const int& position) {
@@ -425,32 +424,34 @@ void Menu::editSong(const int& position) {
       break;
   }
   system("PAUSE");
-
 }
 
-void Menu::exitProgram(){
+void Menu::exitProgram() {
   system("CLS");
   int response;
   ostringstream oss;
-  if(!this->songList.isEmpty()){
+  if (!this->songList.isEmpty()) {
     oss << windowHeader(50, "SALIR SIN GUARDAR?");
-    response = readInteger(oss.str() + "Desea Guardar las canciones antes de Salir? (1. Si/ 2. No): ",1,2);
-    if(response == 1)
+    response = readInteger(
+        oss.str() +
+            "Desea Guardar las canciones antes de Salir? (1. Si/ 2. No): ",
+        1, 2);
+    if (response == 1)
       saveToDisk();
   }
-  
+
   system("CLS");
   std::cout << "Saliendo del Programa.\nTenga un Lindo Dia :D\n";
-  system("PAUSE"); 
+  system("PAUSE");
 }
 
-void Menu::saveToDisk(){
+void Menu::saveToDisk() {
   system("CLS");
   ostringstream oss;
 
-  if(this->songList.isEmpty()){
+  if (this->songList.isEmpty()) {
     cout << "+-------------------------------------------------------+" << endl;
-    cout << "+            No hay Canciones Registradas Aun           +" <<endl;
+    cout << "+            No hay Canciones Registradas Aun           +" << endl;
     cout << "+              No hay datos que Guardar                 +" << endl;
     cout << "+-------------------------------------------------------+" << endl;
     system("PAUSE");
@@ -468,11 +469,11 @@ void Menu::saveToDisk(){
 
   file.open(fileName, ios_base::trunc);
 
-  if(!file.is_open())
+  if (!file.is_open())
     oss << "No se permite la creacion de archivos." << endl;
-  else{
+  else {
     file << this->songList;
-    oss << "Database guardada con Exito!" << endl;  
+    oss << "Database guardada con Exito!" << endl;
   }
 
   system("CLS");
@@ -480,7 +481,7 @@ void Menu::saveToDisk(){
   system("PAUSE");
 }
 
-void Menu::readFromDisk(){
+void Menu::readFromDisk() {
   system("CLS");
   ostringstream oss;
   int widthBorder = 100;
@@ -488,18 +489,18 @@ void Menu::readFromDisk(){
   string fileName;
 
   oss << windowHeader(widthBorder, "LEER ARCHIVO");
-  
+
   oss << "Tenga en Cuenta que los Archivos se Sobreescribiran" << endl;
   oss << "Ingrese el Nombre del Archivo a Cargar sus Datos: ";
-  
+
   fileName = readLinePrompt(oss.str());
   oss << fileName << endl;
-  
+
   file.open(fileName);
 
-  if(!file.is_open())
+  if (!file.is_open())
     oss << "El archivo no existe o no pudo ser abierto" << endl;
-  else{
+  else {
     this->songList.deleteAll();
     file >> this->songList;
     oss << "Archivos Cargados Con Exito!" << endl;
@@ -511,5 +512,4 @@ void Menu::readFromDisk(){
   system("CLS");
   cout << oss.str();
   system("PAUSE");
-
 }

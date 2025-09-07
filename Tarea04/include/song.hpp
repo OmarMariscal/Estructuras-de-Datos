@@ -1,9 +1,9 @@
 #ifndef __SONG_H__
 #define __SONG_H__
 
-#include <iostream>
 #include <fstream>
 #include <iomanip>
+#include <iostream>
 #include <sstream>
 #include <string>
 
@@ -44,16 +44,15 @@ class Song {
 
   Song& operator=(const Song&);
 
-  //Operadores Relacionales que utilizan el ranking como compardor
+  // Operadores Relacionales que utilizan el ranking como compardor
   bool operator==(const Song&) const;
-  bool operator != (const Song&) const;
-  bool operator < (const Song&) const;
-  bool operator > (const Song&) const;
-  bool operator <= (const Song&) const;
-  bool operator >= (const Song&) const;
+  bool operator!=(const Song&) const;
+  bool operator<(const Song&) const;
+  bool operator>(const Song&) const;
+  bool operator<=(const Song&) const;
+  bool operator>=(const Song&) const;
 
-  friend std::ostream& operator << (std::ostream& ,const Song&);
-  friend std::istream& operator >>(std::istream&, Song&);
-  
+  friend std::ostream& operator<<(std::ostream&, const Song&);
+  friend std::istream& operator>>(std::istream&, Song&);
 };
 #endif  // __SONG_H__

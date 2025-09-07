@@ -82,41 +82,38 @@ Song& Song::operator=(const Song& other) {
   return *this;
 }
 
-bool Song::operator==(const Song& other) const{
+bool Song::operator==(const Song& other) const {
   return this->ranking == other.ranking;
 }
 
-bool Song::operator != (const Song& other) const{
+bool Song::operator!=(const Song& other) const {
   return !(*this == other);
 }
 
-bool Song::operator < (const Song& other) const{
+bool Song::operator<(const Song& other) const {
   return this->ranking < other.ranking;
 }
 
-bool Song::operator > (const Song& other) const {
+bool Song::operator>(const Song& other) const {
   return this->ranking > other.ranking;
 }
 
-bool Song::operator <= (const Song& other) const {
+bool Song::operator<=(const Song& other) const {
   return !(*this > other);
 }
 
-bool Song::operator >= (const Song& other) const{
+bool Song::operator>=(const Song& other) const {
   return !(*this < other);
 }
 
-std::ostream& operator << (std::ostream& os, const Song& song){
-  os << song.ranking << ","
-      << song.songName << ","
-      << song.author << ","
-      << song.interpreter;
-  
-  return os;
+std::ostream& operator<<(std::ostream& os, const Song& song) {
+  os << song.ranking << "," << song.songName << "," << song.author << ","
+     << song.interpreter;
 
+  return os;
 }
 
-std::istream& operator >>(std::istream& is, Song& song){
+std::istream& operator>>(std::istream& is, Song& song) {
   string dataString;
   getline(is, dataString, ',');
   song.ranking = stoi(dataString);
@@ -126,5 +123,3 @@ std::istream& operator >>(std::istream& is, Song& song){
 
   return is;
 }
-
-

@@ -1,18 +1,18 @@
 #ifndef __MENU_H__
 #define __MENU_H__
 
+#include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <fstream>
 
 #include "list.hpp"
 #include "song.hpp"
 
 class Menu {
  private:
-  List<Song> &songList;
+  List<Song>& songList;
 
   int readInteger(std::string, const int&, const int&);
   Name readName(std::string);

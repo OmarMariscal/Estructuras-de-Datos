@@ -1,10 +1,9 @@
 #ifndef __LIST_H__
 #define __LIST_H__
 
-
+#include <fstream>
 #include <iomanip>
 #include <iostream>
-#include <fstream>
 #include <sstream>
 
 #include "exceptions.hpp"
@@ -44,9 +43,9 @@ class List {
   List<T, ARRAYSIZE> operator=(const List<T, ARRAYSIZE>&);
 
   template <class X>
-  friend std::ostream& operator << (std::ostream&, const List<X>&);
+  friend std::ostream& operator<<(std::ostream&, const List<X>&);
   template <class X>
-  friend std::istream& operator >> (std::istream&, List<X>&);
+  friend std::istream& operator>>(std::istream&, List<X>&);
 };
 
 template <class T, int ARRAYSIZE>
@@ -196,30 +195,30 @@ List<T, ARRAYSIZE> List<T, ARRAYSIZE>::operator=(
 }
 
 template <class X>
-std::ostream& operator << (std::ostream& os, const List<X>& list){
+std::ostream& operator<<(std::ostream& os, const List<X>& list) {
   int i = 0;
 
-  os << "Ranking, Nombre de la Cancion, Nombre del Autor, Apellido del Autor, Nombre del Interprete, Apellido del Interprete\n";
+  os << "Ranking, Nombre de la Cancion, Nombre del Autor, Apellido del Autor, "
+        "Nombre del Interprete, Apellido del Interprete\n";
 
-  while(i <= list.last)
-    os << list.data[i++] << "," << std::endl; 
+  while (i <= list.last)
+    os << list.data[i++] << "," << std::endl;
 
   return os;
 }
 
 template <class X>
-std::istream& operator >> (std::istream& is, List<X>& list){
+std::istream& operator>>(std::istream& is, List<X>& list) {
   X obj;
   std::string aux;
   std::getline(is, aux);
 
-  try{
-    while(is >> obj){
-      if(!list.isFull())
+  try {
+    while (is >> obj) {
+      if (!list.isFull())
         list.data[++list.last] = obj;
-    }    
-  } catch(const std::invalid_argument& ex){
-
+    }
+  } catch (const std::invalid_argument& ex) {
   }
   return is;
 }
