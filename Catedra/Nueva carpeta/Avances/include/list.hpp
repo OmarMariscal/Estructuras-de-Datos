@@ -54,7 +54,7 @@ class List{
 
         void deleteAll();
 
-        List<T, ARRAYSIZE>& operator=(const List<T>&);
+        List<T, ARRAYSIZE>& operator=(const List<T, ARRAYSIZE>&);
 };
 
 
@@ -193,7 +193,7 @@ void List<T, ARRAYSIZE>::deleteAll(){
 }
 
 template<class T, int ARRAYSIZE>
-List<T>& List<T, ARRAYSIZE>::operator=(const List<T, ARRAYSIZE>& other){
+List<T,ARRAYSIZE>& List<T, ARRAYSIZE>::operator=(const List<T, ARRAYSIZE>& other){
     this->copyAll(other);
 
     return *this;
