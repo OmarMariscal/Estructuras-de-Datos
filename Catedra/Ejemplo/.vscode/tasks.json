@@ -1,0 +1,25 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compilar y ejecutar (MSYS2)",
+            "type": "shell",
+            "command": "cmd.exe",
+            "args": [
+                "/c",
+                "g++ -Wall -Wextra -g3 src/*.cpp -Iinclude -o output/main.exe && start cmd /k output\\main.exe"
+                //Si hay librerias extras añadir después el directorio de lib para las inclusiones: lib/*.cpp
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        }
+    ]
+}
