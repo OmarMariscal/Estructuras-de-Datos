@@ -25,5 +25,8 @@ class Name{
         friend std::ostream& operator << (std::ostream&, const Name&);
         friend std::istream& operator >> (std::istream&, Name&);
 
+        std::string serialize() const;
+        void deserialize(const std::string&);
+
 };
 
