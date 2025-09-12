@@ -18,8 +18,6 @@ class List{
         List<T>();
         List<T>(const List<T>&);
 
-        // void initialize(); Lo hace el constructor
-
         bool isEmpty() const;
 
         bool isFull() const;

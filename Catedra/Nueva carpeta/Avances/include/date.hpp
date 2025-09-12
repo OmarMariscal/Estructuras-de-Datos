@@ -35,7 +35,6 @@ class Date{
         int compareTo(const Date&) const;
         static int compare(const Date&, const Date&);
 
-
         Date& operator = (const Date&);
 
 }; 

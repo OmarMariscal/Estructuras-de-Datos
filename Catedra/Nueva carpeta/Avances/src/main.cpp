@@ -1,6 +1,12 @@
 #include <iostream>
 
-int main(int argc, char *argv[])
-{
-    std::cout << "Hello world!" << std::endl;
+#include "exceptions.hpp"
+
+int main(){
+    try{
+        throw DateExceptions::InvalidDate("La Fecha no es Valida");
+    } catch(const DateExceptions::InvalidDate& ex){
+        std::cout << ex.what();
+    }
+    getchar();
 }
