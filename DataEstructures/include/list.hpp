@@ -22,8 +22,10 @@ class List {
   List<T, ARRAYSIZE>();
   List<T, ARRAYSIZE>(const List<T, ARRAYSIZE>&);
 
-  bool isEmpty();
-  bool isFull();
+  bool isEmpty() const;
+  bool isFull() const;
+  bool isSorted() const;
+
   void insertElement(const T&, const int&);
   void deleteData(const int&);
   T* retrieve(const int&);
@@ -41,13 +43,15 @@ class List {
 
   bool isValidPosition(const int&) const;
 
-  int findDataL (const T&);
-  int findDataB (const T&);
+  int findDataL(const T&);
+  int findDataB(const T&);
 
   void insertSortedData(const T&);
 
   void sortDataBubble();
   void sortDataInsert();
+  void sortDataSelect();
+  void sortDataShell();
 
   List<T, ARRAYSIZE> operator=(const List<T, ARRAYSIZE>&);
 
@@ -56,13 +60,16 @@ class List {
   template <class X>
   friend std::istream& operator>>(std::istream&, List<X>&);
 
-  //Métodos Extras al Modelo
+  // Métodos Extras al Modelo
+  bool isSorted(int(const T&, const T&)) const;
+
   int findDataL(const T&, int(const T&, const T&));
   int findDataB(const T&, int(const T&, const T&));
 
   void sortDataBubble(int(const T&, const T&));
   void sortDataInsert(int(const T&, const T&));
-  
+  void sortDataSelect(int(const T&, const T&));
+  void sortDataShell(int(const T&, const T&));
 
   void insertSortedData(const T&, int(const T&, const T&));
 };
@@ -88,13 +95,31 @@ List<T, ARRAYSIZE>::List(const List<T, ARRAYSIZE>& other) {
 }
 
 template <class T, int ARRAYSIZE>
-bool List<T, ARRAYSIZE>::isEmpty() {
+bool List<T, ARRAYSIZE>::isEmpty() const {
   return this->last == -1;
 }
 
 template <class T, int ARRAYSIZE>
-bool List<T, ARRAYSIZE>::isFull() {
+bool List<T, ARRAYSIZE>::isFull() const {
   return this->last == (ARRAYSIZE - 1);
+}
+
+template <class T, int ARRAYSIZE>
+bool List<T, ARRAYSIZE>::isSorted() const {
+  for (int i = 0; i < this->last; i++)
+    if (this->data[i] > this->data[i + 1])
+      return true;
+
+  return true;
+}
+
+template <class T, int ARRAYSIZE>
+bool List<T, ARRAYSIZE>::isSorted(int cmp(const T&, const T&)) const {
+  for (int i = 0; i < this->last; i++)
+    if (cmp(this->data[i], this->data[i + 1]) > 0)
+      return true;
+
+  return true;
 }
 
 // Inserción en el Punto de Interés
@@ -155,14 +180,13 @@ int List<T, ARRAYSIZE>::getNextPosition(const int& position) const {
 
 template <class T, int ARRAYSIZE>
 std::string List<T, ARRAYSIZE>::toString() const {
-  if (this->last < 0 )
-    return "";
+  std::ostringstream oss;
+  for (int i = 0; i <= this->last; i++) {
+    oss << "| " << std::to_string(i) << std::setw(11 - std::to_string(i).size())
+        << "" << this->data[i].toString() << "\n";
+  }
 
-  std::string result;
-  for(int i = 0; i <= this->last; i++)
-    result += std::to_string(this->data[i]);
-
-  return result;
+  return oss.str();
 }
 
 template <class T, int ARRAYSIZE>
@@ -171,88 +195,133 @@ void List<T, ARRAYSIZE>::deleteAll() {
 }
 
 template <class T, int ARRAYSIZE>
-void List<T, ARRAYSIZE>::insertSortedData(const T& newData){
+void List<T, ARRAYSIZE>::insertSortedData(const T& newData) {
   int i(0);
 
-  while( (i <= this->last) && (newData > this->data[i]) )
+  while ((i <= this->last) && (newData > this->data[i]))
     i++;
 
   insertElement(newData, i);
 }
 
 template <class T, int ARRAYSIZE>
-int List<T, ARRAYSIZE>::findDataL(const T& searchedData){
-  for(int i = 0; i <= this->last; i++)
-    if(this->data[i] == searchedData)
+int List<T, ARRAYSIZE>::findDataL(const T& searchedData) {
+  for (int i = 0; i <= this->last; i++)
+    if (this->data[i] == searchedData)
       return i;
   return -1;
 }
 
 template <class T, int ARRAYSIZE>
-int List<T, ARRAYSIZE>::findDataB(const T& searchedData){
+int List<T, ARRAYSIZE>::findDataB(const T& searchedData) {
   int i(0), j(this->last), middle;
 
-  while(i <= j){
+  while (i <= j) {
     middle = (i + j) / 2;
-    if(this->data[middle] == searchedData)
+    if (this->data[middle] == searchedData)
       return middle;
-    if(searchedData < this->data[middle])
+    if (searchedData < this->data[middle])
       j = middle - 1;
     else
-      i = middle + 1;      
+      i = middle + 1;
   }
   return -1;
 }
 
 template <class T, int ARRAYSIZE>
-void List<T, ARRAYSIZE>::swapData(T& a, T& b){
+void List<T, ARRAYSIZE>::swapData(T& a, T& b) {
   T aux = a;
   a = b;
   b = aux;
 }
 
 template <class T, int ARRAYSIZE>
-void List<T, ARRAYSIZE>::sortDataBubble(){
+void List<T, ARRAYSIZE>::sortDataBubble() {
   int i(this->last), j;
   bool flag;
 
-  do{
+  do {
     flag = false;
     j = 0;
 
-    while(j < i){
-      if(this->data[j] > this->data[j+1]){
-        swapData(this->data[j], this->data[j+1]);
+    while (j < i) {
+      if (this->data[j] > this->data[j + 1]) {
+        swapData(this->data[j], this->data[j + 1]);
         flag = true;
       }
       j++;
     }
 
     i--;
-  } while(flag);
-
+  } while (flag);
 }
 
 template <class T, int ARRAYSIZE>
-void List<T, ARRAYSIZE>::sortDataInsert(){
+void List<T, ARRAYSIZE>::sortDataInsert() {
   int i(1), j;
   T aux;
 
-  while(i < = this->last){
+  while (i <= this->last) {
     aux = this->data[i];
 
     j = i;
-    while(j > 0 && aux < this->data[j - 1]){
+    while (j > 0 && aux < this->data[j - 1]) {
       this->data[j] = this->data[j - 1];
 
       j--;
     }
 
-    if(i != j){
+    if (i != j) {
       this->data[j] = aux;
     }
 
     i++;
+  }
+}
+
+template <class T, int ARRAYSIZE>
+void List<T, ARRAYSIZE>::sortDataSelect() {
+  int i(0), j, menor;
+
+  while (i <= this->last) {
+    menor = i;
+
+    j = i + 1;
+
+    while (j <= this->last) {
+      if (this->data[j] < this->data[menor]) {
+        menor = j;
+      }
+      j++;
+    }
+
+    if (i != menor) {
+      this->swapData(this->data[i], this->data[menor]);
+    }
+    i++;
+  }
+}
+
+template <class T, int ARRAYSIZE>
+void List<T, ARRAYSIZE>::sortDataShell() {
+  int series[] = {4181, 2584, 1597, 987, 610, 377, 233, 144, 89, 55,
+                  34,   21,   13,   8,   5,   3,   2,   1,   0};
+  int pos(0), dif(series[pos]), i, j;
+
+  while (dif > 0) {
+    i = dif;
+    while (i <= this->last) {
+      j = i;
+
+      while (j >= dif && this->data[j - dif] > this->data[j]) {
+        this->swapData(this->data[j - dif], this->data[j]);
+        j -= dif;
+      }
+
+      i++;
+    }
+
+    dif = series[++pos];
   }
 }
 
@@ -288,26 +357,28 @@ std::istream& operator>>(std::istream& is, List<X>& list) {
   return is;
 }
 
-//Extras al Modelo de la Lista:
+// Extras al Modelo de la Lista:
 template <class T, int ARRAYSIZE>
-int List<T, ARRAYSIZE>::findDataL(const T& searchedData, int cmp(const T&, const T&)){
-  for(int i = 0; i <= this->last; i++)
-    if( cmp(searchedData, this->data[i]) == 0 )
+int List<T, ARRAYSIZE>::findDataL(const T& searchedData,
+                                  int cmp(const T&, const T&)) {
+  for (int i = 0; i <= this->last; i++)
+    if (cmp(searchedData, this->data[i]) == 0)
       return i;
 
-    return -1;
+  return -1;
 }
 
 template <class T, int ARRAYSIZE>
-int List<T, ARRAYSIZE>::findDataB(const T& searchedData, int cmp(const T&, const T&)){
+int List<T, ARRAYSIZE>::findDataB(const T& searchedData,
+                                  int cmp(const T&, const T&)) {
   int i(0), j(this->last), middle;
 
-  while(i <= j){
+  while (i <= j) {
     middle = (i + j) / 2;
 
-    if(cmp(searchedData, this->data[middle]) == 0)
+    if (cmp(searchedData, this->data[middle]) == 0)
       return middle;
-    if(cmp(searchedData, this->data[middle]) < 0)
+    if (cmp(searchedData, this->data[middle]) < 0)
       j = middle - 1;
     else
       i = middle + 1;
@@ -317,54 +388,53 @@ int List<T, ARRAYSIZE>::findDataB(const T& searchedData, int cmp(const T&, const
 }
 
 template <class T, int ARRAYSIZE>
-void List<T, ARRAYSIZE>::insertSortedData(const T& newData, int cmp(const T&, const T&)){
+void List<T, ARRAYSIZE>::insertSortedData(const T& newData,
+                                          int cmp(const T&, const T&)) {
   int i(0);
 
-  while( (i <= this->last) && (cmp(newData, this->data[i]) > 0) )
+  while ((i <= this->last) && (cmp(newData, this->data[i]) > 0))
     i++;
 
   insertElement(newData, i);
 }
 
-
 template <class T, int ARRAYSIZE>
-void List<T, ARRAYSIZE>::sortDataBubble(int cmp(const T&, const T&)){
+void List<T, ARRAYSIZE>::sortDataBubble(int cmp(const T&, const T&)) {
   int i(this->last), j;
   bool flag;
 
-  do{
+  do {
     flag = false;
     j = 0;
 
-    while(j < i){
-      if(cmp(this->data[j], this->data[j+1]) > 0){
-        swapData(this->data[j], this->data[j+1]);
+    while (j < i) {
+      if (cmp(this->data[j], this->data[j + 1]) > 0) {
+        swapData(this->data[j], this->data[j + 1]);
         flag = true;
       }
       j++;
     }
 
     i--;
-  } while(flag);
-
+  } while (flag);
 }
 
 template <class T, int ARRAYSIZE>
-void List<T, ARRAYSIZE>::sortDataInsert(int cmp(const T&, const T&)){
+void List<T, ARRAYSIZE>::sortDataInsert(int cmp(const T&, const T&)) {
   int i(1), j;
   T aux;
 
-  while(i < = this->last){
+  while (i <= this->last) {
     aux = this->data[i];
 
     j = i;
-    while(j > 0 && cmp(aux, this->data[j - 1] < 0)){
+    while (j > 0 && cmp(aux, this->data[j - 1]) < 0) {
       this->data[j] = this->data[j - 1];
 
       j--;
     }
 
-    if(i != j){
+    if (i != j) {
       this->data[j] = aux;
     }
 
@@ -372,5 +442,50 @@ void List<T, ARRAYSIZE>::sortDataInsert(int cmp(const T&, const T&)){
   }
 }
 
+template <class T, int ARRAYSIZE>
+void List<T, ARRAYSIZE>::sortDataSelect(int cmp(const T&, const T&)) {
+  int i(0), j, menor;
+
+  while (i <= this->last) {
+    menor = i;
+
+    j = i + 1;
+
+    while (j <= this->last) {
+      if (cmp(this->data[j], this->data[menor]) < 0) {
+        menor = j;
+      }
+      j++;
+    }
+
+    if (i != menor) {
+      this->swapData(this->data[i], this->data[menor]);
+    }
+    i++;
+  }
+}
+
+template <class T, int ARRAYSIZE>
+void List<T, ARRAYSIZE>::sortDataShell(int cmp(const T&, const T&)) {
+  int series[] = {4181, 2584, 1597, 987, 610, 377, 233, 144, 89, 55,
+                  34,   21,   13,   8,   5,   3,   2,   1,   0};
+  int pos(0), dif(series[pos]), i, j;
+
+  while (dif > 0) {
+    i = dif;
+    while (i <= this->last) {
+      j = i;
+
+      while (j >= dif && cmp(this->data[j - dif], this->data[j]) > 0) {
+        this->swapData(this->data[j - dif], this->data[j]);
+        j -= dif;
+      }
+
+      i++;
+    }
+
+    dif = series[++pos];
+  }
+}
 
 #endif  // __LIST_H__
