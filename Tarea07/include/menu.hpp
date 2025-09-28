@@ -8,8 +8,8 @@
 #include <string>
 
 #include "list.hpp"
-#include "song.hpp"
 #include "name.hpp"
+#include "song.hpp"
 
 class Menu {
  private:
@@ -44,6 +44,7 @@ class Menu {
   void sortMenu();
   void sortBySongName();
   void sortByInterpreter();
+  void sortByRanking();
 
   void saveToDisk();
   void readFromDisk();

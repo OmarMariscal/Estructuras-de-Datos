@@ -637,6 +637,7 @@ void Menu::searchBySongName() {
       oss << setfill(' ') << endl;
     }
 
+    songWithTheName.deleteAll();
     oss << "Desea Realizar Otra Busqueda?: (1.Si / 2.No): ";
 
     repeat = readInteger(oss.str(), 1, 2);
@@ -721,7 +722,7 @@ void Menu::searchByIntepreter() {
       oss << setw(146) << "";
       oss << setfill(' ') << endl;
     }
-
+    songsOfInterpreter.deleteAll();
     oss << "Desea Realizar Otra Busqueda?: (1.Si / 2.No): ";
 
     repeat = readInteger(oss.str(), 1, 2);
@@ -739,9 +740,10 @@ void Menu::sortMenu() {
     return;
   }
 
-  if(this->songList.getLastPosition() == 0){
-    cout << "Solo hay 1 cancion registrada."<< endl;
+  if (this->songList.getLastPosition() == 0) {
+    cout << "Solo hay 1 cancion registrada." << endl;
     cout << "No se requiere Ordenamiento." << endl;
+    enterToContinue();
     return;
   }
 
@@ -750,14 +752,17 @@ void Menu::sortMenu() {
   oss << windowHeader(50, "ORDENAR EXITOS");
   oss << "Existen un total de: " << this->songList.getLastPosition() + 1
       << " registradas." << endl;
-  oss << "A continuacion se muestran las opciones sobre las cuales ordenar las canciones: " << endl;
-  oss << "[A] Buscar por Nombre de Cancion" << endl
-      << "[B] Buscar por Nombre del Inteprete" << endl
+  oss << "A continuacion se muestran las opciones sobre las cuales ordenar las "
+         "canciones: "
+      << endl;
+  oss << "[A] Ordenar por Nombre de Cancion" << endl
+      << "[B] Ordenar por Nombre del Inteprete" << endl
+      << "[C] Ordenar por Numero de Ranking" << endl
       << "[R] Regresar." << endl
       << "Seleccione una Opcion: ";
 
   while (op != 'R') {
-    char charsValid[3] = {'A', 'B', 'R'};
+    char charsValid[] = {'A', 'B', 'C', 'R'};
     op = readChar(oss.str(), charsValid);
     cin.ignore();
 
@@ -768,6 +773,9 @@ void Menu::sortMenu() {
       case 'B':
         this->sortByInterpreter();
         break;
+      case 'C':
+        this->sortByRanking();
+        break;
       case 'R':
         system("CLS");
         cout << "Regresando...";
@@ -777,13 +785,14 @@ void Menu::sortMenu() {
   }
 }
 
-void Menu::sortBySongName(){
+void Menu::sortBySongName() {
   system("CLS");
   ostringstream oss;
   char op, validOptions[5] = {'A', 'B', 'C', 'D', 'E'};
-  
+
   oss << windowHeader(100, "Ordenar por Nombre de la Cancion");
-  oss << "A continuacion, eliga un algoritmo de ordenamiento para la lista: " << endl;
+  oss << "A continuacion, eliga un algoritmo de ordenamiento para la lista: "
+      << endl;
   oss << "[A] Ordenamiento por Burbuja" << endl;
   oss << "[B] Ordenamiento por InsertSort" << endl;
   oss << "[C] Ordenamiento por SelectSort" << endl;
@@ -795,7 +804,7 @@ void Menu::sortBySongName(){
   cin.ignore();
 
   oss << op << endl;
-  switch (op){
+  switch (op) {
     case 'A':
       this->songList.sortDataBubble(Song::compareBySongName);
       oss << "Ordenamiento por Burbuja hecho correctamente!." << endl;
@@ -805,11 +814,11 @@ void Menu::sortBySongName(){
       oss << "Ordenamiento por InserSor hecho correctamente!" << endl;
       break;
     case 'C':
-      //this->songList.sortDataSelectSort(Song::compareBySongName);
+      this->songList.sortDataSelect(Song::compareBySongName);
       oss << "Ordenamiento por DataSelect hecho correctamente!" << endl;
       break;
     case 'D':
-      //this->songList.sortDataShellSort(Song::compareBySongName);
+      this->songList.sortDataShell(Song::compareBySongName);
       oss << "Ordenamiento por ShellSort hecho correctamente!" << endl;
       break;
     case 'E':
@@ -821,18 +830,19 @@ void Menu::sortBySongName(){
   }
 
   system("CLS");
-  oss << endl<< "Regresando..." << endl << endl;
+  oss << endl << "Regresando..." << endl << endl;
   cout << oss.str();
   enterToContinue();
 }
 
-void Menu::sortByInterpreter(){
+void Menu::sortByInterpreter() {
   system("CLS");
   ostringstream oss;
   char op, validOptions[5] = {'A', 'B', 'C', 'D', 'E'};
-  
+
   oss << windowHeader(100, "Ordenar por Interprete de la Cancion");
-  oss << "A continuacion, eliga un algoritmo de ordenamiento para la lista: " << endl;
+  oss << "A continuacion, eliga un algoritmo de ordenamiento para la lista: "
+      << endl;
   oss << "[A] Ordenamiento por Burbuja" << endl;
   oss << "[B] Ordenamiento por InsertSort" << endl;
   oss << "[C] Ordenamiento por SelectSort" << endl;
@@ -844,7 +854,7 @@ void Menu::sortByInterpreter(){
   cin.ignore();
 
   oss << op << endl;
-  switch (op){
+  switch (op) {
     case 'A':
       this->songList.sortDataBubble(Song::compareByInterpreter);
       oss << "Ordenamiento por Burbuja hecho correctamente!." << endl;
@@ -854,11 +864,11 @@ void Menu::sortByInterpreter(){
       oss << "Ordenamiento por InserSor hecho correctamente!" << endl;
       break;
     case 'C':
-      //this->songList.sortDataSelectSort(Song::compareByInterpreter);
+      this->songList.sortDataSelect(Song::compareByInterpreter);
       oss << "Ordenamiento por DataSelect hecho correctamente!" << endl;
       break;
     case 'D':
-      //this->songList.sortDataShellSort(Song::compareByInterpreter);
+      this->songList.sortDataShell(Song::compareByInterpreter);
       oss << "Ordenamiento por ShellSort hecho correctamente!" << endl;
       break;
     case 'E':
@@ -870,7 +880,57 @@ void Menu::sortByInterpreter(){
   }
 
   system("CLS");
-  oss << endl<< "Regresando..." << endl << endl;
+  oss << endl << "Regresando..." << endl << endl;
+  cout << oss.str();
+  enterToContinue();
+}
+
+void Menu::sortByRanking() {
+  system("CLS");
+  ostringstream oss;
+  char op, validOptions[5] = {'A', 'B', 'C', 'D', 'E'};
+
+  oss << windowHeader(100, "Ordenar por Ranking de la Cancion");
+  oss << "A continuacion, eliga un algoritmo de ordenamiento para la lista: "
+      << endl;
+  oss << "[A] Ordenamiento por Burbuja" << endl;
+  oss << "[B] Ordenamiento por InsertSort" << endl;
+  oss << "[C] Ordenamiento por SelectSort" << endl;
+  oss << "[D] Ordenamiento por ShellSort" << endl;
+  oss << "[E] Regresar" << endl << endl;
+  oss << "Ingrese una Opcion: ";
+
+  op = this->readChar(oss.str(), validOptions);
+  cin.ignore();
+
+  oss << op << endl;
+  switch (op) {
+    case 'A':
+      this->songList.sortDataBubble();
+      oss << "Ordenamiento por Burbuja hecho correctamente!." << endl;
+      break;
+    case 'B':
+      this->songList.sortDataInsert();
+      oss << "Ordenamiento por InserSor hecho correctamente!" << endl;
+      break;
+    case 'C':
+      this->songList.sortDataSelect();
+      oss << "Ordenamiento por DataSelect hecho correctamente!" << endl;
+      break;
+    case 'D':
+      this->songList.sortDataShell();
+      oss << "Ordenamiento por ShellSort hecho correctamente!" << endl;
+      break;
+    case 'E':
+      system("CLS");
+      cout << "Regresando..." << endl;
+      enterToContinue();
+      return;
+      break;
+  }
+
+  system("CLS");
+  oss << endl << "Regresando..." << endl << endl;
   cout << oss.str();
   enterToContinue();
 }
