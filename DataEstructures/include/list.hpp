@@ -18,6 +18,12 @@ class List {
 
   void swapData(T&, T&);
 
+  void sortDataMerge(const int&, const int&);
+  void sortDataMerge(const int&, const int&, int(const T&, const T&));
+
+  void sortDataQuick(const int&, const int&);
+  void sortDataQuick(const int&, const int&, int(const T&, const T&));
+
  public:
   List<T, ARRAYSIZE>();
   List<T, ARRAYSIZE>(const List<T, ARRAYSIZE>&);
@@ -38,6 +44,7 @@ class List {
   int getNextPosition(const int&) const;
 
   std::string toString() const;
+  std::string toString(const T&,int(const T&, const T&));
 
   void deleteAll();
 
@@ -52,6 +59,8 @@ class List {
   void sortDataInsert();
   void sortDataSelect();
   void sortDataShell();
+  void sortDataMerge();
+  void sortDataQuick();
 
   List<T, ARRAYSIZE> operator=(const List<T, ARRAYSIZE>&);
 
@@ -70,6 +79,8 @@ class List {
   void sortDataInsert(int(const T&, const T&));
   void sortDataSelect(int(const T&, const T&));
   void sortDataShell(int(const T&, const T&));
+  void sortDataMerge(int(const T&, const T&));
+  void sortDataQuick(int(const T&, const T&));
 
   void insertSortedData(const T&, int(const T&, const T&));
 };
@@ -184,6 +195,18 @@ std::string List<T, ARRAYSIZE>::toString() const {
   for (int i = 0; i <= this->last; i++) {
     oss << "| " << std::to_string(i) << std::setw(11 - std::to_string(i).size())
         << "" << this->data[i].toString() << "\n";
+  }
+
+  return oss.str();
+}
+
+template <class T, int ARRAYSIZE>
+std::string List<T, ARRAYSIZE>::toString(const T& searched, int cmp(const T&, const T&)){
+  std::ostringstream oss;
+  for (int i = 0; i <= this->last; i++) {
+    if(cmp(this->data[i], searched) == 0)
+      oss << "| " << std::to_string(i) << std::setw(11 - std::to_string(i).size())
+          << "" << this->data[i].toString() << "\n";
   }
 
   return oss.str();
@@ -323,6 +346,170 @@ void List<T, ARRAYSIZE>::sortDataShell() {
 
     dif = series[++pos];
   }
+}
+
+template <class T, int ARRAYSIZE>
+void List<T, ARRAYSIZE>::sortDataMerge(){
+  this->sortDataMerge(0, this->last);
+}
+
+template <class T, int ARRAYSIZE>
+void List<T, ARRAYSIZE>::sortDataMerge(int cmp(const T&, const T&)){
+  this->sortDataMerge(0, this->last, cmp)
+}
+
+template <class T, int ARRAYSIZE>
+void List<T, ARRAYSIZE>::sortDataMerge(const int& leftEdge, const int& rightEdge){
+  //Criterio de Paro
+  if(leftEdge >= rightEdge)
+    return;
+  
+  
+  int m((leftEdge + rightEdge) / 2);
+
+  //Divide y Vencerás
+  this->sortDataMerge(leftEdge, m);
+  this->sortDataMerge(m + 1, rightEdge);
+  
+  //Intercalación
+  static T temp[ARRAYSIZE];
+
+  for(int n(leftEdge); n <= rightEdge; n++)
+    temp[n] = this->data[n];
+  
+  int i(leftEdge), j(m + 1), x(leftEdge);
+
+  while(i <= m && j<= rightEdge){
+    while(i <= m && this->temp[i] <= this->temp[j])
+      this->data[x++] = temp[i++];
+
+    if(i <= m)
+      while( j <= rightEdge && this->temp[j] <= this->temp[i])
+        this->data[x++] = temp[j++];
+
+  }
+
+  while(i <= m)
+    this->data[x++] = temp[i++];
+  while(j <= m)
+    this->data[x++] = temp[j++];
+
+}
+
+template <class T, int ARRAYSIZE>
+void List<T, ARRAYSIZE>::sortDataMerge(const int& leftEdge, const int& rightEdge, int cmp(const T&, const T&)){
+  //Criterio de Paro
+  if(leftEdge >= rightEdge)
+    return;
+  
+  
+  int m((leftEdge + rightEdge) / 2);
+
+  //Divide y Vencerás
+  this->sortDataMerge(leftEdge, m, cmp);
+  this->sortDataMerge(m + 1, rightEdge, cmp);
+  
+  //Intercalación
+  static T temp[ARRAYSIZE];
+
+  for(int n(leftEdge); n <= rightEdge; n++)
+    temp[n] = this->data[n];
+  
+  int i(leftEdge), j(m + 1), x(leftEdge);
+
+  while(i <= m && j <= rightEdge){
+    while(i <= m && cmp(this->temp[i], this->temp[j]) <= 0)
+      this->data[x++] = temp[i++];
+
+    if(i <= m)
+      while( j <= rightEdge && cmp(this->temp[j], this->temp[i]) <= 0)
+        this->data[x++] = temp[j++];
+
+  }
+
+  while(i <= m)
+    this->data[x++] = temp[i++];
+  while(j <= m)
+    this->data[x++] = temp[j++];
+
+}
+
+template <class T, int ARRAYSIZE>
+void List<T, ARRAYSIZE>::sortDataQuick(){
+  this->sortDataQuick(0, this->last);
+}
+
+template <class T, int ARRAYSIZE>
+void List<T, ARRAYSIZE>::sortDataQuick(int cmp(const T&, const T&)){
+  this->sortDataQuick(0, this->last, cmp);
+}
+
+template <class T, int ARRAYSIZE>
+void List<T, ARRAYSIZE>::sortDataQuick(const int& leftEdge, const int& rightEdge){
+  //Criterio de paro
+  if(leftEdge >= rightEdge)
+    return;
+
+  if(leftEdge == rightEdge + 1){
+    if(this->data[leftEdge] > this->data[rightEdge])
+      swap(this->data[leftEdge], this->data[rightEdge]);
+    return;
+  }
+
+  //Separación
+  int i(leftEdge), j(rightEdge);
+
+  while(i < j){
+    while(i < j && this->data[i] <= this->data[rightEdge])
+      i++;
+    
+    while(i < j && this->data[j] >= this->data[rightEdge])
+      j--;
+
+    if(i != j)
+      this->swapData(this->data[i], this->data[j]);
+  }
+
+  if(i != rightEdge)
+    this->swapData(this->data[i], this->data[rightEdge]);
+
+  //Divide y Vencerás
+  this->sortDataQuick(leftEdge, i - 1);
+  this->sortDataQuick(i + 1, rightEdge);
+}
+
+template <class T, int ARRAYSIZE>
+void List<T, ARRAYSIZE>::sortDataQuick(const int& leftEdge, const int& rightEdge, int cmp(const T&, const T&)){
+  //Criterio de paro
+  if(leftEdge >= rightEdge)
+    return;
+
+  if(cmp(this->data[leftEdge], this->data[rightEdge + 1]) == 0){
+    if(cmp(this->data[leftEdge], this->data[rightEdge]) > 0)
+      swap(this->data[leftEdge], this->data[rightEdge]);
+    return;
+  }
+
+  //Separación
+  int i(leftEdge), j(rightEdge);
+
+  while(i < j){
+    while(i < j && cmp(this->data[i], this->data[rightEdge]) <= 0)
+      i++;
+    
+    while(i < j && cmp(this->data[j], this->data[rightEdge]) >= 0)
+      j--;
+
+    if(i != j)
+      this->swapData(this->data[i], this->data[j]);
+  }
+
+  if(i != rightEdge)
+    this->swapData(this->data[i], this->data[rightEdge]);
+
+  //Divide y Vencerás
+  this->sortDataQuick(leftEdge, i - 1, cmp);
+  this->sortDataQuick(i + 1, rightEdge, cmp);
 }
 
 template <class T, int ARRAYSIZE>
