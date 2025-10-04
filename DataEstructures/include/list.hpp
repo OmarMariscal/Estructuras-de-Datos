@@ -119,7 +119,7 @@ template <class T, int ARRAYSIZE>
 bool List<T, ARRAYSIZE>::isSorted() const {
   for (int i = 0; i < this->last; i++)
     if (this->data[i] > this->data[i + 1])
-      return true;
+      return false;
 
   return true;
 }
@@ -206,7 +206,7 @@ std::string List<T, ARRAYSIZE>::toString(const T& searched, int cmp(const T&, co
   for (int i = 0; i <= this->last; i++) {
     if(cmp(this->data[i], searched) == 0)
       oss << "| " << std::to_string(i) << std::setw(11 - std::to_string(i).size())
-          << "" << this->data[i].toString() << "\n";
+          << "" << this->data[i].z() << "\n";
   }
 
   return oss.str();
