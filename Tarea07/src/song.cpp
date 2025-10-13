@@ -93,20 +93,43 @@ std::string Song::toStringOnly(const int& widthBorder) const {
   return oss.str();
 }
 
-std::string Song::toString(const int& widthRanking,
+std::string Song::toString(const bool& singleSong,
+                           const int& widthRanking,
                            const int& widthSongName,
                            const int& widthName,
                            const int& widthMP3) const {
   ostringstream oss;
 
-  oss << "| " << this->ranking
-      << setw(widthRanking - to_string(this->ranking).size()) << "| "
-      << this->songName << setw(widthSongName - this->songName.size()) << "| "
-      << this->author.toString()
-      << setw(widthName - this->author.toString().size()) << "| "
-      << this->interpreter.toString()
-      << setw(widthName - this->interpreter.toString().size()) << "| "
-      << this->mp3Name << setw(widthMP3 - this->mp3Name.size()) << "|";
+  if(singleSong){
+    int widthBorder = widthRanking + widthSongName + widthName + widthMP3;
+    oss << setfill('=') << setw(widthBorder) << "" << endl;
+    oss << setfill(' ');
+
+    oss << "| " << setw((widthBorder / 2) + 10) << "INFORMACION DE LA CANCION"
+        << setw((widthBorder / 2) - 12) << "|" << endl;
+
+    oss << setfill('-') << setw(widthBorder) << "" << endl;
+    oss << setfill(' ');
+
+    oss << "Posicion en el Ranking: " << ranking << endl;
+    oss << "Nombre de la Cancion: " << songName << endl;
+    oss << "Nombre del Autor: " << author.toString() << endl;
+    oss << "Nombre del Inteprete: " << interpreter.toString() << endl;
+
+    oss << endl << setfill('=') << setw(widthBorder) << "" << endl;
+    oss << setfill(' ');
+  }
+  else{
+    oss << "| " << this->ranking
+        << setw(widthRanking - to_string(this->ranking).size()) << "| "
+        << this->songName << setw(widthSongName - this->songName.size()) << "| "
+        << this->author.toString()
+        << setw(widthName - this->author.toString().size()) << "| "
+        << this->interpreter.toString()
+        << setw(widthName - this->interpreter.toString().size()) << "| "
+        << this->mp3Name << setw(widthMP3 - this->mp3Name.size()) << "|";    
+  }
+
 
   return oss.str();
 }
