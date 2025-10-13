@@ -40,6 +40,7 @@ class List {
   int getNextPosition(const int&) const;
 
   std::string toString() const;
+  std::string toString(const T&, int(const T&, const T&)) const;
 
   void deleteAll();
 
@@ -78,14 +79,13 @@ class List {
 
 template <class T, int ARRAYSIZE>
 List<T, ARRAYSIZE>::List() : last(-1) {
-  this->data =  new T*[ARRAYSIZE];
-  for(int i = 0; i < ARRAYSIZE; i++)
+  this->data = new T*[ARRAYSIZE];
+  for (int i = 0; i < ARRAYSIZE; i++)
     this->data[i] = nullptr;
-  
 }
 
 template <class T, int ARRAYSIZE>
-List<T, ARRAYSIZE>::~List(){
+List<T, ARRAYSIZE>::~List() {
   freeAll();
   delete[] data;
   data = nullptr;
@@ -93,24 +93,24 @@ List<T, ARRAYSIZE>::~List(){
 
 template <class T, int ARRAYSIZE>
 void List<T, ARRAYSIZE>::copyAll(const List<T, ARRAYSIZE>& other) {
+  this->last = other.last;
+
   this->freeAll();
-  for (int i = 0; i <= other.last; i++){
+  for (int i = 0; i <= other.last; i++) {
     this->data[i] = new T(*other.data[i]);
   }
 
-  for(int i = other.last + 1; i < ARRAYSIZE; i++){
-    if(this->data[i])
+  for (int i = other.last + 1; i < ARRAYSIZE; i++) {
+    if (this->data[i])
       delete this->data[i];
     this->data[i] = nullptr;
   }
-  
-  this->last = other.last;
 }
 
 template <class T, int ARRAYSIZE>
-void List<T, ARRAYSIZE>::freeAll(){
-  for(int i = 0; i <= this->last; i++){
-    if(this->data[i])
+void List<T, ARRAYSIZE>::freeAll() {
+  for (int i = 0; i <= this->last; i++) {
+    if (this->data[i] != nullptr)
       delete this->data[i];
     this->data[i] = nullptr;
   }
@@ -125,12 +125,11 @@ template <class T, int ARRAYSIZE>
 List<T, ARRAYSIZE>::List(const List<T, ARRAYSIZE>& other) {
   this->data = new T*[ARRAYSIZE];
 
-  for(int i = 0; i < ARRAYSIZE; i++)
+  for (int i = 0; i < ARRAYSIZE; i++)
     this->data[i] = nullptr;
 
   copyAll(other);
 }
-
 
 template <class T, int ARRAYSIZE>
 bool List<T, ARRAYSIZE>::isEmpty() const {
@@ -184,11 +183,11 @@ void List<T, ARRAYSIZE>::deleteData(const int& position) {
     throw DataContainersExceptions::InvalidPosition(
         "Poscion Invalida, delteData(List)");
 
-  //Liberar la Memoria de la posicion indicada:
+  // Liberar la Memoria de la posicion indicada:
   delete this->data[position];
   this->data[position] = nullptr;
 
-  //Recorrer la Lista
+  // Recorrer la Lista
   for (int i = position; i < last; i++)
     this->data[i] = this->data[i + 1];
   last--;
@@ -234,10 +233,23 @@ std::string List<T, ARRAYSIZE>::toString() const {
 }
 
 template <class T, int ARRAYSIZE>
+std::string List<T, ARRAYSIZE>::toString(const T& search,
+                                         int cmp(const T&, const T&)) const {
+  std::ostringstream oss;
+  for (int i = 0; i <= this->last; i++) {
+    if (cmp(search, *this->data[i]) == 0)
+      oss << "| " << std::to_string(i)
+          << std::setw(11 - std::to_string(i).size()) << ""
+          << this->data[i]->toString() << "\n";
+  }
+
+  return oss.str();
+}
+
+template <class T, int ARRAYSIZE>
 void List<T, ARRAYSIZE>::deleteAll() {
   this->freeAll();
   this->last = -1;
-
 }
 
 template <class T, int ARRAYSIZE>

@@ -455,10 +455,10 @@ void Menu::editSong(const int& position) {
   Song ver;
 
   oss << target->toStringOnly();
-  oss << "5 Salir\n";
+  oss << "6 Salir\n";
 
   editOption = readInteger(
-      oss.str() + "Elige el atributo que quieras cambiar (1-5): ", 1, 5);
+      oss.str() + "Elige el atributo que quieras cambiar (1-6): ", 1, 6);
 
   switch (editOption) {
     case 1:
@@ -494,6 +494,12 @@ void Menu::editSong(const int& position) {
       cout << "Cambio hecho con Exito!";
       break;
     case 5:
+      oss << "Ingrese el nuevo nombre del Archivo MP3: ";
+      dataString = this->readLinePrompt(oss.str());
+      target->setMp3Name(dataString);
+      cout << "Cambio Hecho con Exito!";
+      break;
+    case 6:
       return;
     default:
       break;
@@ -622,7 +628,7 @@ void Menu::searchBySongName() {
     else {
       oss.str("");
       oss.clear();
-      oss << windowHeader(146, "LISTA DE EXITOS");
+      oss << this->windowHeader(146, "LISTA DE EXITOS");
       oss << "| " << "# En Lista" << setw(3) << "| " << "Ranking" << setw(3)
           << "| " << "Nombre de la Cancion" << setw(15) << "| "
           << "Nombre del Artista" << setw(12) << "| " << "Nombre del Interprete"
@@ -646,7 +652,7 @@ void Menu::searchBySongName() {
   } while (repeat != 2);
   system("CLS");
   cout << "Regresando..." << endl;
-  enterToContinue();
+  this->enterToContinue();
 }
 
 void Menu::searchByIntepreter() {
