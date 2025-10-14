@@ -55,7 +55,7 @@ string Date::toString() const{
 }
 
 void Date::setYear(const int&y){
-    this->year = y; //Hacer Validaciones
+    this->year = y;  //Hacer Validaciones
 }
 
 void Date::setMonth(const int&m){
@@ -96,6 +96,30 @@ int Date::compareTo(const Date& other) const{
 
 int Date::compare(const Date& a, const Date& b){
     return a.toInt() - b.toInt();
+}
+
+Date& Date::operator = (const Date& other){
+    this->year = other.year;
+    this->month = other.month;
+    this->day = other.day;
+
+    return *this;
+}
+
+nlohmann::json Date::toJson() const{
+    nlohmann::json js{
+        {"year", this->year},
+        {"month", this->month},
+        {"day", this->day},
+    };
+
+    return js;
+}
+
+void Date::fromJson(const nlohmann::json& js){
+    this->year = js.at("year").get<int>();
+    this->month = js.at("month").get<int>();
+    this->day = js.at("day").get<int>();
 }
 
 

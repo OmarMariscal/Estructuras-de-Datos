@@ -5,6 +5,8 @@
 #include <fstream>
 #include <chrono>
 
+#include "../lib/nlohmann/json.hpp"
+
 #include "ownexceptions.hpp"
 
 class Date{
@@ -42,6 +44,9 @@ class Date{
         static int compare(const Date&, const Date&);
 
         Date& operator = (const Date&);
+
+        nlohmann::json toJson() const;
+        void fromJson(const nlohmann::json&);
 
         friend std::ostream& operator << (std::ostream&, const Date&);
         friend std::istream& operator >> (std::istream&, Date&);

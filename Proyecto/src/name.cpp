@@ -71,6 +71,20 @@ int Name::compare(const Name& nameA, const Name& nameB) {
   return nameA.toString().compare(nameB.toString());
 }
 
+nlohmann::json Name::toJson() const{
+  nlohmann::json js{
+    {"Last", this->last},
+    {"First", this->first},
+  };
+
+  return js;
+}
+
+void Name::fromJson(const nlohmann::json& js){
+  this->last = js.at("Last").get<std::string>();
+  this->first = js.at("First").get<std::string>();
+}
+
 std::ostream& operator<<(std::ostream& os, const Name& name) {
   //PENDIENTE: REALIZAR EN FORMATO .JSON
 }

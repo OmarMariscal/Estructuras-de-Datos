@@ -5,6 +5,8 @@
 #include <iostream>
 #include <string>
 
+#include "../lib/nlohmann/json.hpp"
+
 #include "ownexceptions.hpp"
 
 class Name {
@@ -40,7 +42,12 @@ class Name {
   int compareTo(const Name&) const;
   int static compare(const Name&, const Name&);
 
+  nlohmann::json toJson() const;
+  void fromJson(const nlohmann::json&);
+
   friend std::ostream& operator<<(std::ostream&, const Name&);
   friend std::istream& operator>>(std::istream&, Name&);
+
+
 };
 #endif  // __NAME_H__

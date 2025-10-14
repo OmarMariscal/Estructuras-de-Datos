@@ -5,6 +5,8 @@
 #include <string>
 #include <sstream>
 
+#include "../lib/nlohmann/json.hpp"
+
 #include "ownexceptions.hpp"
 
 class Ingredient{
@@ -31,18 +33,21 @@ class Ingredient{
         void setAmount(const float&);
         void setUnit(const std::string&);
 
-        bool operator == (const Ingredient&);
-        bool operator != (const Ingredient&);
-        bool operator < (const Ingredient&);
-        bool operator > (const Ingredient&);
-        bool operator <= (const Ingredient&);
-        bool operator >= (const Ingredient&);
+        bool operator == (const Ingredient&) const;
+        bool operator != (const Ingredient&) const;
+        bool operator < (const Ingredient&) const;
+        bool operator > (const Ingredient&) const;
+        bool operator <= (const Ingredient&) const;
+        bool operator >= (const Ingredient&) const;
 
         int compare(const Ingredient&) const;
         static int compareTo(const Ingredient&, const Ingredient&);
 
         int compareByAmount(const Ingredient&) const;
         int compareByUnit(const Ingredient&) const;
+
+        nlohmann::json toJson() const;
+        void fromJson(const nlohmann::json&);
 
         friend std::ostream& operator << (std::ostream&, const Ingredient&);
         friend std::istream& operator >> (std::istream&, Ingredient&);

@@ -41,27 +41,27 @@ void Ingredient::setUnit(const std::string& unit){
     this->unit = unit;
 }
 
-bool Ingredient::operator == (const Ingredient& other){
+bool Ingredient::operator == (const Ingredient& other) const{
     return this->nameIngredient == other.nameIngredient;
 }
 
-bool Ingredient::operator != (const Ingredient& other){
+bool Ingredient::operator != (const Ingredient& other) const{
     return !(this->nameIngredient == other.nameIngredient);
 }
 
-bool Ingredient::operator < (const Ingredient& other){
+bool Ingredient::operator < (const Ingredient& other) const{
     return this->nameIngredient < other.nameIngredient;
 }
 
-bool Ingredient::operator > (const Ingredient& other){
+bool Ingredient::operator > (const Ingredient& other) const{
     return this->nameIngredient > other.nameIngredient;
 }
 
-bool Ingredient::operator <= (const Ingredient& other){
+bool Ingredient::operator <= (const Ingredient& other) const{
     return this->nameIngredient <= other.nameIngredient;
 }
 
-bool Ingredient::operator >= (const Ingredient& other){
+bool Ingredient::operator >= (const Ingredient& other) const{
     return this->nameIngredient >= other.nameIngredient;
 }
 
@@ -79,6 +79,22 @@ int Ingredient::compareByAmount(const Ingredient& other) const{
 
 int Ingredient::compareByUnit(const Ingredient& other) const{
     return this->unit.compare(other.unit);
+}
+
+nlohmann::json Ingredient::toJson() const{
+    nlohmann::json js{
+        {"name ingredient", this->nameIngredient},
+        {"amount", this->amount},
+        {"unit", this->unit},
+    };
+
+    return js;
+}
+
+void Ingredient::fromJson(const nlohmann::json& js){
+    this->nameIngredient = js.at("name ingredient").get<std::string>();
+    this->amount = js.at("amount").get<float>();
+    this->unit = js.at("unit").get<std::string>();
 }
 
 Ingredient& Ingredient::operator = (const Ingredient& other){
