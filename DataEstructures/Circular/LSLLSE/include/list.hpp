@@ -1,6 +1,8 @@
 #ifndef __LIST_H__
 #define __LIST_H__
 
+//LISTA CIRCULAR SIN ENCABEZADO
+
 #include <string>
 #include <exception>
 
@@ -157,13 +159,21 @@ void List<T>::insertData(const typename List<T>::Position& position, const T& el
         throw std::exception("Memoria no Disponible");
     
     if(position == nullptr){ //Insertar al Principio
-        newNode->setNext(this->anchor);
+
+        if(this->isEmpty()){
+            newNode->setNext(newNode);
+        }
+        else{
+            newNode->setNext(this->anchor);
+            this->getLastPos()->setNext(newNode);
+        }
+
         this->anchor = newNode;
     }
 
     else{ //Cualquier otra
-        newNode->setNext(position->setNext(position->getNext()));
-        this->getPrevPos(position);
+        newNode->setNext(position->getNext());
+        position->setNext(newNode);
     }
 
 }
@@ -173,8 +183,16 @@ void List<T>::deleteData(const typename List<T>::Position& position){
     if(!this->isValidPosition(position))
         throw std::exception("Posicion Invalida");
     
-    if(position == this->anchor) //Eliminar el primero
-        this->anchor = position->getNext();
+    if(position == this->anchor){
+        if(position->getData() == position){ //Queda solo uno
+            this->anchor = nullptr;
+        }
+
+        else{
+            this->getLastPos()->setNext(position->getNext());
+            this->anchor = position->getNext();
+        }
+    } 
     
     else //Cualquier otra Posición
         this->getPrevPos(position)->setNext(position->getNext());
@@ -193,7 +211,7 @@ typename List<T>::Position List<T>::getLastPos() const{
         return nullptr;
     
     Position aux (this->anchor);
-    while(aux->getNext() != nullptr)
+    while(aux->getNext() != this->anchor)
         aux = aux->getNext();
 
     return aux;
@@ -201,28 +219,42 @@ typename List<T>::Position List<T>::getLastPos() const{
 
 
 template <class T>
-typename List<T>::Position List<T>::getPrevPos(const typename List<T>::Position&) const{
-    Position aux(this->anchor);
+typename List<T>::Position List<T>::getPrevPos(const typename List<T>::Position& p) const{
+    if(this->isEmpty())
+        return nullptr;
 
-    while(aux != nullptr && aux->getNext() != Position)
+    Position aux(this->anchor);
+    do{
+        if(aux->getNext() == p)
+            return aux;
         aux = aux->getNext();
+
+    }while(aux != this->anchor);
     
-    return aux;
+    return nullptr;
 
 }
 template <class T>
 typename List<T>::Position List<T>::getNextPos(const typename List<T>::Position& position) const{
-   return this->isValidPosition(position) ? position->getNext() : nullptr;
+   return this->isValidPosition(position) || position->getNext() == this->anchor ? nullptr : position->getNext();
 }
 
 
 template <class T>
 typename List<T>::Position List<T>::findData(const T& dataSearched) const{
+    if(this->isEmpty())
+        return nullptr;
+
     Position aux(this->anchor);
 
-    while(aux != nullptr && aux->getData() != dataSearched)
+    do{
+        if(aux->getData() == dataSearched)
+            return aux;
+        
         aux = aux->getNext();
-    return aux;
+    } while(aux != this->anchor);
+    
+    return nullptr;
 }
 
 template <class T>
@@ -235,11 +267,14 @@ T& List<T>::retrieve(const typename List<T>::Position& p){
 template <class T>
 string List<T>::toString() const{
     string result;
-    Position aux(this->anchor);
 
-    while(aux != nullptr){
-        result += aux->getData()->toString() + "\n";
-        aux = aux->getNext();
+    if(!this->isEmpty()){
+        Position aux(this->anchor);
+
+        do{
+            result += aux->getData()->toString() + '\n';
+            aux = aux->getNext();
+        }while(aux != this->anchor);
     }
 
     return result;
@@ -252,13 +287,19 @@ void List<T>::sortData(){
 
 template <class T>
 void List<T>::deleteAll(){
-    Position aux;
 
-    while(this->anchor != nullptr){
+    if(this->isEmpty())
+        return;
+
+    Position mark(this->anchor), aux;
+
+    do{
         aux = this->anchor;
         this->anchor = aux->getNext();
-        delete aux;
-    }
+        delete aux;        
+    } while(this->anchor != mark);
+
+    this->anchor = nullptr;
 }
 
 template <class T>
