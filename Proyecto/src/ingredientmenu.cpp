@@ -8,52 +8,57 @@ void IngredientMenu::addIngredients(){
     char op;
     string dataString;
     Ingredient newIngredient;
+    try{
     do{
-            oss.str("");
-            oss.clear();
+                oss.str("");
+                oss.clear();
 
-            oss << this->windowHeader("🥑 RECETARIO DIGITAL - AÑADIENDO INGREDIENTES");
-            if(!this->ingredientList.isEmpty()){
-                oss << this->centerText("👍" + this->insertColorText("Lista de Ingredientes Actual para " + recipeName, "magenta"));
-                oss << this->ingredientList.toString() << endl;
-                oss << this->divider();
-            }
+                oss << this->windowHeader("🥑 RECETARIO DIGITAL - AÑADIENDO INGREDIENTES");
+                if(!this->ingredientList.isEmpty()){
+                    oss << this->centerText("👍" + this->insertColorText("Lista de Ingredientes Actual para " + recipeName, "magenta"));
+                    oss << this->ingredientList.toString() << endl;
+                    oss << this->divider();
+                }
 
-            oss << this->insertColorText("    Ingrese el Nombre del Ingrediente: ", "cyan");
-            
-            while(true){
-                dataString = this->readLinePrompt(oss.str());
-                newIngredient.setNameInredient(dataString);
+                oss << this->insertColorText("    Ingrese el Nombre del Ingrediente: ", "cyan");
+                
+                while(true){
+                    dataString = this->readLinePrompt(oss.str());
+                    newIngredient.setNameInredient(dataString);
 
-                if(this->ingredientList.findDataL(newIngredient) != -1)
-                    this->errorMessage("El Ingrediente Ya Esta en la Lista\nIntente Agregar Uno Nuevo");
-                else
-                    break;
-            }
+                    if(this->ingredientList.findDataL(newIngredient) != -1)
+                        this->errorMessage("El Ingrediente Ya Esta en la Lista\nIntente Agregar Uno Nuevo");
+                    else
+                        break;
+                }
 
-            oss << dataString << endl;
+                oss << dataString << endl;
 
-            oss << this->insertColorText("    Ingrese la Cantidad que se Utiliza: ", "cyan");
-            dataFloat = this->readFloat(oss.str(), 0.0, 9999);
-            oss << dataFloat << endl;
-            newIngredient.setAmount(dataFloat);
+                oss << this->insertColorText("    Ingrese la Cantidad que se Utiliza: ", "cyan");
+                dataFloat = this->readFloat(oss.str(), 0.0, 9999);
+                oss << dataFloat << endl;
+                newIngredient.setAmount(dataFloat);
 
-            oss << this->insertColorText("    Ingrese la Unidad de Medidad de la Cantidad: ", "cyan");
-            dataString = readLinePrompt(oss.str());
-            oss << dataString << endl;
-            newIngredient.setUnit(dataString);
-            
-            this->ingredientList.insertSortedData(newIngredient);
+                oss << this->insertColorText("    Ingrese la Unidad de Medidad de la Cantidad: ", "cyan");
+                dataString = readLinePrompt(oss.str());
+                oss << dataString << endl;
+                newIngredient.setUnit(dataString);
+                
+                this->ingredientList.insertSortedData(newIngredient);
 
-            oss << this->divider("-");
-            oss << "✅ ";
-            oss << this->insertColorText("Ingrediente Añadido con Exito!", "green") << endl;
-            oss << " 🥕 ¿Desea Añadir Más Ingredientes? (S/N): ";
+                oss << this->divider("-");
+                oss << "✅ ";
+                oss << this->insertColorText("Ingrediente Añadido con Exito!", "green") << endl;
+                oss << " 🥕 ¿Desea Añadir Más Ingredientes? (S/N): ";
 
-            op = this->readChar(oss.str(), "S,N");
+                op = this->readChar(oss.str(), "S,N");
 
-    } while(op != 'N');
+        } while(op != 'N');
 
+    } catch(const InputExceptions::OperationCanceledException& ex){
+        this->errorMessage("Agregado de Ingrediente Cancelado.\nAvanzando...");
+        return;
+    }
 }
 
 void IngredientMenu::deleteIngredients(){

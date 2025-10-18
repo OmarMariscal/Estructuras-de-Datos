@@ -47,9 +47,6 @@ class Date{
 
         nlohmann::json toJson() const;
         void fromJson(const nlohmann::json&);
-
-        friend std::ostream& operator << (std::ostream&, const Date&);
-        friend std::istream& operator >> (std::istream&, Date&);
 }; 
 
 #endif // __DATE_H__

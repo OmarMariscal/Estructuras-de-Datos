@@ -1,0 +1,2578 @@
+{
+    "data": [
+        {
+            "author": {
+                "First": "Diego",
+                "Last": "García"
+            },
+            "category": 2,
+            "creation date": {
+                "day": 19,
+                "month": 1,
+                "year": 2023
+            },
+            "id": 1,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 1.5,
+                        "name ingredient": "Salsa BBQ",
+                        "unit": "Taza"
+                    },
+                    {
+                        "amount": 1.5,
+                        "name ingredient": "Chile",
+                        "unit": "Paquete"
+                    },
+                    {
+                        "amount": 1,
+                        "name ingredient": "Vinagre",
+                        "unit": "Cucharada"
+                    },
+                    {
+                        "amount": 1,
+                        "name ingredient": "Caldo de Res",
+                        "unit": "Cucharada"
+                    },
+                    {
+                        "amount": 400,
+                        "name ingredient": "Pollo",
+                        "unit": "Gramos"
+                    },
+                    {
+                        "amount": 100,
+                        "name ingredient": "Albahaca",
+                        "unit": "Piezas"
+                    }
+                ]
+            },
+            "preparation time": 13,
+            "procedure list": {
+                "data": [
+                    "Precalentar los ingredientes hasta que espese",
+                    "Mezclar la salsa y servir caliente",
+                    "Mezclar el arroz hasta que estén dorados",
+                    "Reposar la pasta y reservar",
+                    "Sazonar las verduras hasta integrar completamente",
+                    "Sazonar los ingredientes hasta que estén dorados"
+                ]
+            },
+            "recipe name": "Galletas de Avena"
+        },
+        {
+            "author": {
+                "First": "José",
+                "Last": "Martínez"
+            },
+            "category": 4,
+            "creation date": {
+                "day": 19,
+                "month": 11,
+                "year": 2025
+            },
+            "id": 2,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 1,
+                        "name ingredient": "Crema",
+                        "unit": "Paquete"
+                    },
+                    {
+                        "amount": 4,
+                        "name ingredient": "Salsa de Soja",
+                        "unit": "Taza"
+                    },
+                    {
+                        "amount": 50,
+                        "name ingredient": "Zanahoria",
+                        "unit": "Cucharada"
+                    },
+                    {
+                        "amount": 50,
+                        "name ingredient": "Orégano",
+                        "unit": "Cucharadita"
+                    },
+                    {
+                        "amount": 1,
+                        "name ingredient": "Tomate",
+                        "unit": "Dientes"
+                    }
+                ]
+            },
+            "preparation time": 33,
+            "procedure list": {
+                "data": [
+                    "Cortar la pasta y servir caliente",
+                    "Batir el arroz hasta que estén dorados",
+                    "Hervir la salsa hasta integrar completamente",
+                    "Picar los ingredientes a 180°C por 25 minutos"
+                ]
+            },
+            "recipe name": "Omelette de Queso"
+        },
+        {
+            "author": {
+                "First": "José",
+                "Last": "Ortiz"
+            },
+            "category": 4,
+            "creation date": {
+                "day": 5,
+                "month": 7,
+                "year": 2024
+            },
+            "id": 3,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 5,
+                        "name ingredient": "Nuez",
+                        "unit": "Dientes"
+                    },
+                    {
+                        "amount": 1.5,
+                        "name ingredient": "Pimienta",
+                        "unit": "Trozo"
+                    },
+                    {
+                        "amount": 2,
+                        "name ingredient": "Papa",
+                        "unit": "Paquete"
+                    },
+                    {
+                        "amount": 1,
+                        "name ingredient": "Salsa de Soja",
+                        "unit": "Piezas"
+                    },
+                    {
+                        "amount": 50,
+                        "name ingredient": "Aceite",
+                        "unit": "Gramos"
+                    },
+                    {
+                        "amount": 1.5,
+                        "name ingredient": "Almendra",
+                        "unit": "Trozo"
+                    }
+                ]
+            },
+            "preparation time": 27,
+            "procedure list": {
+                "data": [
+                    "Lavar el pollo y reservar",
+                    "Hornear el pollo a 180°C por 25 minutos",
+                    "Reservar el arroz a 180°C por 25 minutos",
+                    "Hornear el aderezo a fuego medio",
+                    "Hornear la salsa con cuidado",
+                    "Reposar la pasta a fuego medio"
+                ]
+            },
+            "recipe name": "Lasaña de Carne"
+        },
+        {
+            "author": {
+                "First": "Carlos",
+                "Last": "Ramírez"
+            },
+            "category": 1,
+            "creation date": {
+                "day": 11,
+                "month": 8,
+                "year": 2023
+            },
+            "id": 4,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 1.5,
+                        "name ingredient": "Zanahoria",
+                        "unit": "Taza"
+                    },
+                    {
+                        "amount": 400,
+                        "name ingredient": "Leche",
+                        "unit": "Gramos"
+                    },
+                    {
+                        "amount": 100,
+                        "name ingredient": "Chile",
+                        "unit": "Gramos"
+                    },
+                    {
+                        "amount": 400,
+                        "name ingredient": "Vinagre",
+                        "unit": "Piezas"
+                    },
+                    {
+                        "amount": 1.5,
+                        "name ingredient": "Caldo de Res",
+                        "unit": "Paquete"
+                    }
+                ]
+            },
+            "preparation time": 93,
+            "procedure list": {
+                "data": [
+                    "Lavar la carne a 180°C por 25 minutos",
+                    "Cortar la masa a 180°C por 25 minutos",
+                    "Cocer las verduras hasta que esté al dente",
+                    "Picar la mezcla con cuidado",
+                    "Saltear la carne hasta integrar completamente",
+                    "Cocer el aderezo con cuidado"
+                ]
+            },
+            "recipe name": "Hamburguesa Clásica"
+        },
+        {
+            "author": {
+                "First": "Lucía",
+                "Last": "Salazar"
+            },
+            "category": 3,
+            "creation date": {
+                "day": 10,
+                "month": 8,
+                "year": 2024
+            },
+            "id": 5,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 200,
+                        "name ingredient": "Cacao",
+                        "unit": "Piezas"
+                    },
+                    {
+                        "amount": 50,
+                        "name ingredient": "Espinaca",
+                        "unit": "Piezas"
+                    },
+                    {
+                        "amount": 200,
+                        "name ingredient": "Salsa BBQ",
+                        "unit": "Hoja"
+                    },
+                    {
+                        "amount": 3,
+                        "name ingredient": "Crema",
+                        "unit": "Cucharada"
+                    },
+                    {
+                        "amount": 300,
+                        "name ingredient": "Perejil",
+                        "unit": "Gramos"
+                    },
+                    {
+                        "amount": 150,
+                        "name ingredient": "Nata",
+                        "unit": "Gramos"
+                    },
+                    {
+                        "amount": 400,
+                        "name ingredient": "Caldo de Res",
+                        "unit": "Cucharada"
+                    },
+                    {
+                        "amount": 1.5,
+                        "name ingredient": "Papa",
+                        "unit": "Cucharadita"
+                    },
+                    {
+                        "amount": 300,
+                        "name ingredient": "Pan",
+                        "unit": "Gramos"
+                    },
+                    {
+                        "amount": 100,
+                        "name ingredient": "Pasta",
+                        "unit": "Piezas"
+                    }
+                ]
+            },
+            "preparation time": 103,
+            "procedure list": {
+                "data": [
+                    "Precalentar el pollo y reservar",
+                    "Hornear la pasta y reservar",
+                    "Hervir las verduras hasta integrar completamente",
+                    "Sazonar la mezcla a fuego medio",
+                    "Batir la pasta hasta integrar completamente",
+                    "Cocer la carne hasta integrar completamente",
+                    "Batir el aderezo hasta que esté al dente"
+                ]
+            },
+            "recipe name": "Enchiladas Verdes"
+        },
+        {
+            "author": {
+                "First": "Ricardo",
+                "Last": "Cuevas"
+            },
+            "category": 3,
+            "creation date": {
+                "day": 2,
+                "month": 1,
+                "year": 2025
+            },
+            "id": 6,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 150,
+                        "name ingredient": "Almendra",
+                        "unit": "Gramos"
+                    },
+                    {
+                        "amount": 500,
+                        "name ingredient": "Tomillo",
+                        "unit": "Cucharada"
+                    },
+                    {
+                        "amount": 3,
+                        "name ingredient": "Salsa BBQ",
+                        "unit": "Taza"
+                    },
+                    {
+                        "amount": 4,
+                        "name ingredient": "Caldo de Res",
+                        "unit": "Dientes"
+                    },
+                    {
+                        "amount": 400,
+                        "name ingredient": "Huevo",
+                        "unit": "Gramos"
+                    }
+                ]
+            },
+            "preparation time": 46,
+            "procedure list": {
+                "data": [
+                    "Lavar los ingredientes a 180°C por 25 minutos",
+                    "Cortar la pasta hasta que esté al dente",
+                    "Triturar la mezcla a 180°C por 25 minutos",
+                    "Reposar las verduras por 5 minutos",
+                    "Saltear los ingredientes a 180°C por 25 minutos",
+                    "Hervir la salsa hasta que espese",
+                    "Hervir el pollo hasta integrar completamente",
+                    "Triturar la mezcla hasta que espese"
+                ]
+            },
+            "recipe name": "Ceviche de Pescado"
+        },
+        {
+            "author": {
+                "First": "Marta",
+                "Last": "Ríos"
+            },
+            "category": 3,
+            "creation date": {
+                "day": 18,
+                "month": 4,
+                "year": 2023
+            },
+            "id": 7,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 150,
+                        "name ingredient": "Tofu",
+                        "unit": "Piezas"
+                    },
+                    {
+                        "amount": 4,
+                        "name ingredient": "Tomillo",
+                        "unit": "Mililitros"
+                    },
+                    {
+                        "amount": 3,
+                        "name ingredient": "Lentejas",
+                        "unit": "Taza"
+                    },
+                    {
+                        "amount": 500,
+                        "name ingredient": "Carne de Res",
+                        "unit": "Piezas"
+                    },
+                    {
+                        "amount": 3,
+                        "name ingredient": "Salmón",
+                        "unit": "Paquete"
+                    }
+                ]
+            },
+            "preparation time": 73,
+            "procedure list": {
+                "data": [
+                    "Precalentar la masa hasta que espese",
+                    "Servir la mezcla a fuego medio",
+                    "Tostar el arroz con cuidado",
+                    "Hervir el arroz y servir caliente",
+                    "Servir la mezcla y reservar"
+                ]
+            },
+            "recipe name": "Bistec Empanizado"
+        },
+        {
+            "author": {
+                "First": "Carlos",
+                "Last": "Ríos"
+            },
+            "category": 2,
+            "creation date": {
+                "day": 26,
+                "month": 8,
+                "year": 2024
+            },
+            "id": 8,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 0.5,
+                        "name ingredient": "Vinagre",
+                        "unit": "Cucharada"
+                    },
+                    {
+                        "amount": 3,
+                        "name ingredient": "Garbanzos",
+                        "unit": "Hoja"
+                    },
+                    {
+                        "amount": 300,
+                        "name ingredient": "Orégano",
+                        "unit": "Gramos"
+                    },
+                    {
+                        "amount": 200,
+                        "name ingredient": "Carne de Res",
+                        "unit": "Gramos"
+                    },
+                    {
+                        "amount": 250,
+                        "name ingredient": "Azúcar",
+                        "unit": "Trozo"
+                    }
+                ]
+            },
+            "preparation time": 101,
+            "procedure list": {
+                "data": [
+                    "Lavar el pollo hasta que espese",
+                    "Mezclar los ingredientes por 5 minutos",
+                    "Saltear el arroz hasta que espese"
+                ]
+            },
+            "recipe name": "Galletas de Avena (receta 8)"
+        },
+        {
+            "author": {
+                "First": "Isabel",
+                "Last": "Ramírez"
+            },
+            "category": 2,
+            "creation date": {
+                "day": 24,
+                "month": 10,
+                "year": 2024
+            },
+            "id": 9,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 300,
+                        "name ingredient": "Sal",
+                        "unit": "Hoja"
+                    },
+                    {
+                        "amount": 0.25,
+                        "name ingredient": "Almendra",
+                        "unit": "Paquete"
+                    },
+                    {
+                        "amount": 0.25,
+                        "name ingredient": "Nata",
+                        "unit": "Trozo"
+                    },
+                    {
+                        "amount": 4,
+                        "name ingredient": "Lentejas",
+                        "unit": "Piezas"
+                    },
+                    {
+                        "amount": 3,
+                        "name ingredient": "Chocolate",
+                        "unit": "Trozo"
+                    },
+                    {
+                        "amount": 500,
+                        "name ingredient": "Vainilla",
+                        "unit": "Cucharadita"
+                    },
+                    {
+                        "amount": 50,
+                        "name ingredient": "Salmón",
+                        "unit": "Hoja"
+                    },
+                    {
+                        "amount": 300,
+                        "name ingredient": "Salsa BBQ",
+                        "unit": "Gramos"
+                    }
+                ]
+            },
+            "preparation time": 77,
+            "procedure list": {
+                "data": [
+                    "Lavar las verduras y reservar",
+                    "Sazonar la masa hasta que esté al dente",
+                    "Tostar el arroz por 5 minutos",
+                    "Hervir el aderezo y servir caliente",
+                    "Cortar el pollo hasta que esté al dente",
+                    "Cortar las verduras hasta que esté al dente",
+                    "Triturar el arroz hasta integrar completamente"
+                ]
+            },
+            "recipe name": "Pasta al Ajillo"
+        },
+        {
+            "author": {
+                "First": "Ana",
+                "Last": "Salazar"
+            },
+            "category": 4,
+            "creation date": {
+                "day": 14,
+                "month": 6,
+                "year": 2025
+            },
+            "id": 10,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 4,
+                        "name ingredient": "Pimienta",
+                        "unit": "Dientes"
+                    },
+                    {
+                        "amount": 300,
+                        "name ingredient": "Zanahoria",
+                        "unit": "Mililitros"
+                    },
+                    {
+                        "amount": 50,
+                        "name ingredient": "Arroz",
+                        "unit": "Hoja"
+                    },
+                    {
+                        "amount": 0.5,
+                        "name ingredient": "Carne de Res",
+                        "unit": "Hoja"
+                    },
+                    {
+                        "amount": 100,
+                        "name ingredient": "Cilantro",
+                        "unit": "Cucharadita"
+                    },
+                    {
+                        "amount": 0.25,
+                        "name ingredient": "Vinagre",
+                        "unit": "Cucharada"
+                    },
+                    {
+                        "amount": 200,
+                        "name ingredient": "Caldo de Res",
+                        "unit": "Gramos"
+                    },
+                    {
+                        "amount": 250,
+                        "name ingredient": "Nuez",
+                        "unit": "Piezas"
+                    },
+                    {
+                        "amount": 2,
+                        "name ingredient": "Chocolate",
+                        "unit": "Dientes"
+                    }
+                ]
+            },
+            "preparation time": 55,
+            "procedure list": {
+                "data": [
+                    "Precalentar la masa y servir caliente",
+                    "Batir la masa hasta integrar completamente",
+                    "Mezclar la pasta hasta integrar completamente",
+                    "Hornear la pasta y reservar",
+                    "Picar la masa hasta que estén dorados",
+                    "Hervir la masa a fuego medio"
+                ]
+            },
+            "recipe name": "Tostadas de Aguacate"
+        },
+        {
+            "author": {
+                "First": "Alejandro",
+                "Last": "Medina"
+            },
+            "category": 1,
+            "creation date": {
+                "day": 18,
+                "month": 1,
+                "year": 2025
+            },
+            "id": 11,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 300,
+                        "name ingredient": "Tomillo",
+                        "unit": "Gramos"
+                    },
+                    {
+                        "amount": 0.25,
+                        "name ingredient": "Salsa BBQ",
+                        "unit": "Piezas"
+                    },
+                    {
+                        "amount": 0.25,
+                        "name ingredient": "Almendra",
+                        "unit": "Cucharada"
+                    },
+                    {
+                        "amount": 1.5,
+                        "name ingredient": "Nata",
+                        "unit": "Cucharadita"
+                    },
+                    {
+                        "amount": 1.5,
+                        "name ingredient": "Pasta",
+                        "unit": "Taza"
+                    }
+                ]
+            },
+            "preparation time": 44,
+            "procedure list": {
+                "data": [
+                    "Lavar las verduras hasta que espese",
+                    "Picar la pasta hasta que esté al dente",
+                    "Mezclar los ingredientes con cuidado",
+                    "Reservar la masa a 180°C por 25 minutos",
+                    "Tostar el pollo a 180°C por 25 minutos",
+                    "Sazonar la salsa hasta que espese",
+                    "Sazonar la salsa hasta integrar completamente",
+                    "Picar la salsa y reservar"
+                ]
+            },
+            "recipe name": "Bistec Empanizado (receta 11)"
+        },
+        {
+            "author": {
+                "First": "Héctor",
+                "Last": "Ortiz"
+            },
+            "category": 1,
+            "creation date": {
+                "day": 19,
+                "month": 6,
+                "year": 2024
+            },
+            "id": 12,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 1,
+                        "name ingredient": "Azúcar",
+                        "unit": "Trozo"
+                    },
+                    {
+                        "amount": 6,
+                        "name ingredient": "Tomate",
+                        "unit": "Dientes"
+                    },
+                    {
+                        "amount": 400,
+                        "name ingredient": "Caldo de Pollo",
+                        "unit": "Mililitros"
+                    },
+                    {
+                        "amount": 250,
+                        "name ingredient": "Pan",
+                        "unit": "Cucharadita"
+                    },
+                    {
+                        "amount": 400,
+                        "name ingredient": "Chile",
+                        "unit": "Piezas"
+                    },
+                    {
+                        "amount": 100,
+                        "name ingredient": "Caldo de Res",
+                        "unit": "Trozo"
+                    }
+                ]
+            },
+            "preparation time": 31,
+            "procedure list": {
+                "data": [
+                    "Cortar la carne por 5 minutos",
+                    "Tostar la mezcla hasta que espese",
+                    "Freír el aderezo hasta que esté al dente",
+                    "Marinar la carne por 5 minutos",
+                    "Servir los ingredientes hasta que espese",
+                    "Freír la salsa a fuego medio",
+                    "Hornear la salsa por 5 minutos",
+                    "Hervir las verduras con cuidado"
+                ]
+            },
+            "recipe name": "Guiso de Lentejas"
+        },
+        {
+            "author": {
+                "First": "Alejandro",
+                "Last": "Medina"
+            },
+            "category": 3,
+            "creation date": {
+                "day": 2,
+                "month": 2,
+                "year": 2024
+            },
+            "id": 13,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 4,
+                        "name ingredient": "Caldo de Pollo",
+                        "unit": "Dientes"
+                    },
+                    {
+                        "amount": 150,
+                        "name ingredient": "Queso",
+                        "unit": "Trozo"
+                    },
+                    {
+                        "amount": 150,
+                        "name ingredient": "Arroz",
+                        "unit": "Gramos"
+                    },
+                    {
+                        "amount": 300,
+                        "name ingredient": "Cilantro",
+                        "unit": "Gramos"
+                    },
+                    {
+                        "amount": 250,
+                        "name ingredient": "Nata",
+                        "unit": "Cucharadita"
+                    },
+                    {
+                        "amount": 400,
+                        "name ingredient": "Carne de Res",
+                        "unit": "Hoja"
+                    }
+                ]
+            },
+            "preparation time": 119,
+            "procedure list": {
+                "data": [
+                    "Preparar la salsa a 180°C por 25 minutos",
+                    "Marinar el pollo y servir caliente",
+                    "Batir la pasta hasta que espese",
+                    "Batir la carne hasta que espese",
+                    "Sazonar los ingredientes hasta que esté al dente",
+                    "Picar la masa hasta que esté al dente"
+                ]
+            },
+            "recipe name": "Risotto de Champiñones"
+        },
+        {
+            "author": {
+                "First": "Fernanda",
+                "Last": "Martínez"
+            },
+            "category": 1,
+            "creation date": {
+                "day": 5,
+                "month": 6,
+                "year": 2025
+            },
+            "id": 14,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 50,
+                        "name ingredient": "Chocolate",
+                        "unit": "Piezas"
+                    },
+                    {
+                        "amount": 3,
+                        "name ingredient": "Albahaca",
+                        "unit": "Cucharadita"
+                    },
+                    {
+                        "amount": 200,
+                        "name ingredient": "Limón",
+                        "unit": "Hoja"
+                    },
+                    {
+                        "amount": 1.5,
+                        "name ingredient": "Salsa de Soja",
+                        "unit": "Paquete"
+                    },
+                    {
+                        "amount": 100,
+                        "name ingredient": "Chile",
+                        "unit": "Piezas"
+                    },
+                    {
+                        "amount": 1.5,
+                        "name ingredient": "Espinaca",
+                        "unit": "Cucharadita"
+                    },
+                    {
+                        "amount": 3,
+                        "name ingredient": "Pasta",
+                        "unit": "Hoja"
+                    }
+                ]
+            },
+            "preparation time": 29,
+            "procedure list": {
+                "data": [
+                    "Lavar los ingredientes y servir caliente",
+                    "Reposar el pollo y reservar",
+                    "Marinar la pasta con cuidado",
+                    "Marinar el aderezo a fuego medio",
+                    "Freír la mezcla a 180°C por 25 minutos"
+                ]
+            },
+            "recipe name": "Risotto de Champiñones (receta 14)"
+        },
+        {
+            "author": {
+                "First": "Marta",
+                "Last": "Fernández"
+            },
+            "category": 4,
+            "creation date": {
+                "day": 14,
+                "month": 2,
+                "year": 2024
+            },
+            "id": 15,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 4,
+                        "name ingredient": "Zanahoria",
+                        "unit": "Cucharadita"
+                    },
+                    {
+                        "amount": 1,
+                        "name ingredient": "Limón",
+                        "unit": "Paquete"
+                    },
+                    {
+                        "amount": 150,
+                        "name ingredient": "Salsa de Soja",
+                        "unit": "Piezas"
+                    },
+                    {
+                        "amount": 250,
+                        "name ingredient": "Sal",
+                        "unit": "Piezas"
+                    },
+                    {
+                        "amount": 1.5,
+                        "name ingredient": "Vainilla",
+                        "unit": "Taza"
+                    },
+                    {
+                        "amount": 400,
+                        "name ingredient": "Albahaca",
+                        "unit": "Trozo"
+                    },
+                    {
+                        "amount": 300,
+                        "name ingredient": "Tofu",
+                        "unit": "Gramos"
+                    }
+                ]
+            },
+            "preparation time": 64,
+            "procedure list": {
+                "data": [
+                    "Precalentar la carne hasta integrar completamente",
+                    "Servir el aderezo hasta integrar completamente",
+                    "Picar la salsa y servir caliente"
+                ]
+            },
+            "recipe name": "Camarones al Ajillo"
+        },
+        {
+            "author": {
+                "First": "Ana",
+                "Last": "Fernández"
+            },
+            "category": 3,
+            "creation date": {
+                "day": 22,
+                "month": 9,
+                "year": 2023
+            },
+            "id": 16,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 50,
+                        "name ingredient": "Mostaza",
+                        "unit": "Hoja"
+                    },
+                    {
+                        "amount": 100,
+                        "name ingredient": "Salmón",
+                        "unit": "Cucharadita"
+                    },
+                    {
+                        "amount": 0.5,
+                        "name ingredient": "Caldo de Pollo",
+                        "unit": "Cucharada"
+                    },
+                    {
+                        "amount": 6,
+                        "name ingredient": "Albahaca",
+                        "unit": "Dientes"
+                    },
+                    {
+                        "amount": 250,
+                        "name ingredient": "Crema",
+                        "unit": "Cucharadita"
+                    },
+                    {
+                        "amount": 100,
+                        "name ingredient": "Nata",
+                        "unit": "Cucharada"
+                    }
+                ]
+            },
+            "preparation time": 111,
+            "procedure list": {
+                "data": [
+                    "Precalentar el arroz y servir caliente",
+                    "Picar el aderezo a fuego medio",
+                    "Picar la pasta por 5 minutos"
+                ]
+            },
+            "recipe name": "Pizza Casera"
+        },
+        {
+            "author": {
+                "First": "Raúl",
+                "Last": "Molina"
+            },
+            "category": 3,
+            "creation date": {
+                "day": 10,
+                "month": 6,
+                "year": 2024
+            },
+            "id": 17,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 4,
+                        "name ingredient": "Almendra",
+                        "unit": "Piezas"
+                    },
+                    {
+                        "amount": 0.25,
+                        "name ingredient": "Mantequilla",
+                        "unit": "Taza"
+                    },
+                    {
+                        "amount": 300,
+                        "name ingredient": "Atún",
+                        "unit": "Trozo"
+                    },
+                    {
+                        "amount": 6,
+                        "name ingredient": "Papa",
+                        "unit": "Dientes"
+                    },
+                    {
+                        "amount": 50,
+                        "name ingredient": "Levadura",
+                        "unit": "Hoja"
+                    }
+                ]
+            },
+            "preparation time": 25,
+            "procedure list": {
+                "data": [
+                    "Precalentar el arroz y reservar",
+                    "Triturar la mezcla a 180°C por 25 minutos",
+                    "Cortar la salsa por 5 minutos",
+                    "Picar los ingredientes a fuego medio"
+                ]
+            },
+            "recipe name": "Tortilla Española"
+        },
+        {
+            "author": {
+                "First": "Alejandro",
+                "Last": "Ríos"
+            },
+            "category": 2,
+            "creation date": {
+                "day": 11,
+                "month": 9,
+                "year": 2023
+            },
+            "id": 18,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 100,
+                        "name ingredient": "Levadura",
+                        "unit": "Hoja"
+                    },
+                    {
+                        "amount": 4,
+                        "name ingredient": "Orégano",
+                        "unit": "Piezas"
+                    },
+                    {
+                        "amount": 250,
+                        "name ingredient": "Salsa de Soja",
+                        "unit": "Mililitros"
+                    },
+                    {
+                        "amount": 0.25,
+                        "name ingredient": "Mayonesa",
+                        "unit": "Mililitros"
+                    },
+                    {
+                        "amount": 0.5,
+                        "name ingredient": "Chocolate",
+                        "unit": "Taza"
+                    },
+                    {
+                        "amount": 1.5,
+                        "name ingredient": "Huevo",
+                        "unit": "Taza"
+                    },
+                    {
+                        "amount": 2,
+                        "name ingredient": "Caldo de Res",
+                        "unit": "Cucharadita"
+                    },
+                    {
+                        "amount": 150,
+                        "name ingredient": "Pimentón Rojo",
+                        "unit": "Hoja"
+                    },
+                    {
+                        "amount": 300,
+                        "name ingredient": "Caldo de Pollo",
+                        "unit": "Cucharadita"
+                    },
+                    {
+                        "amount": 150,
+                        "name ingredient": "Garbanzos",
+                        "unit": "Gramos"
+                    }
+                ]
+            },
+            "preparation time": 108,
+            "procedure list": {
+                "data": [
+                    "Preparar el pollo hasta que esté al dente",
+                    "Hervir la pasta hasta que espese",
+                    "Reposar la mezcla con cuidado",
+                    "Cortar la salsa hasta que esté al dente"
+                ]
+            },
+            "recipe name": "Bistec Empanizado (receta 18)"
+        },
+        {
+            "author": {
+                "First": "José",
+                "Last": "Martínez"
+            },
+            "category": 4,
+            "creation date": {
+                "day": 6,
+                "month": 6,
+                "year": 2023
+            },
+            "id": 19,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 500,
+                        "name ingredient": "Salsa de Soja",
+                        "unit": "Paquete"
+                    },
+                    {
+                        "amount": 2,
+                        "name ingredient": "Pimentón Rojo",
+                        "unit": "Paquete"
+                    },
+                    {
+                        "amount": 200,
+                        "name ingredient": "Limón",
+                        "unit": "Hoja"
+                    },
+                    {
+                        "amount": 150,
+                        "name ingredient": "Sal",
+                        "unit": "Piezas"
+                    },
+                    {
+                        "amount": 400,
+                        "name ingredient": "Vainilla",
+                        "unit": "Cucharadita"
+                    },
+                    {
+                        "amount": 0.5,
+                        "name ingredient": "Orégano",
+                        "unit": "Piezas"
+                    },
+                    {
+                        "amount": 4,
+                        "name ingredient": "Mayonesa",
+                        "unit": "Taza"
+                    },
+                    {
+                        "amount": 300,
+                        "name ingredient": "Tomillo",
+                        "unit": "Gramos"
+                    },
+                    {
+                        "amount": 0.5,
+                        "name ingredient": "Chocolate",
+                        "unit": "Paquete"
+                    },
+                    {
+                        "amount": 250,
+                        "name ingredient": "Caldo de Res",
+                        "unit": "Paquete"
+                    }
+                ]
+            },
+            "preparation time": 33,
+            "procedure list": {
+                "data": [
+                    "Cortar el arroz y reservar",
+                    "Cocer la salsa hasta que esté al dente",
+                    "Batir la masa hasta que esté al dente",
+                    "Mezclar las verduras y servir caliente",
+                    "Reservar el pollo a 180°C por 25 minutos"
+                ]
+            },
+            "recipe name": "Pan de Ajo"
+        },
+        {
+            "author": {
+                "First": "Raúl",
+                "Last": "Castillo"
+            },
+            "category": 4,
+            "creation date": {
+                "day": 25,
+                "month": 11,
+                "year": 2025
+            },
+            "id": 20,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 50,
+                        "name ingredient": "Aguacate",
+                        "unit": "Piezas"
+                    },
+                    {
+                        "amount": 1,
+                        "name ingredient": "Vainilla",
+                        "unit": "Taza"
+                    },
+                    {
+                        "amount": 2,
+                        "name ingredient": "Lentejas",
+                        "unit": "Piezas"
+                    },
+                    {
+                        "amount": 0.5,
+                        "name ingredient": "Miel",
+                        "unit": "Taza"
+                    },
+                    {
+                        "amount": 0.25,
+                        "name ingredient": "Atún",
+                        "unit": "Cucharadita"
+                    },
+                    {
+                        "amount": 1,
+                        "name ingredient": "Garbanzos",
+                        "unit": "Taza"
+                    },
+                    {
+                        "amount": 150,
+                        "name ingredient": "Limón",
+                        "unit": "Trozo"
+                    },
+                    {
+                        "amount": 1,
+                        "name ingredient": "Albahaca",
+                        "unit": "Mililitros"
+                    },
+                    {
+                        "amount": 300,
+                        "name ingredient": "Cebolla",
+                        "unit": "Trozo"
+                    }
+                ]
+            },
+            "preparation time": 28,
+            "procedure list": {
+                "data": [
+                    "Preparar la salsa hasta integrar completamente",
+                    "Freír el arroz con cuidado",
+                    "Reservar la salsa y reservar",
+                    "Servir la carne hasta que esté al dente",
+                    "Picar el pollo hasta que esté al dente",
+                    "Reposar los ingredientes hasta que espese",
+                    "Marinar la carne hasta que estén dorados"
+                ]
+            },
+            "recipe name": "Enchiladas Verdes (receta 20)"
+        },
+        {
+            "author": {
+                "First": "José",
+                "Last": "Morales"
+            },
+            "category": 1,
+            "creation date": {
+                "day": 27,
+                "month": 2,
+                "year": 2024
+            },
+            "id": 21,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 0.5,
+                        "name ingredient": "Cacao",
+                        "unit": "Trozo"
+                    },
+                    {
+                        "amount": 0.25,
+                        "name ingredient": "Pasta",
+                        "unit": "Paquete"
+                    },
+                    {
+                        "amount": 2,
+                        "name ingredient": "Perejil",
+                        "unit": "Piezas"
+                    },
+                    {
+                        "amount": 3,
+                        "name ingredient": "Harina",
+                        "unit": "Taza"
+                    },
+                    {
+                        "amount": 50,
+                        "name ingredient": "Pollo",
+                        "unit": "Gramos"
+                    },
+                    {
+                        "amount": 100,
+                        "name ingredient": "Nata",
+                        "unit": "Cucharadita"
+                    }
+                ]
+            },
+            "preparation time": 24,
+            "procedure list": {
+                "data": [
+                    "Precalentar la carne hasta que estén dorados",
+                    "Hervir la carne con cuidado",
+                    "Hervir la pasta hasta integrar completamente",
+                    "Freír la masa hasta que estén dorados"
+                ]
+            },
+            "recipe name": "Ceviche de Pescado (receta 21)"
+        },
+        {
+            "author": {
+                "First": "Luis",
+                "Last": "Cuevas"
+            },
+            "category": 1,
+            "creation date": {
+                "day": 17,
+                "month": 6,
+                "year": 2024
+            },
+            "id": 22,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 4,
+                        "name ingredient": "Aguacate",
+                        "unit": "Dientes"
+                    },
+                    {
+                        "amount": 5,
+                        "name ingredient": "Tomillo",
+                        "unit": "Dientes"
+                    },
+                    {
+                        "amount": 200,
+                        "name ingredient": "Miel",
+                        "unit": "Gramos"
+                    },
+                    {
+                        "amount": 250,
+                        "name ingredient": "Albahaca",
+                        "unit": "Gramos"
+                    },
+                    {
+                        "amount": 0.25,
+                        "name ingredient": "Perejil",
+                        "unit": "Cucharadita"
+                    },
+                    {
+                        "amount": 1.5,
+                        "name ingredient": "Vainilla",
+                        "unit": "Cucharada"
+                    },
+                    {
+                        "amount": 100,
+                        "name ingredient": "Crema",
+                        "unit": "Gramos"
+                    },
+                    {
+                        "amount": 100,
+                        "name ingredient": "Sal",
+                        "unit": "Cucharadita"
+                    },
+                    {
+                        "amount": 50,
+                        "name ingredient": "Vinagre",
+                        "unit": "Cucharadita"
+                    },
+                    {
+                        "amount": 1.5,
+                        "name ingredient": "Lentejas",
+                        "unit": "Taza"
+                    }
+                ]
+            },
+            "preparation time": 75,
+            "procedure list": {
+                "data": [
+                    "Preparar la pasta con cuidado",
+                    "Sazonar las verduras y servir caliente",
+                    "Hervir la masa con cuidado",
+                    "Triturar la pasta a fuego medio",
+                    "Servir la pasta con cuidado"
+                ]
+            },
+            "recipe name": "Stroganoff de Res"
+        },
+        {
+            "author": {
+                "First": "Fernanda",
+                "Last": "Ortiz"
+            },
+            "category": 1,
+            "creation date": {
+                "day": 11,
+                "month": 3,
+                "year": 2024
+            },
+            "id": 23,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 100,
+                        "name ingredient": "Aceite",
+                        "unit": "Cucharadita"
+                    },
+                    {
+                        "amount": 500,
+                        "name ingredient": "Caldo de Res",
+                        "unit": "Cucharada"
+                    },
+                    {
+                        "amount": 0.25,
+                        "name ingredient": "Cilantro",
+                        "unit": "Paquete"
+                    },
+                    {
+                        "amount": 0.5,
+                        "name ingredient": "Espinaca",
+                        "unit": "Cucharadita"
+                    },
+                    {
+                        "amount": 4,
+                        "name ingredient": "Zanahoria",
+                        "unit": "Dientes"
+                    },
+                    {
+                        "amount": 0.5,
+                        "name ingredient": "Ajo",
+                        "unit": "Cucharada"
+                    }
+                ]
+            },
+            "preparation time": 104,
+            "procedure list": {
+                "data": [
+                    "Preparar los ingredientes con cuidado",
+                    "Tostar la salsa por 5 minutos",
+                    "Picar las verduras y reservar",
+                    "Hervir las verduras y reservar",
+                    "Saltear la mezcla con cuidado",
+                    "Batir la salsa a fuego medio"
+                ]
+            },
+            "recipe name": "Puré de Papa"
+        },
+        {
+            "author": {
+                "First": "Miguel",
+                "Last": "Ortiz"
+            },
+            "category": 3,
+            "creation date": {
+                "day": 18,
+                "month": 11,
+                "year": 2023
+            },
+            "id": 24,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 500,
+                        "name ingredient": "Tomate",
+                        "unit": "Gramos"
+                    },
+                    {
+                        "amount": 300,
+                        "name ingredient": "Azúcar",
+                        "unit": "Gramos"
+                    },
+                    {
+                        "amount": 200,
+                        "name ingredient": "Ajo",
+                        "unit": "Hoja"
+                    },
+                    {
+                        "amount": 3,
+                        "name ingredient": "Miel",
+                        "unit": "Cucharadita"
+                    },
+                    {
+                        "amount": 0.5,
+                        "name ingredient": "Perejil",
+                        "unit": "Mililitros"
+                    }
+                ]
+            },
+            "preparation time": 40,
+            "procedure list": {
+                "data": [
+                    "Lavar el arroz y servir caliente",
+                    "Reposar la mezcla y servir caliente",
+                    "Reservar los ingredientes a fuego medio",
+                    "Batir el arroz y reservar",
+                    "Cocer la salsa hasta integrar completamente",
+                    "Hervir el pollo con cuidado",
+                    "Cortar la salsa a 180°C por 25 minutos",
+                    "Reservar la pasta hasta que esté al dente"
+                ]
+            },
+            "recipe name": "Risotto de Champiñones (receta 24)"
+        },
+        {
+            "author": {
+                "First": "Valeria",
+                "Last": "Castillo"
+            },
+            "category": 2,
+            "creation date": {
+                "day": 21,
+                "month": 5,
+                "year": 2023
+            },
+            "id": 25,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 0.5,
+                        "name ingredient": "Ajo",
+                        "unit": "Mililitros"
+                    },
+                    {
+                        "amount": 200,
+                        "name ingredient": "Pan",
+                        "unit": "Paquete"
+                    },
+                    {
+                        "amount": 400,
+                        "name ingredient": "Salmón",
+                        "unit": "Trozo"
+                    },
+                    {
+                        "amount": 250,
+                        "name ingredient": "Queso",
+                        "unit": "Cucharada"
+                    },
+                    {
+                        "amount": 200,
+                        "name ingredient": "Papa",
+                        "unit": "Mililitros"
+                    },
+                    {
+                        "amount": 0.5,
+                        "name ingredient": "Cilantro",
+                        "unit": "Trozo"
+                    },
+                    {
+                        "amount": 2,
+                        "name ingredient": "Vinagre",
+                        "unit": "Dientes"
+                    },
+                    {
+                        "amount": 200,
+                        "name ingredient": "Leche",
+                        "unit": "Paquete"
+                    },
+                    {
+                        "amount": 1.5,
+                        "name ingredient": "Salsa de Soja",
+                        "unit": "Hoja"
+                    },
+                    {
+                        "amount": 250,
+                        "name ingredient": "Huevo",
+                        "unit": "Cucharada"
+                    }
+                ]
+            },
+            "preparation time": 16,
+            "procedure list": {
+                "data": [
+                    "Cortar la pasta por 5 minutos",
+                    "Freír la mezcla a fuego medio",
+                    "Reservar el arroz y reservar",
+                    "Picar el arroz hasta integrar completamente",
+                    "Hornear el arroz y servir caliente",
+                    "Cocer la mezcla hasta que estén dorados"
+                ]
+            },
+            "recipe name": "Tacos de Carne"
+        },
+        {
+            "author": {
+                "First": "Carlos",
+                "Last": "Ríos"
+            },
+            "category": 2,
+            "creation date": {
+                "day": 25,
+                "month": 7,
+                "year": 2023
+            },
+            "id": 26,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 1,
+                        "name ingredient": "Arroz",
+                        "unit": "Cucharada"
+                    },
+                    {
+                        "amount": 150,
+                        "name ingredient": "Espinaca",
+                        "unit": "Mililitros"
+                    },
+                    {
+                        "amount": 0.5,
+                        "name ingredient": "Vinagre",
+                        "unit": "Taza"
+                    },
+                    {
+                        "amount": 400,
+                        "name ingredient": "Cilantro",
+                        "unit": "Trozo"
+                    },
+                    {
+                        "amount": 50,
+                        "name ingredient": "Nuez",
+                        "unit": "Paquete"
+                    }
+                ]
+            },
+            "preparation time": 39,
+            "procedure list": {
+                "data": [
+                    "Preparar los ingredientes a fuego medio",
+                    "Cortar el aderezo con cuidado",
+                    "Reposar la pasta y servir caliente",
+                    "Saltear la masa y servir caliente",
+                    "Servir el pollo hasta integrar completamente"
+                ]
+            },
+            "recipe name": "Polenta Cremosa"
+        },
+        {
+            "author": {
+                "First": "Carmen",
+                "Last": "Ríos"
+            },
+            "category": 1,
+            "creation date": {
+                "day": 17,
+                "month": 4,
+                "year": 2023
+            },
+            "id": 27,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 50,
+                        "name ingredient": "Nuez",
+                        "unit": "Cucharada"
+                    },
+                    {
+                        "amount": 50,
+                        "name ingredient": "Tomate",
+                        "unit": "Piezas"
+                    },
+                    {
+                        "amount": 250,
+                        "name ingredient": "Papa",
+                        "unit": "Cucharadita"
+                    },
+                    {
+                        "amount": 2,
+                        "name ingredient": "Pimienta",
+                        "unit": "Mililitros"
+                    },
+                    {
+                        "amount": 100,
+                        "name ingredient": "Caldo de Res",
+                        "unit": "Piezas"
+                    },
+                    {
+                        "amount": 300,
+                        "name ingredient": "Vainilla",
+                        "unit": "Cucharadita"
+                    },
+                    {
+                        "amount": 3,
+                        "name ingredient": "Cilantro",
+                        "unit": "Dientes"
+                    },
+                    {
+                        "amount": 400,
+                        "name ingredient": "Lentejas",
+                        "unit": "Trozo"
+                    },
+                    {
+                        "amount": 50,
+                        "name ingredient": "Salmón",
+                        "unit": "Trozo"
+                    },
+                    {
+                        "amount": 500,
+                        "name ingredient": "Mostaza",
+                        "unit": "Cucharadita"
+                    }
+                ]
+            },
+            "preparation time": 14,
+            "procedure list": {
+                "data": [
+                    "Precalentar la salsa por 5 minutos",
+                    "Saltear la masa hasta que esté al dente",
+                    "Freír la pasta y servir caliente",
+                    "Triturar el pollo hasta que estén dorados",
+                    "Batir el pollo por 5 minutos",
+                    "Batir la carne y servir caliente",
+                    "Mezclar el arroz hasta que estén dorados",
+                    "Batir la mezcla a fuego medio"
+                ]
+            },
+            "recipe name": "Pasta con Salsa Roja"
+        },
+        {
+            "author": {
+                "First": "Diego",
+                "Last": "García"
+            },
+            "category": 4,
+            "creation date": {
+                "day": 28,
+                "month": 11,
+                "year": 2025
+            },
+            "id": 28,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 2,
+                        "name ingredient": "Leche",
+                        "unit": "Taza"
+                    },
+                    {
+                        "amount": 2,
+                        "name ingredient": "Orégano",
+                        "unit": "Taza"
+                    },
+                    {
+                        "amount": 250,
+                        "name ingredient": "Tomate",
+                        "unit": "Gramos"
+                    },
+                    {
+                        "amount": 200,
+                        "name ingredient": "Pimentón Rojo",
+                        "unit": "Gramos"
+                    },
+                    {
+                        "amount": 500,
+                        "name ingredient": "Tomillo",
+                        "unit": "Hoja"
+                    },
+                    {
+                        "amount": 200,
+                        "name ingredient": "Salmón",
+                        "unit": "Mililitros"
+                    },
+                    {
+                        "amount": 0.25,
+                        "name ingredient": "Aceite",
+                        "unit": "Hoja"
+                    },
+                    {
+                        "amount": 1.5,
+                        "name ingredient": "Perejil",
+                        "unit": "Taza"
+                    },
+                    {
+                        "amount": 2,
+                        "name ingredient": "Harina",
+                        "unit": "Dientes"
+                    }
+                ]
+            },
+            "preparation time": 40,
+            "procedure list": {
+                "data": [
+                    "Preparar la pasta y servir caliente",
+                    "Picar las verduras hasta que esté al dente",
+                    "Servir los ingredientes hasta que esté al dente"
+                ]
+            },
+            "recipe name": "Bistec Empanizado (receta 28)"
+        },
+        {
+            "author": {
+                "First": "Luis",
+                "Last": "Fernández"
+            },
+            "category": 1,
+            "creation date": {
+                "day": 16,
+                "month": 10,
+                "year": 2025
+            },
+            "id": 29,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 1.5,
+                        "name ingredient": "Albahaca",
+                        "unit": "Piezas"
+                    },
+                    {
+                        "amount": 500,
+                        "name ingredient": "Caldo de Res",
+                        "unit": "Gramos"
+                    },
+                    {
+                        "amount": 200,
+                        "name ingredient": "Huevo",
+                        "unit": "Gramos"
+                    },
+                    {
+                        "amount": 0.5,
+                        "name ingredient": "Champiñones",
+                        "unit": "Cucharadita"
+                    },
+                    {
+                        "amount": 50,
+                        "name ingredient": "Pimienta",
+                        "unit": "Hoja"
+                    },
+                    {
+                        "amount": 3,
+                        "name ingredient": "Caldo de Pollo",
+                        "unit": "Paquete"
+                    }
+                ]
+            },
+            "preparation time": 87,
+            "procedure list": {
+                "data": [
+                    "Cortar la carne a fuego medio",
+                    "Picar los ingredientes y servir caliente",
+                    "Hornear la pasta hasta que esté al dente",
+                    "Reservar las verduras con cuidado",
+                    "Saltear el pollo hasta integrar completamente",
+                    "Triturar las verduras hasta que esté al dente",
+                    "Marinar la carne hasta integrar completamente",
+                    "Triturar los ingredientes por 5 minutos"
+                ]
+            },
+            "recipe name": "Pasta al Ajillo (receta 29)"
+        },
+        {
+            "author": {
+                "First": "Lucía",
+                "Last": "Morales"
+            },
+            "category": 1,
+            "creation date": {
+                "day": 17,
+                "month": 2,
+                "year": 2025
+            },
+            "id": 30,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 5,
+                        "name ingredient": "Pasta",
+                        "unit": "Dientes"
+                    },
+                    {
+                        "amount": 150,
+                        "name ingredient": "Aguacate",
+                        "unit": "Hoja"
+                    },
+                    {
+                        "amount": 4,
+                        "name ingredient": "Cacao",
+                        "unit": "Taza"
+                    },
+                    {
+                        "amount": 0.5,
+                        "name ingredient": "Salsa de Soja",
+                        "unit": "Hoja"
+                    },
+                    {
+                        "amount": 50,
+                        "name ingredient": "Pimienta",
+                        "unit": "Paquete"
+                    },
+                    {
+                        "amount": 300,
+                        "name ingredient": "Arroz",
+                        "unit": "Cucharada"
+                    },
+                    {
+                        "amount": 4,
+                        "name ingredient": "Vinagre",
+                        "unit": "Cucharadita"
+                    },
+                    {
+                        "amount": 5,
+                        "name ingredient": "Salmón",
+                        "unit": "Dientes"
+                    }
+                ]
+            },
+            "preparation time": 32,
+            "procedure list": {
+                "data": [
+                    "Precalentar el arroz por 5 minutos",
+                    "Hornear las verduras hasta que espese",
+                    "Triturar los ingredientes por 5 minutos"
+                ]
+            },
+            "recipe name": "Mole Poblano"
+        },
+        {
+            "author": {
+                "First": "Alejandro",
+                "Last": "Torres"
+            },
+            "category": 4,
+            "creation date": {
+                "day": 27,
+                "month": 9,
+                "year": 2023
+            },
+            "id": 31,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 3,
+                        "name ingredient": "Caldo de Res",
+                        "unit": "Taza"
+                    },
+                    {
+                        "amount": 2,
+                        "name ingredient": "Harina",
+                        "unit": "Hoja"
+                    },
+                    {
+                        "amount": 150,
+                        "name ingredient": "Tomate",
+                        "unit": "Cucharadita"
+                    },
+                    {
+                        "amount": 150,
+                        "name ingredient": "Papa",
+                        "unit": "Gramos"
+                    },
+                    {
+                        "amount": 250,
+                        "name ingredient": "Mostaza",
+                        "unit": "Trozo"
+                    }
+                ]
+            },
+            "preparation time": 78,
+            "procedure list": {
+                "data": [
+                    "Precalentar las verduras y servir caliente",
+                    "Batir la pasta y reservar",
+                    "Tostar el pollo hasta que esté al dente"
+                ]
+            },
+            "recipe name": "Lasaña de Carne (receta 31)"
+        },
+        {
+            "author": {
+                "First": "Héctor",
+                "Last": "Sánchez"
+            },
+            "category": 4,
+            "creation date": {
+                "day": 11,
+                "month": 12,
+                "year": 2024
+            },
+            "id": 32,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 250,
+                        "name ingredient": "Crema",
+                        "unit": "Gramos"
+                    },
+                    {
+                        "amount": 3,
+                        "name ingredient": "Salsa de Soja",
+                        "unit": "Dientes"
+                    },
+                    {
+                        "amount": 150,
+                        "name ingredient": "Arroz",
+                        "unit": "Cucharadita"
+                    },
+                    {
+                        "amount": 250,
+                        "name ingredient": "Almendra",
+                        "unit": "Paquete"
+                    },
+                    {
+                        "amount": 200,
+                        "name ingredient": "Salsa BBQ",
+                        "unit": "Cucharada"
+                    },
+                    {
+                        "amount": 150,
+                        "name ingredient": "Mayonesa",
+                        "unit": "Gramos"
+                    },
+                    {
+                        "amount": 0.5,
+                        "name ingredient": "Huevo",
+                        "unit": "Piezas"
+                    },
+                    {
+                        "amount": 200,
+                        "name ingredient": "Salmón",
+                        "unit": "Piezas"
+                    },
+                    {
+                        "amount": 0.25,
+                        "name ingredient": "Chile",
+                        "unit": "Piezas"
+                    }
+                ]
+            },
+            "preparation time": 90,
+            "procedure list": {
+                "data": [
+                    "Cortar las verduras a 180°C por 25 minutos",
+                    "Marinar la mezcla hasta que esté al dente",
+                    "Reposar el aderezo por 5 minutos",
+                    "Mezclar el arroz hasta que estén dorados",
+                    "Reposar la pasta y servir caliente",
+                    "Triturar el pollo por 5 minutos",
+                    "Triturar los ingredientes hasta integrar completamente"
+                ]
+            },
+            "recipe name": "Ratatouille"
+        },
+        {
+            "author": {
+                "First": "Marta",
+                "Last": "Castillo"
+            },
+            "category": 2,
+            "creation date": {
+                "day": 17,
+                "month": 3,
+                "year": 2023
+            },
+            "id": 33,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 100,
+                        "name ingredient": "Pollo",
+                        "unit": "Cucharadita"
+                    },
+                    {
+                        "amount": 0.25,
+                        "name ingredient": "Pimienta",
+                        "unit": "Taza"
+                    },
+                    {
+                        "amount": 3,
+                        "name ingredient": "Ajo",
+                        "unit": "Piezas"
+                    },
+                    {
+                        "amount": 400,
+                        "name ingredient": "Crema",
+                        "unit": "Paquete"
+                    },
+                    {
+                        "amount": 200,
+                        "name ingredient": "Cacao",
+                        "unit": "Cucharadita"
+                    },
+                    {
+                        "amount": 200,
+                        "name ingredient": "Aceite",
+                        "unit": "Piezas"
+                    },
+                    {
+                        "amount": 0.5,
+                        "name ingredient": "Salsa BBQ",
+                        "unit": "Taza"
+                    }
+                ]
+            },
+            "preparation time": 120,
+            "procedure list": {
+                "data": [
+                    "Precalentar la pasta con cuidado",
+                    "Servir los ingredientes con cuidado",
+                    "Saltear la carne hasta integrar completamente",
+                    "Batir el arroz hasta que espese"
+                ]
+            },
+            "recipe name": "Fajitas Mixtas"
+        },
+        {
+            "author": {
+                "First": "Miguel",
+                "Last": "Martínez"
+            },
+            "category": 3,
+            "creation date": {
+                "day": 26,
+                "month": 7,
+                "year": 2023
+            },
+            "id": 34,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 1,
+                        "name ingredient": "Harina",
+                        "unit": "Trozo"
+                    },
+                    {
+                        "amount": 3,
+                        "name ingredient": "Espinaca",
+                        "unit": "Trozo"
+                    },
+                    {
+                        "amount": 4,
+                        "name ingredient": "Tofu",
+                        "unit": "Trozo"
+                    },
+                    {
+                        "amount": 300,
+                        "name ingredient": "Carne de Res",
+                        "unit": "Cucharada"
+                    },
+                    {
+                        "amount": 400,
+                        "name ingredient": "Salsa BBQ",
+                        "unit": "Cucharada"
+                    },
+                    {
+                        "amount": 150,
+                        "name ingredient": "Azúcar",
+                        "unit": "Hoja"
+                    },
+                    {
+                        "amount": 200,
+                        "name ingredient": "Papa",
+                        "unit": "Gramos"
+                    },
+                    {
+                        "amount": 50,
+                        "name ingredient": "Tomate",
+                        "unit": "Hoja"
+                    },
+                    {
+                        "amount": 100,
+                        "name ingredient": "Mostaza",
+                        "unit": "Mililitros"
+                    },
+                    {
+                        "amount": 200,
+                        "name ingredient": "Mantequilla",
+                        "unit": "Trozo"
+                    }
+                ]
+            },
+            "preparation time": 64,
+            "procedure list": {
+                "data": [
+                    "Precalentar el aderezo hasta que estén dorados",
+                    "Mezclar la pasta con cuidado",
+                    "Sazonar la salsa a 180°C por 25 minutos",
+                    "Picar la mezcla a 180°C por 25 minutos",
+                    "Hervir la salsa a fuego medio",
+                    "Hornear la masa a fuego medio",
+                    "Tostar la masa por 5 minutos",
+                    "Reposar el pollo por 5 minutos"
+                ]
+            },
+            "recipe name": "Ensalada César"
+        },
+        {
+            "author": {
+                "First": "María",
+                "Last": "Pérez"
+            },
+            "category": 2,
+            "creation date": {
+                "day": 24,
+                "month": 8,
+                "year": 2024
+            },
+            "id": 35,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 250,
+                        "name ingredient": "Sal",
+                        "unit": "Cucharada"
+                    },
+                    {
+                        "amount": 2,
+                        "name ingredient": "Mostaza",
+                        "unit": "Dientes"
+                    },
+                    {
+                        "amount": 250,
+                        "name ingredient": "Vainilla",
+                        "unit": "Paquete"
+                    },
+                    {
+                        "amount": 0.5,
+                        "name ingredient": "Lentejas",
+                        "unit": "Taza"
+                    },
+                    {
+                        "amount": 1,
+                        "name ingredient": "Pan",
+                        "unit": "Dientes"
+                    },
+                    {
+                        "amount": 100,
+                        "name ingredient": "Levadura",
+                        "unit": "Trozo"
+                    },
+                    {
+                        "amount": 200,
+                        "name ingredient": "Nuez",
+                        "unit": "Trozo"
+                    },
+                    {
+                        "amount": 300,
+                        "name ingredient": "Aceite",
+                        "unit": "Gramos"
+                    },
+                    {
+                        "amount": 50,
+                        "name ingredient": "Chile",
+                        "unit": "Gramos"
+                    }
+                ]
+            },
+            "preparation time": 74,
+            "procedure list": {
+                "data": [
+                    "Preparar el aderezo hasta que estén dorados",
+                    "Sazonar la carne a 180°C por 25 minutos",
+                    "Hornear los ingredientes por 5 minutos",
+                    "Cortar la masa y reservar"
+                ]
+            },
+            "recipe name": "Omelette de Queso (receta 35)"
+        },
+        {
+            "author": {
+                "First": "Ricardo",
+                "Last": "Fernández"
+            },
+            "category": 3,
+            "creation date": {
+                "day": 19,
+                "month": 6,
+                "year": 2024
+            },
+            "id": 36,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 1.5,
+                        "name ingredient": "Tomate",
+                        "unit": "Paquete"
+                    },
+                    {
+                        "amount": 2,
+                        "name ingredient": "Ajo",
+                        "unit": "Hoja"
+                    },
+                    {
+                        "amount": 1.5,
+                        "name ingredient": "Cebolla",
+                        "unit": "Piezas"
+                    },
+                    {
+                        "amount": 4,
+                        "name ingredient": "Aguacate",
+                        "unit": "Hoja"
+                    },
+                    {
+                        "amount": 2,
+                        "name ingredient": "Mantequilla",
+                        "unit": "Piezas"
+                    }
+                ]
+            },
+            "preparation time": 52,
+            "procedure list": {
+                "data": [
+                    "Lavar la masa por 5 minutos",
+                    "Hervir la mezcla hasta que estén dorados",
+                    "Mezclar la masa a 180°C por 25 minutos"
+                ]
+            },
+            "recipe name": "Brownies de Chocolate"
+        },
+        {
+            "author": {
+                "First": "Miguel",
+                "Last": "Morales"
+            },
+            "category": 4,
+            "creation date": {
+                "day": 18,
+                "month": 12,
+                "year": 2025
+            },
+            "id": 37,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 0.25,
+                        "name ingredient": "Chile",
+                        "unit": "Mililitros"
+                    },
+                    {
+                        "amount": 400,
+                        "name ingredient": "Queso",
+                        "unit": "Cucharada"
+                    },
+                    {
+                        "amount": 1,
+                        "name ingredient": "Albahaca",
+                        "unit": "Mililitros"
+                    },
+                    {
+                        "amount": 500,
+                        "name ingredient": "Tomate",
+                        "unit": "Cucharada"
+                    },
+                    {
+                        "amount": 2,
+                        "name ingredient": "Aguacate",
+                        "unit": "Cucharada"
+                    },
+                    {
+                        "amount": 3,
+                        "name ingredient": "Pasta",
+                        "unit": "Cucharadita"
+                    }
+                ]
+            },
+            "preparation time": 96,
+            "procedure list": {
+                "data": [
+                    "Preparar el aderezo a 180°C por 25 minutos",
+                    "Cocer la masa hasta que esté al dente",
+                    "Cortar la masa por 5 minutos",
+                    "Mezclar la pasta por 5 minutos",
+                    "Mezclar el arroz con cuidado",
+                    "Sazonar el aderezo hasta que estén dorados",
+                    "Marinar el arroz hasta integrar completamente",
+                    "Sazonar la pasta por 5 minutos"
+                ]
+            },
+            "recipe name": "Pancakes"
+        },
+        {
+            "author": {
+                "First": "Pedro",
+                "Last": "Vargas"
+            },
+            "category": 1,
+            "creation date": {
+                "day": 5,
+                "month": 2,
+                "year": 2024
+            },
+            "id": 38,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 50,
+                        "name ingredient": "Pimienta",
+                        "unit": "Mililitros"
+                    },
+                    {
+                        "amount": 150,
+                        "name ingredient": "Aguacate",
+                        "unit": "Hoja"
+                    },
+                    {
+                        "amount": 300,
+                        "name ingredient": "Garbanzos",
+                        "unit": "Mililitros"
+                    },
+                    {
+                        "amount": 0.5,
+                        "name ingredient": "Espinaca",
+                        "unit": "Trozo"
+                    },
+                    {
+                        "amount": 300,
+                        "name ingredient": "Leche",
+                        "unit": "Paquete"
+                    },
+                    {
+                        "amount": 0.5,
+                        "name ingredient": "Cilantro",
+                        "unit": "Paquete"
+                    },
+                    {
+                        "amount": 150,
+                        "name ingredient": "Pan",
+                        "unit": "Gramos"
+                    },
+                    {
+                        "amount": 500,
+                        "name ingredient": "Aceite",
+                        "unit": "Hoja"
+                    }
+                ]
+            },
+            "preparation time": 51,
+            "procedure list": {
+                "data": [
+                    "Preparar la carne hasta que espese",
+                    "Reservar la salsa a fuego medio",
+                    "Servir la carne con cuidado",
+                    "Mezclar la pasta y reservar",
+                    "Servir las verduras y reservar",
+                    "Freír el arroz hasta que esté al dente"
+                ]
+            },
+            "recipe name": "Tacos de Carne (receta 38)"
+        },
+        {
+            "author": {
+                "First": "Raúl",
+                "Last": "Salazar"
+            },
+            "category": 1,
+            "creation date": {
+                "day": 21,
+                "month": 3,
+                "year": 2023
+            },
+            "id": 39,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 300,
+                        "name ingredient": "Arroz",
+                        "unit": "Cucharadita"
+                    },
+                    {
+                        "amount": 300,
+                        "name ingredient": "Aguacate",
+                        "unit": "Piezas"
+                    },
+                    {
+                        "amount": 0.5,
+                        "name ingredient": "Pan",
+                        "unit": "Trozo"
+                    },
+                    {
+                        "amount": 400,
+                        "name ingredient": "Sal",
+                        "unit": "Hoja"
+                    },
+                    {
+                        "amount": 0.5,
+                        "name ingredient": "Queso",
+                        "unit": "Taza"
+                    },
+                    {
+                        "amount": 1,
+                        "name ingredient": "Pimienta",
+                        "unit": "Trozo"
+                    },
+                    {
+                        "amount": 400,
+                        "name ingredient": "Garbanzos",
+                        "unit": "Hoja"
+                    },
+                    {
+                        "amount": 50,
+                        "name ingredient": "Pasta",
+                        "unit": "Mililitros"
+                    },
+                    {
+                        "amount": 200,
+                        "name ingredient": "Chile",
+                        "unit": "Mililitros"
+                    }
+                ]
+            },
+            "preparation time": 17,
+            "procedure list": {
+                "data": [
+                    "Cortar la pasta hasta que espese",
+                    "Picar el aderezo con cuidado",
+                    "Freír la salsa hasta integrar completamente",
+                    "Cortar la salsa y servir caliente",
+                    "Servir los ingredientes hasta integrar completamente",
+                    "Marinar las verduras por 5 minutos"
+                ]
+            },
+            "recipe name": "Ceviche de Pescado (receta 39)"
+        },
+        {
+            "author": {
+                "First": "José",
+                "Last": "Cuevas"
+            },
+            "category": 4,
+            "creation date": {
+                "day": 17,
+                "month": 12,
+                "year": 2025
+            },
+            "id": 40,
+            "ingredient list": {
+                "data": [
+                    {
+                        "amount": 0.5,
+                        "name ingredient": "Atún",
+                        "unit": "Cucharadita"
+                    },
+                    {
+                        "amount": 250,
+                        "name ingredient": "Lentejas",
+                        "unit": "Hoja"
+                    },
+                    {
+                        "amount": 50,
+                        "name ingredient": "Espinaca",
+                        "unit": "Gramos"
+                    },
+                    {
+                        "amount": 250,
+                        "name ingredient": "Cacao",
+                        "unit": "Mililitros"
+                    },
+                    {
+                        "amount": 300,
+                        "name ingredient": "Tomate",
+                        "unit": "Paquete"
+                    },
+                    {
+                        "amount": 50,
+                        "name ingredient": "Vinagre",
+                        "unit": "Trozo"
+                    },
+                    {
+                        "amount": 1.5,
+                        "name ingredient": "Limón",
+                        "unit": "Piezas"
+                    },
+                    {
+                        "amount": 500,
+                        "name ingredient": "Crema",
+                        "unit": "Hoja"
+                    }
+                ]
+            },
+            "preparation time": 51,
+            "procedure list": {
+                "data": [
+                    "Precalentar los ingredientes y reservar",
+                    "Freír el arroz y servir caliente",
+                    "Cocer la pasta y servir caliente",
+                    "Batir el arroz hasta que esté al dente",
+                    "Hervir los ingredientes y servir caliente",
+                    "Hornear la pasta a fuego medio",
+                    "Reposar las verduras hasta que esté al dente",
+                    "Hervir la mezcla hasta integrar completamente"
+                ]
+            },
+            "recipe name": "Hamburguesa Clásica (receta 40)"
+        }
+    ]
+}

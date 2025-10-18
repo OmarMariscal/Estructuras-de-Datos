@@ -41,7 +41,7 @@ class Recipe{
         List<Ingredient, Configure::maximunIngredientSize>& getIngredientList();
         Date getCreationDate() const;
 
-        std::string toString() const;
+        std::string toString(const std::string& = "full") const;
 
         //Setter's
         void setId(const int&);
@@ -82,10 +82,7 @@ class Recipe{
         
         nlohmann::json toJson() const;
         void fromJson(const nlohmann::json&);
-    
-        friend std::ostream& operator << (std::ostream&, const Recipe&);
-        friend std::istream& operator >> (std::istream&, Recipe&);
-
+        
         Recipe& operator = (const Recipe&);
 };
 

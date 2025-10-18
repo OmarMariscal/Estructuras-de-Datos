@@ -84,11 +84,3 @@ void Name::fromJson(const nlohmann::json& js){
   this->last = js.at("Last").get<std::string>();
   this->first = js.at("First").get<std::string>();
 }
-
-std::ostream& operator<<(std::ostream& os, const Name& name) {
-  //PENDIENTE: REALIZAR EN FORMATO .JSON
-}
-
-std::istream& operator>>(std::istream& is, Name& name) {
-    //PENDIENTE: REALIZAR EN FORMATO .JSON
-}

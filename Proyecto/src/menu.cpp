@@ -283,7 +283,7 @@ void Menu::addRecipe() {
         
         oss << this->windowHeader("🌮 RECETARIO DIGITAL - AÑADIR RECETA");
         oss << this->centerText("Vamos a Agregar Una Nueva Receta");
-        oss << this->centerText("Ingrese '/r' en Cualquier Momento para Cancelar");
+        oss << this->centerText("Ingrese " + this->insertColorText("'/r'", "red") + " en Cualquier Momento para Cancelar");
         oss << this->divider("-");
 
         try{
@@ -698,6 +698,7 @@ void Menu::saveToDisk() {
             oss << dataString + ".json" << endl;
             oss << this->centerText(this->insertColorText(" ✅ ¡Datos Guardados Con Éxito!", "green"));
             dataFile.close();
+            this->modify = false;
         }
         else
             oss << this->centerText(this->insertColorText(" ❌ Ha Ocurrido Un Error Al Crear el Archivo.", "red"));
@@ -726,6 +727,7 @@ void Menu::readFromDisk() {
     
     try{
         dataString = this->readLinePrompt(oss.str());
+        oss << dataString << endl;
         ifstream dataFile(dataString + ".json");
 
         if(dataFile.is_open()){
@@ -747,6 +749,9 @@ void Menu::readFromDisk() {
                 this->sortedBy = "category";
             else if(this->recipeBook.isSorted(Recipe::compareByCreationDate))
                 this->sortedBy = "creationDate";
+        }
+        else{
+            oss << this->centerText(this->insertColorText("No se encontró o no se pudo abrir el archivo.", "red")) << endl;
         }
 
 

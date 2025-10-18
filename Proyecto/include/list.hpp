@@ -47,8 +47,12 @@ class List {
   int getPrevPosition(const int&) const;
   int getNextPosition(const int&) const;
 
+  //toString Completo
   std::string toString(const bool& = false) const;
+  //toString por categoría
   std::string toString(const T&, int(const T&, const T&)) const;
+  //toString para diferenres impresioens:
+  std::string toString(std::string (T::*formatFunc)(const std::string&) const, const std::string& arg);
 
   void deleteAll();
 
@@ -261,6 +265,15 @@ std::string List<T, ARRAYSIZE>::toString(const T& search,
   }
 
   return oss.str();
+}
+
+template <typename T, int ARRAYSIZE>
+std::string List<T, ARRAYSIZE>::toString(std::string (T::*formatFunc)(const std::string&) const, const std::string& arg) {
+    std::ostringstream oss;
+    for (int i = 0; i < this->last; i++) {
+        oss << (this->data[i]->*formatFunc)(arg) << "\n";
+    }
+    return oss.str();
 }
 
 template <class T, int ARRAYSIZE>

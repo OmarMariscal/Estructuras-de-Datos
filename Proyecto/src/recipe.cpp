@@ -38,14 +38,23 @@ Date Recipe::getCreationDate() const{
     return this->creationDate;
 }
 
-std::string Recipe::toString() const{
+std::string Recipe::toString(const std::string& format) const{
     std::ostringstream oss;
     
+    if(format == "full"){
     oss << "\033[36mID de la Receta: \033[37m   " << this->id << std::endl;
     oss << "\033[36mFecha de Creación \033[37m: " << this->creationDate.toString() << std::endl;
     oss << "\033[36mNombre de la Receta \033[37m:   " << this->recipeName << std::endl;
     oss << "\033[36mAutor \033[37m:   " << this->author.toString() << std::endl;
-    oss << "\033[36mCategoría \033[37m:   " << this->category << std::endl;
+    oss << "\033[36mCategoría \033[37m:   "; 
+    switch(this->category){
+        case DESAYUNO: oss << "Desayuno"; break;
+        case COMIDA : oss << "Comida"; break;
+        case CENA : oss << "Cena"; break;
+        case NAVIDEÑO : oss << "Navideño"; break;
+    }
+    oss << std::endl;
+
     oss << "\033[36mTiempo \033[37m:    " << this->preparationTime << " minutos." << std::endl;
     oss << std::setfill('-');
     oss << std::setw(53) << "" << std::endl;
@@ -57,6 +66,25 @@ std::string Recipe::toString() const{
     oss << std::setfill(' ');
     oss << "🧾 \033[35mProcedimiento \033[37m: " << std::endl;
     oss << this->procedureList.toString(true);
+    }
+    else if(format == "table") {
+        // Truncar strings largos para que quepan en columnas
+        std::string truncName = recipeName.length() > 22 ? 
+                               recipeName.substr(0, 19) + "..." : recipeName;
+        
+        std::string truncAuthor = author.toString().length() > 18 ? 
+                                 author.toString().substr(0, 15) + "..." : 
+                                 author.toString();
+        
+        // Formato compacto con columnas alineadas
+        oss << std::left
+            << std::setw(5) << id << " | "
+            << std::setw(22) << truncName << " | "
+            << std::setw(12) << category << " | "
+            << std::setw(18) << truncAuthor << " | "
+            << std::right << std::setw(4) << preparationTime << " min | "
+            << std::left << std::setw(6) << ingredientList.getLastPosition() + 1 << " ing.";
+    }
 
     return oss.str();
 }
@@ -221,13 +249,4 @@ Recipe& Recipe::operator = (const Recipe& other){
     this->creationDate = other.creationDate;
 
     return *this;
-}
-
-std::istream& operator >> (std::istream& is, Recipe& r){
-    
-}
-
-std::ostream& operator << (std::ostream& os, const Recipe& r){
-    os << r.toString();
-    return os;
 }

@@ -110,11 +110,3 @@ Ingredient& Ingredient::operator = (const Ingredient& other){
 
     return *this;
 }
-
-std::istream& operator >> (std::istream&, Ingredient&){
-    //PENDIENTE: CONVERTIR A .JSON   
-}
-
-std::ostream& operator << (std::ostream&, const Ingredient&){
-    //PENDIENTE: CONVERTIR A .JSON
-}

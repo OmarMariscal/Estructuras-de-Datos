@@ -50,10 +50,7 @@ class Ingredient{
 
         nlohmann::json toJson() const;
         void fromJson(const nlohmann::json&);
-
-        friend std::ostream& operator << (std::ostream&, const Ingredient&);
-        friend std::istream& operator >> (std::istream&, Ingredient&);
-
+        
         Ingredient& operator = (const Ingredient&);
          
 };

@@ -44,10 +44,5 @@ class Name {
 
   nlohmann::json toJson() const;
   void fromJson(const nlohmann::json&);
-
-  friend std::ostream& operator<<(std::ostream&, const Name&);
-  friend std::istream& operator>>(std::istream&, Name&);
-
-
 };
 #endif  // __NAME_H__

@@ -129,12 +129,3 @@ void Date::fromJson(const nlohmann::json& js){
     this->day = js.at("day").get<int>();
 }
 
-
-std::ostream& operator << (std::ostream& os, const Date& date){
-    //PENDIENTE: REALIZAR EN FORMATO .JSON    
-}
-
-std::istream& operator >> (std::istream& is, Date& date){
-    //PENDIENTE: REALIZAR EN FORMATO .JSON
-}
-
