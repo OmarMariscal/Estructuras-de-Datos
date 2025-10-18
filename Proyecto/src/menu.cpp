@@ -2,626 +2,6 @@
 
 using namespace std;
 
-int Menu::readInteger(std::string oss, const int& lowerLimit, const int& upperLimit) {
-
-  string aux("");
-  int result;
-  while (true) {
-    try {
-      system("CLS");
-      cout << oss;
-      getline(cin, aux);
-
-      if (aux == "/r")
-        throw InputExceptions::OperationCanceledException("Cancelado por usuario");
-
-      result = stoi(aux);
-
-      if (result > upperLimit || result < lowerLimit)
-        throw InputExceptions::InvalidOption("Numero Fuera de Rango");
-      break;
-    } catch (const InputExceptions::InvalidOption& ex) {
-        this->errorMessage("Numero Fuera de Rango\nVuelva a Intentarlo");
-    } catch (const invalid_argument& msg) {
-        this->errorMessage("Entrada No Numérica\nAsegúrese de Ingresar Un Número Válido");
-    }
-  }
-
-  return result;
-}
-
-float Menu::readFloat(const std::string& oss, const float& lowerLimit, const float& upperLimit) {
-  std::string aux("");
-  float result;
-  while (true) {
-    try {
-      system("CLS");
-      std::cout << oss;
-      std::getline(std::cin, aux);
-
-      if (aux == "/r")
-        throw InputExceptions::InvalidOption("Cancelado por usuario");
-
-      result = std::stof(aux);
-
-      if (result > upperLimit || result < lowerLimit)
-        throw InputExceptions::InvalidOption("Numero Fuera de Rango");
-      break;
-    } catch (const std::invalid_argument& ex) {
-        this->errorMessage("Entrada Inválida\nInténtelo Nuevamente");
-    } catch (const std::out_of_range& ex) {
-      this->errorMessage("Entrada Fuera de Rango\nInténtelo Nuevamente");
-    } catch (const InputExceptions::InvalidOption& msg) {
-      system("CLS");
-      std::cout << msg.what() << std::endl;
-    }
-  }
-
-  return result;
-}
-
-Name Menu::readName(string prompt, const string& petition, const string& petition2) {
-  Name result;
-  prompt += petition;
-  result.setFirst(readLinePrompt(prompt));
-  prompt += result.getFirst() + "\n";
-  prompt += petition2;
-  result.setLast(readLinePrompt(prompt));
-
-  return result;
-}
-
-string Menu::readLinePrompt(const string& prompt, bool allowEmpty) {
-  string result;
-  while (true) {
-    system("CLS");
-    cout << prompt;
-    getline(cin, result);
-    if(result == "/r")
-        throw InputExceptions::OperationCanceledException();
-    if (!allowEmpty && result.empty()) {
-      system("CLS");
-      this->errorMessage("No Puede Estar Vacío\nIntente Nuevamente.");
-      continue;
-    }
-    return result;
-  }
-}
-
-char Menu::readChar(const std::string& prompt, const std::string& options) {
-    while (true) {
-        this->cleanScreen();
-        string input;
-        cout << prompt;
-        getline(cin, input);
-
-        if (!input.empty()) {
-            char result = toupper(input[0]);
-            if (options.find(result) != string::npos)
-                return result;
-        }
-
-        this->cleanScreen();
-        this->errorMessage("La opcion ingresada es invalida.\nIntentelo nuevamente.");
-        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    }
-}
-
-Category Menu::readCategory(const std::string& prompt){
-    Category result;
-    int op;
-    op = this->readInteger(prompt, 1, 4);
-    switch(op){
-        case 1: result = DESAYUNO; break;
-        case 2: result = COMIDA; break;
-        case 3: result = CENA; break;
-        case 4: result = NAVIDEÑO; break;
-    }
-
-    return result;
-}
-
-std::string Menu::standarString(std::string text){
-    // Eliminar espacios al final
-    size_t end = text.size();
-    while (end > 0 && (text[end - 1] == ' ' || text[end - 1] == '\t')) {
-        --end;
-    }
-    text.resize(end);
-
-    // 2. Convertir a mayúsculas (solo letras ASCII)
-    for (size_t i = 0; i < text.size(); ++i) {
-        if (text[i] >= 'a' && text[i] <= 'z') {
-            text[i] = text[i] - ('a' - 'A');
-        }
-    }
-
-    return text;
-}
-
-std::string Menu::clearColor(const std::string& s){
-    std::string out;
-    out.reserve(s.size());
-    for (size_t i = 0; i < s.size(); ++i) {
-        unsigned char c = static_cast<unsigned char>(s[i]);
-        if (c == 0x1B) { // ESC
-            // si sigue '[', consumimos hasta una letra (final de secuencia CSI)
-            if (i + 1 < s.size() && s[i + 1] == '[') {
-                i += 2; // saltamos ESC and '['
-                // consumir hasta encontrar una letra A-Z o a-z
-                while (i < s.size()) {
-                    unsigned char cc = static_cast<unsigned char>(s[i]);
-                    if ((cc >= 'A' && cc <= 'Z') || (cc >= 'a' && cc <= 'z')) break;
-                    ++i;
-                }
-                // al salir, i apunta a la letra final; el bucle for incrementará i,
-                // por eso dejamos que continúe normalmente (se descarta la letra final también)
-                continue;
-            } else {
-                // ESC sin '[', saltar el ESC solo
-                continue;
-            }
-        }
-        out.push_back(c);
-    }
-    return out;
-
-}
-
-void Menu::menuIngredints(List<Ingredient, Configure::maximunIngredientSize>* r, const string& recipeName){
-    if(r->isEmpty()){
-        this->errorMessage("No hay Ingredientes Registrados\nRegresando...");
-        return;
-    }
-    ostringstream oss;
-    char op;
-
-    do{
-        oss.str("");
-        oss.clear();
-        
-        oss << this->windowHeader("RECETARIO DIGITAL - MODIFICAR LISTA DE INGREDIENTES");
-        oss << r->toString();
-        oss << this->divider("-");
-        oss << this->insertColorText("    [A] ", "cyan") << "Agregar Ingredientes" << endl;
-        oss << this->insertColorText("    [B] ", "cyan") << "Eliminar Ingredientes" << endl;
-        oss << this->insertColorText("    [C] ", "cyan") << "Modificar Ingredientes" << endl;
-        oss << this->insertColorText("    [R] ", "cyan") << "Regresar" << endl; 
-        oss << "Ingrese una Opción: ";
-        op = this->readChar(oss.str(), "A,B,C,R");
-        switch(op){
-            case 'A':
-                this->addIngredients(r, recipeName);
-                break;
-            case 'B':
-                this->deleteIngredients(r, recipeName);
-                break;
-            case 'C':
-                this->modifyIngredient(r, recipeName);
-                break;
-        }
-    } while(op != 'R');
-}
-
-void Menu::addIngredients(List<Ingredient, Configure::maximunIngredientSize>* r, const string& recipeName){
-    ostringstream oss;
-    float dataFloat;
-    char op;
-    string dataString;
-    Ingredient newIngredient;
-    do{
-            oss.str("");
-            oss.clear();
-
-            oss << this->windowHeader("🥑 RECETARIO DIGITAL - AÑADIENDO INGREDIENTES");
-            if(!r->isEmpty()){
-                oss << this->centerText("👍" + this->insertColorText("Lista de Ingredientes Actual para " + recipeName, "magenta"));
-                oss << r->toString() << endl;
-                oss << this->divider();
-            }
-
-            oss << this->insertColorText("    Ingrese el Nombre del Ingrediente: ", "cyan");
-            
-            while(true){
-                dataString = this->readLinePrompt(oss.str());
-                newIngredient.setNameInredient(dataString);
-
-                if(r->findDataL(newIngredient) != -1)
-                    this->errorMessage("El Ingrediente Ya Esta en la Lista\nIntente Agregar Uno Nuevo");
-                else
-                    break;
-            }
-
-            oss << dataString << endl;
-
-            oss << this->insertColorText("    Ingrese la Cantidad que se Utiliza: ", "cyan");
-            dataFloat = this->readFloat(oss.str(), 0.0, 9999);
-            oss << dataFloat << endl;
-            newIngredient.setAmount(dataFloat);
-
-            oss << this->insertColorText("    Ingrese la Unidad de Medidad de la Cantidad: ", "cyan");
-            dataString = readLinePrompt(oss.str());
-            oss << dataString << endl;
-            newIngredient.setUnit(dataString);
-            
-            r->insertSortedData(newIngredient);
-
-            oss << this->divider("-");
-            oss << "✅ ";
-            oss << this->insertColorText("Ingrediente Añadido con Exito!", "green") << endl;
-            oss << " 🥕 ¿Desea Añadir Más Ingredientes? (S/N): ";
-
-            op = this->readChar(oss.str(), "S,N");
-
-    } while(op != 'N');
-
-}
-
-void Menu::deleteIngredients(List<Ingredient, Configure::maximunIngredientSize>* r, const string& recipeName){
-    if(r->isEmpty()){
-        this->errorMessage("La Lista de Ingredientes está Vacía.\nNo Hay que Eliminar");
-        return;
-    }
-
-    ostringstream oss;
-    char op;
-    int dataInt;
-    string dataString;
-    Ingredient searchedIngredient;
-
-    do{
-            oss.str("");
-            oss.clear();
-
-            oss << this->windowHeader("🥑 RECETARIO DIGITAL - ELIMINAR INGREDIENTES");
-            if(!r->isEmpty()){
-                oss << this->centerText("👍" + this->insertColorText("Lista de Ingredientes Actual para " + recipeName, "magenta"));
-                oss << r->toString() << endl;
-                oss << this->divider();
-            }
-            oss << this->centerText("Ingrese 'fin' para regresar");
-            oss << this->insertColorText("    Ingrese el Nombre del Ingrediente a Eliminar: ", "cyan") << endl;
-            dataString = this->readLinePrompt(oss.str());
-
-            searchedIngredient.setNameInredient(dataString);    
-            dataInt = r->findDataL(searchedIngredient);
-
-            if(dataInt == -1){
-                oss << "Ingrediente " << this->insertColorText("No Encontrado", "red") << endl;
-            }
-
-            else{
-                oss << this->insertColorText("¿Esta Seguro que Desea Eliminar Este Ingrediente? (S/N): ", "yellow");
-                op = this->readChar(oss.str(), "S,N");
-                if(op == 'S'){
-                    r->deleteData(dataInt);
-                    oss << this->centerText(this->insertColorText("!Ingrediente Eliminado Con Exito!", "green"));
-                    this->modify = true;
-                }
-                else
-                    oss << this->centerText(this->insertColorText("Eliminacion Cancelada", "red"));
-            }
-
-            oss << " ❌ ¿Desea Eliminar Más Ingredientes? (S/N): ";
-
-            op = this->readChar(oss.str(), "S,N");
-
-    } while(op != 'N' && !r->isEmpty());
- 
-}
-
-void Menu::modifyIngredient(List<Ingredient, Configure::maximunIngredientSize>* r, const std::string& recipeName){
-        if(r->isEmpty()){
-            this->errorMessage("No Hay Ingredientes en Esta Receta\nRegresando...");
-            return;
-        }
-    ostringstream oss;
-    string dataString;
-    char op, atributeModify;
-    Ingredient searched;
-    float dataFloat;
-    int dataInt;
-    
-    try{
-        do{
-                oss.str("");
-                oss.clear();
-
-                oss << this->windowHeader("🥐 RECETARIO DIGITAL - MODIFICAR INGREDIENTES");
-                
-                oss << this->centerText("👍" + this->insertColorText("Lista de Ingredientes Actual para " + recipeName, "magenta"));
-                oss << r->toString() << endl;
-                oss << this->divider();
-
-                oss << this->insertColorText("    Ingrese el nombre del Ingrediente a Modificar: ", "cyan");
-                
-                dataString = this->readLinePrompt(oss.str());
-                searched.setNameInredient(dataString);
-                dataInt = r->findDataL(searched);
-
-                if(dataInt == -1){
-                    oss << "Ingrediente " << this->insertColorText("No Encontrado", "red") << endl;
-                }
-
-                else{
-                    oss << " 🖊️ Seleccione que Atributo Modificar" << endl;
-                    oss << this->insertColorText("    [A] ", "cyan") << "Nombre del Ingrediente" << endl;
-                    oss << this->insertColorText("    [B] ", "cyan") << "Cantidad del Ingrediente" << endl;
-                    oss << this->insertColorText("    [C] ", "cyan") << "Unidad de Medida" << endl;
-                    
-                    atributeModify = this->readChar(oss.str(), "A,B,C");
-
-                    switch(atributeModify){
-                        case 'A':
-                            oss << this->insertColorText("    Ingrese el Nuevo Nombre del Ingrediente: ", "cyan");
-                            dataString = this->readLinePrompt(oss.str());
-                            r->retrieve(dataInt)->setNameInredient(dataString);
-                            break;
-                        case 'B':
-                            oss << this->insertColorText("    Ingrese la Nueva Cantidad del Ingrediente: ", "cyan");
-                            dataFloat = this->readFloat(oss.str(),0,99999);
-                            r->retrieve(dataInt)->setAmount(dataFloat);                        
-                            break;
-                        case 'C':
-                            oss << this->insertColorText("    Ingrese la Nueva Unidad de Medida Ingrediente: ", "cyan");
-                            dataString = this->readLinePrompt(oss.str());
-                            r->retrieve(dataInt)->setUnit(dataString);                    
-                            break;
-                    }
-
-                    oss << this->centerText(this->insertColorText("¡Modificación Hecha Con Exito!", "green"));
-                }
-
-                oss << " ❌ ¿Desea Modificar Más Ingredientes? (S/N): ";
-
-                op = this->readChar(oss.str(), "S,N");
-
-        } while(op != 'N');       
-    } catch(const InputExceptions::OperationCanceledException& ex){
-        this->errorMessage("Operación Cancelada\nRegresando...");
-    }
-}
-
-void Menu::menuPreocedure(List<StringWrapper, Configure::maximunIngredientSize>* r, const std::string& recipeName){
-    if(r->isEmpty()){
-        this->errorMessage("No hay Pasos Registrados\nRegresando...");
-        return;
-    }
-    ostringstream oss;
-    char op;
-
-    do{
-        oss.str("");
-        oss.clear();
-        
-        oss << this->windowHeader("RECETARIO DIGITAL - MODIFICAR LISTA DE PASOS");
-        oss << r->toString(true);
-        oss << this->divider("-");
-        oss << this->insertColorText("    [A] ", "cyan") << "Agregar Pasos" << endl;
-        oss << this->insertColorText("    [B] ", "cyan") << "Eliminar Pasos" << endl;
-        oss << this->insertColorText("    [C] ", "cyan") << "Modificar Pasos" << endl;
-        oss << this->insertColorText("    [R] ", "cyan") << "Regresar" << endl; 
-        oss << "Ingrese una Opción: ";
-        op = this->readChar(oss.str(), "A,B,C,R");
-        switch(op){
-            case 'A':
-                this->addProcedure(r, recipeName);
-                break;
-            case 'B':
-                this->deleteProcedure(r, recipeName);
-                break;
-            case 'C':
-                this->modifyProcedure(r, recipeName);
-                break;
-        }
-    } while(op != 'R');
-}
-
-
-void Menu::addProcedure(List<StringWrapper, Configure::maximunIngredientSize>* r, const std::string& recipeName){
-    ostringstream oss;
-    char op;
-    string dataString;
-    StringWrapper newStep;
-    try{
-    do{
-            oss.str("");
-            oss.clear();
-
-            oss << this->windowHeader("🥑 RECETARIO DIGITAL - AÑADIENDO PASOS");
-            if(!r->isEmpty()){
-                oss << this->centerText("👍" + this->insertColorText("Lista de Pasos Actual para " + recipeName, "magenta"));
-                oss << r->toString(true) << endl;
-                oss << this->divider();
-            }
-            oss << this->insertColorText("    Ingrese '/r' para Cancelar", "red") << endl;
-            oss << this->insertColorText("    Ingrese el Nuevo Paso Para La Receta: ", "cyan");
-            newStep = this->readLinePrompt(oss.str());
-
-
-            oss << newStep << endl;
-            
-            r->insertElement(newStep, r->getLastPosition()+1);
-
-            oss << this->divider("-");
-            oss << "✅ ";
-            oss << this->insertColorText("Paso Añadido con Exito!", "green") << endl;
-            oss << " 🥕 ¿Desea Añadir Más Pasos? (S/N): ";
-
-            op = this->readChar(oss.str(), "S,N");
-
-    } while(op != 'N');
-    } catch (const InputExceptions::OperationCanceledException&){
-        this->errorMessage("Operación Cancelada.\nRegresando...");
-        return;
-    }
-}
-
-void Menu::deleteProcedure(List<StringWrapper, Configure::maximunIngredientSize>* r, const std::string& recipeName){
-    if(r->isEmpty()){
-        this->errorMessage("La Lista de Pasos está Vacía.\nNo Hay que Eliminar");
-        return;
-    }
-
-    ostringstream oss;
-    char op;
-    int dataInt;
-    string dataString;
-    StringWrapper searchedStep;
-    
-    do{
-            oss.str("");
-            oss.clear();
-
-            oss << this->windowHeader("🥑 RECETARIO DIGITAL - ELIMINAR PASOS");
-            if(!r->isEmpty()){
-                oss << this->centerText("👍" + this->insertColorText("Lista de Pasos Actual para " + recipeName, "magenta"));
-                oss << r->toString(true) << endl;
-                oss << this->divider();
-            }
-            oss << this->centerText("Ingrese 'fin' para regresar");
-            oss << this->insertColorText("    Ingrese el Número del Paso a Eliminar: ", "cyan");
-            
-            while(true){
-                try{
-                    dataString = this->readLinePrompt(oss.str());
-                    if( this->standarString(dataString) == "FIN"){
-                        oss << this->centerText(this->insertColorText("Regresando...", "blue"));
-                        return;
-                    }
-
-                    dataInt = stoi(dataString) - 1;
-                
-                    r->retrieve(dataInt);
-                    oss << dataInt << endl;
-                    oss << this->insertColorText("¿Esta Seguro que Desea Eliminar Este Ingrediente? (S/N): ", "yellow");
-                    op = this->readChar(oss.str(), "S,N");
-                    oss << op << endl;
-                    if(op == 'S'){
-                        r->deleteData(dataInt);
-                        oss << this->centerText(this->insertColorText("!Paso Eliminado Con Exito!", "green"));
-                        this->modify = true;
-                    }
-                    else
-                        oss << this->centerText(this->insertColorText("Eliminacion Cancelada", "red"));
-                break;
-                } catch(const DataContainersExceptions::InvalidPosition& ex){
-                    oss << this->centerText(this->insertColorText("Posición Inválida", "red"));
-                } catch(const InputExceptions::OperationCanceledException& ex){
-                    this->errorMessage("Operación Cancelada.\nRegresando...");
-                    return;
-                } catch(const invalid_argument& ex){
-                    this->errorMessage("Entrada No Numérica\nInténtelo Nuevamente");
-                }
-        }
-            oss << " ❌ ¿Desea Eliminar Más Ingredientes? (S/N): ";
-
-            op = this->readChar(oss.str(), "S,N");
-        
-    } while(op != 'N' && !r->isEmpty());
-
-    this->errorMessage("Ya No Hay Pasos Registrados.\nRegresando...");
-}
-
-void Menu::modifyProcedure(List<StringWrapper, Configure::maximunIngredientSize>* r, const string& recipeName){
-        if(r->isEmpty()){
-            this->errorMessage("No Hay Ingredientes en Esta Receta\nRegresando...");
-            return;
-        }
-    ostringstream oss;
-    string dataString;
-    char op;
-    StringWrapper* searched;
-    int dataInt;
-    
-    try{
-        do{
-                oss.str("");
-                oss.clear();
-
-                oss << this->windowHeader("🥐 RECETARIO DIGITAL - MODIFICAR PASOS");
-                
-                oss << this->centerText("👍" + this->insertColorText("Lista de Pasos Actual para " + recipeName, "magenta"));
-                oss << r->toString(true) << endl;
-                oss << this->divider();
-                oss << this->insertColorText("    Ingrese '/r' Para Cancelar", "red") << endl;
-                oss << this->insertColorText("    Ingrese el Índice del Paso a Modificar: ", "cyan");
-                
-                dataInt = this->readInteger(oss.str(), 0, 999999);
-
-                try{
-                    searched = r->retrieve(dataInt - 1);
-                    oss << this->insertColorText("v    Ingrese la Modificación para el Paso", "yellow");
-                    *searched = this->readLinePrompt(oss.str());
-                    oss << this->centerText(this->insertColorText("¡Modificación Hecha Con Exito!", "green"));
-                } catch(const DataContainersExceptions::InvalidPosition& ex){
-                    oss << this->centerText("Paso" + this->insertColorText("No Encontrado", "red"));
-                }
-    
-                oss << " ❌ ¿Desea Modificar Más Ingredientes? (S/N): ";
-                op = this->readChar(oss.str(), "S,N");
-
-        } while(op != 'N');       
-    } catch(const InputExceptions::OperationCanceledException& ex){
-        this->errorMessage("Operación Cancelada\nRegresando...");
-    }
-
-}
-
-
-void Menu::enterToContinue() {
-    cout << "+----------------------------------+" << endl;
-    cout << "|         Presiones [ENTER]        |" << endl;
-    cout << "|           Para Continuar         |" << endl;
-    cout << "+----------------------------------+" << endl;
-    cin.ignore();
-    cin.get();
-}
-
-std::string Menu::categoryToString(const Category& category) const{
-    switch(category){
-        case DESAYUNO: return "desayuno";
-        case COMIDA: return "comida";
-        case CENA: return "cena";
-        case NAVIDEÑO: return "navideño";
-    }
-    return "";
-}
-
-void Menu::errorMessage(const std::string& prompt, const int& windowWidth){
-    this->cleanScreen();
-    auto printBorder = [&]() {
-        std::cout << "+";
-        for (int i = 0; i < windowWidth; ++i) std::cout << "-";
-        std::cout << "+\n";
-    };
-
-    auto printCenteredLine = [&](const std::string& prompt = "") {
-        int broad = static_cast<int>(prompt.size());
-        int totalSpaces = windowWidth - broad;
-        int leftSpaces = totalSpaces / 2;
-        int rightSpaces = totalSpaces - leftSpaces;
-
-        std::cout << "|";
-        for (int i = 0; i < leftSpaces; ++i) std::cout << " ";
-        std::cout << prompt;
-        for (int i = 0; i < rightSpaces; ++i) std::cout << " ";
-        std::cout << "|\n";
-    };
-
-    // --- Imprimir recuadro ---
-    printBorder();
-    printCenteredLine("[ERROR]");
-
-    stringstream ss(prompt);
-    string line;
-
-    while (getline(ss, line, '\n')) 
-        printCenteredLine(line);
-
-    printBorder();  
-    system("PAUSE");
-}
 
 bool Menu::handleOption(const string& prompt) {
     string validOptions("A,B,C,D,E,F,G,H,I,S");
@@ -672,70 +52,6 @@ bool Menu::handleOption(const string& prompt) {
             break;
     }
 }
-
-string Menu::windowHeader(const string& prompt, const int& widthBorder, const string& c) const {
-    ostringstream oss;
-    int spaces((widthBorder - prompt.size()) / 2);
-
-    oss << this->divider(c, widthBorder);
-    oss << setw(spaces) << "" << prompt << endl;
-
-    oss << this->divider(c, widthBorder);
-
-  return oss.str();
-}
-
-std::string Menu::divider(const std::string& character, const int& size) const {
-    std::string line;
-    for (int i = 0; i < size; ++i) {
-        line += character;
-    }
-    line += '\n';
-    return line;
-}
-
-string Menu::insertColorText(std::string prompt, std::string color) {
-
-    //Mapa o Diccionario para los colores
-    std::unordered_map<string, string> colorMap = {
-        {"red", "\033[31m"},
-        {"green", "\033[32m"},
-        {"yellow", "\033[33m"},
-        {"blue", "\033[34m"},
-        {"cyan", "\033[36m"},
-        {"magenta", "\033[35m"},
-    };
-
-    auto it = colorMap.find(color);
-    if(it != colorMap.end()){
-        prompt.insert(0,it->second);
-        prompt += "\033[37m";
-    }
-
-    return prompt;
-}
-
-std::string Menu::centerText(string prompt, const int& windowWidth){
-        if(prompt.empty())
-            return "";
-
-        string result;
-        int broad = prompt.size();
-        int totalSpaces = windowWidth - broad;
-        int leftSpaces = totalSpaces / 2;
-        int rightSpaces = totalSpaces - leftSpaces;
-
-        for (int i = 0; i < leftSpaces; ++i) result += " ";
-        result += prompt;
-        for (int i = 0; i < rightSpaces; ++i) result += " ";
-        result += '\n';
-    return result;
-}
-
-void Menu::cleanScreen() {
-    system("CLS");
-}
-
 
 void Menu::showStartupAnimation(int duration_ms,
                                 bool showProgressBar,
@@ -1009,7 +325,10 @@ void Menu::addRecipe() {
             newRecipe.setPreparationTime(dataInt);
 
             //Añadir los Ingredientes que el usuario Desee
-            this->addIngredients(&newRecipe.getIngredientList(), newRecipe.getRecipeName());
+            IngredientMenu iM(newRecipe.getIngredientList(), newRecipe.getRecipeName());
+            iM.addIngredients();
+            
+            
             oss << this->insertColorText("    Inserte el Procedimiento Paso a Paso", "cyan") << endl;
             oss << "        Ingrese '" << this->insertColorText("fin", "red") << "' para terminar." << endl;
             dataInt = 1;
@@ -1124,7 +443,6 @@ void Menu::editRecipe() {
             oss << this->insertColorText("[E] ", "cyan") << "Tiempo de Preparación" << endl;
             oss << this->insertColorText("[F] ", "cyan") << "Procedimiento" << endl;
             oss << this->insertColorText("[G] ", "cyan") << "Lista de Ingredientes" << endl;
-            //oss << this->insertColorText("[H] ", "cyan") << "Fecha de Creación" << endl;
             oss << this->insertColorText("[R] ", "cyan") << "Regresar" << endl;
             oss << this->divider("-");
             oss << "Seleccione una opción: ";
@@ -1134,6 +452,7 @@ void Menu::editRecipe() {
             try{
                 switch(op){
                     case 'A':
+                        
                         oss << this->insertColorText("    Ingrese el nuevo ID: ", "yellow");
                         dataInt = this->readInteger(oss.str(),0,99999);
                         searched.setId(dataInt);
@@ -1159,21 +478,29 @@ void Menu::editRecipe() {
                         break;
                     case 'D':
                         oss << this->insertColorText("    Ingrese la Nueva Categoría de la Receta: ", "yellow");
+                        oss << "    Categoría: " << this->insertColorText("[1] ", "magenta") << this->insertColorText("Desayuno", "green") << this->insertColorText("[2] ", "magenta") << this->insertColorText("Comida", "green") << this->insertColorText("[3] ", "magenta") << this->insertColorText("Cena", "green") << this->insertColorText("[4] ", "magenta") << this->insertColorText("Navideño", "green") << ": "; 
                         dataCategory = this->readCategory(oss.str());
                         oss << this->categoryToString(dataCategory) << endl;
                         objetive->setCategory(dataCategory);
                         break;
                     case 'E':
+                    
                         oss << this->insertColorText("    Ingrese el Nuevo Tiempo de Preparación en Minutos: ", "yellow");
                         dataInt = this->readInteger(oss.str(), 0, 999999);
                         oss << dataInt << endl;
                         objetive->setPreparationTime(dataInt);
                         break;
                     case 'F':
-                       this->menuPreocedure(&objetive->getProcedureList(), objetive->getRecipeName());
+                        { 
+                            ProcedureMenu mP(objetive->getProcedureList(), objetive->getRecipeName());
+                            mP.mainMenu();                            
+                        }
                         break;
                     case 'G':
-                        this->menuIngredints(&objetive->getIngredientList(), objetive->getRecipeName());
+                        {
+                            IngredientMenu iM(objetive->getIngredientList(), objetive->getRecipeName());
+                            iM.mainMenu();
+                        }
                         break;
                     case 'H':
                         break;
@@ -1185,7 +512,8 @@ void Menu::editRecipe() {
                 this->errorMessage("Operación Cancelada\nRegresando...");
                 return;
             }
-            oss << this->centerText(this->insertColorText("Modificación Realizada con Exito", "green"));
+            if(index != -1)
+                oss << this->centerText(this->insertColorText("Modificación Realizada con Exito", "green"));
         }
 
         else
