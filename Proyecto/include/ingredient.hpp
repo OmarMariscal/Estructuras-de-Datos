@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <iomanip>
+#include <windows.h>
 
 #include "../lib/nlohmann/json.hpp"
 
@@ -43,8 +45,8 @@ class Ingredient{
         int compare(const Ingredient&) const;
         static int compareTo(const Ingredient&, const Ingredient&);
 
-        int compareByAmount(const Ingredient&) const;
-        int compareByUnit(const Ingredient&) const;
+        static int compareByAmount(const Ingredient&, const Ingredient&);
+        static int compareByUnit(const Ingredient&, const Ingredient&);
 
         nlohmann::json toJson() const;
         void fromJson(const nlohmann::json&);

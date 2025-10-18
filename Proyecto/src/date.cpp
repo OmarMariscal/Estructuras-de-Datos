@@ -15,7 +15,8 @@ Date::Date() {
 Date::Date(const Date& other) : year(other.year) , month(other.month) , day(other.day){}
 
 Date::Date(const int& y, const int& m, const int& d) : year(y) , month(m), day(d){
-    //Hacer Validaciones!!!
+    if(!this->isValid(y, m, d))
+        throw DateExceptions::InvalidDate();
 }
 
 int Date::toInt() const{
@@ -55,15 +56,21 @@ string Date::toString() const{
 }
 
 void Date::setYear(const int&y){
-    this->year = y;  //Hacer Validaciones
+    if(!this->isValid(y, this->month, this->day))
+        throw DateExceptions::InvalidDate();
+    this->year = y; 
 }
 
 void Date::setMonth(const int&m){
-    this->month = m; //Hacer Validaciones
+    if(!this->isValid(this->year, m, this->day))
+        throw DateExceptions::InvalidDate();
+    this->month = m; 
 }
 
 void Date::setDay(const int&d){
-    this->day = d; //Hacer Validaciones
+    if(!this->isValid(this->year, this->month, d))
+        throw DateExceptions::InvalidDate();
+    this->day = d; 
 }
 
 bool Date::operator == (const Date& other) const{

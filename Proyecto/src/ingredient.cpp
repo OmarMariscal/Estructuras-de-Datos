@@ -1,4 +1,3 @@
-
 #include "ingredient.hpp"
 
 Ingredient::Ingredient() : nameIngredient("default"), amount(0.0), unit("default") {}
@@ -20,7 +19,15 @@ std::string Ingredient::getUnit() const{
 }
 
 std::string Ingredient::toString() const{
-    
+    std::ostringstream oss;
+    oss << "    \033[31m-";
+    oss << "\033[0m"; 
+    oss << this->nameIngredient;
+    oss << std::setfill('.');
+    oss << std::setw(25-this->nameIngredient.size()) << "";
+    oss << std::setfill(' ');
+    oss << this->amount << " " << this->unit;
+    return oss.str();
 }
 
 void Ingredient::setNameInredient(const std::string& nameIngredient){
@@ -73,12 +80,12 @@ int Ingredient::compareTo(const Ingredient& ingredientA, const Ingredient& ingre
     return ingredientA.nameIngredient.compare(ingredientB.nameIngredient);
 }
 
-int Ingredient::compareByAmount(const Ingredient& other) const{
-    return this->amount - other.amount;
+int Ingredient::compareByAmount(const Ingredient& ingredientA, const Ingredient& ingredientB){
+    return ingredientA.amount - ingredientB.amount;
 }
 
-int Ingredient::compareByUnit(const Ingredient& other) const{
-    return this->unit.compare(other.unit);
+int Ingredient::compareByUnit(const Ingredient& ingredientA, const Ingredient& ingredientB){
+    return ingredientA.unit.compare(ingredientB.unit);
 }
 
 nlohmann::json Ingredient::toJson() const{
@@ -87,7 +94,6 @@ nlohmann::json Ingredient::toJson() const{
         {"amount", this->amount},
         {"unit", this->unit},
     };
-
     return js;
 }
 

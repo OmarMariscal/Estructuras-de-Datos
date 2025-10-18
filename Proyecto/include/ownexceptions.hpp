@@ -84,4 +84,12 @@ namespace RecipeBookExceptions{
    };
 }
 
+
+namespace MenuExceptions{
+    class InvalidInsertCategory : std::runtime_error{
+        public:
+            explicit InvalidInsertCategory(const std::string& msg = "La categoria de inserción es inválida") : runtime_error(msg){}
+    };
+}
+
 #endif  // __OWNEXCEPTIONS_H__

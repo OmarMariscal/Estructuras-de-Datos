@@ -1,22 +1,24 @@
+#include <windows.h>
+
 #include "list.hpp"
 #include "recipe.hpp"
+#include "name.hpp"
+#include "menu.hpp"
 
 
 #include "iostream"
 #include "fstream"
+#include "recipe.hpp"
 
 #include "../lib/nlohmann/json.hpp"
 
 
 int main(){
-    List<Recipe> recipeBook;
-    std::ifstream file("prueba.json");
-     
-    nlohmann::json js;
-    file >> js;
+    SetConsoleOutputCP(CP_UTF8);
+    SetConsoleCP(CP_UTF8);
+    Menu menu;
+    
 
-    if(!js.empty())
-        recipeBook.fromJson(js.at("data"));
 
     getchar();
     return 0;

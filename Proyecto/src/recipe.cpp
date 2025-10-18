@@ -1,11 +1,10 @@
 #include "recipe.hpp"
 
+Recipe::Recipe() : id(-1), recipeName("default"), category(DESAYUNO), preparationTime(-1), procedureList(*new List<StringWrapper, Configure::maximunIngredientSize>), ingredientList(*new List<Ingredient, Configure::maximunIngredientSize>), creationDate(Date()) {}
 
-Recipe::Recipe() : id(-1), recipeName("default"), category(DESAYUNO), preparationTime(-1), procedureList(*new List<StringWrapper>), ingredientList(*new List<Ingredient>), creationDate(Date()) {}
+Recipe::Recipe(const Recipe& other) : id(other.id), recipeName(other.recipeName), author(other.author), category(other.category), preparationTime(other.preparationTime), procedureList(other.procedureList), ingredientList(other.ingredientList), creationDate(other.creationDate) {}
 
-Recipe::Recipe(const Recipe& other) : id(other.id), recipeName(other.recipeName), category(other.category), preparationTime(other.preparationTime), procedureList(other.procedureList), ingredientList(other.ingredientList), creationDate(other.creationDate) {}
-
-Recipe::Recipe(const int& i, const std::string& rN, const Category& c, const int& pT, const List<StringWrapper>& pL, const List<Ingredient>& iL, const Date& cD) : id(i), recipeName(rN), category(c), preparationTime(pT), procedureList(pL), ingredientList(iL), creationDate(cD) {}
+Recipe::Recipe(const int& i, const std::string& rN, const Name& n, const Category& c, const int& pT, const List<StringWrapper, Configure::maximunIngredientSize>& pL, const List<Ingredient, Configure::maximunIngredientSize>& iL, const Date& cD) : id(i), recipeName(rN), author(n), category(c), preparationTime(pT), procedureList(pL), ingredientList(iL), creationDate(cD) {}
 
 int Recipe::getId() const{
     return this->id;
@@ -13,6 +12,10 @@ int Recipe::getId() const{
 
 std::string Recipe::getRecipeName() const{
     return this->recipeName;
+}
+
+Name Recipe::getAuthor() const{
+    return this->author;
 }
 
 Category Recipe::getCategory() const{
@@ -23,16 +26,39 @@ int Recipe::getPreparationTime() const{
     return this->preparationTime;
 }
 
-List<StringWrapper> Recipe::getProcedureList() const{
+List<StringWrapper, Configure::maximunIngredientSize>& Recipe::getProcedureList(){
     return this->procedureList;
 }
 
-List<Ingredient> Recipe::getIngredientList() const{
+List<Ingredient, Configure::maximunIngredientSize>& Recipe::getIngredientList(){
     return this->ingredientList;
 }
 
+Date Recipe::getCreationDate() const{
+    return this->creationDate;
+}
+
 std::string Recipe::toString() const{
+    std::ostringstream oss;
     
+    oss << "\033[36mID de la Receta: \033[37m   " << this->id << std::endl;
+    oss << "\033[36mFecha de Creación \033[37m: " << this->creationDate.toString() << std::endl;
+    oss << "\033[36mNombre de la Receta \033[37m:   " << this->recipeName << std::endl;
+    oss << "\033[36mAutor \033[37m:   " << this->author.toString() << std::endl;
+    oss << "\033[36mCategoría \033[37m:   " << this->category << std::endl;
+    oss << "\033[36mTiempo \033[37m:    " << this->preparationTime << " minutos." << std::endl;
+    oss << std::setfill('-');
+    oss << std::setw(53) << "" << std::endl;
+    oss << std::setfill(' ');
+    oss << "🥑 \033[33mIngredientes \033[37m: " << std::endl;
+    oss << this->ingredientList.toString();
+    oss << std::setfill('-');
+    oss << std::setw(53) << "" << std::endl;
+    oss << std::setfill(' ');
+    oss << "🧾 \033[35mProcedimiento \033[37m: " << std::endl;
+    oss << this->procedureList.toString(true);
+
+    return oss.str();
 }
 
 void Recipe::setId(const int& id){
@@ -47,6 +73,10 @@ void Recipe::setRecipeName(const std::string& recipeName){
     this->recipeName = recipeName;
 }
 
+void Recipe::setAuthor(const Name& author){
+    this->author = author;
+}
+
 void Recipe::setCategory(const Category& category){
     this->category = category;
 }
@@ -57,12 +87,16 @@ void Recipe::setPreparationTime(const int& preparationTime){
     this->preparationTime = preparationTime;
 }
 
-void Recipe::setProcedureList(const List<StringWrapper>& procedureList){
+void Recipe::setProcedureList(const List<StringWrapper, Configure::maximunIngredientSize>& procedureList){
     this->procedureList = procedureList;
 }
 
-void Recipe::setIngredientList(const List<Ingredient>& ingredientList){
+void Recipe::setIngredientList(const List<Ingredient, Configure::maximunIngredientSize>& ingredientList){
     this->ingredientList = ingredientList;
+}
+
+void Recipe::setCreationDate(const Date& date){
+    this->creationDate = date;
 }
 
 void Recipe::addIngredient(const Ingredient& ingredient){
@@ -131,26 +165,31 @@ int Recipe::compare(const Recipe& recipeA, const Recipe& recipeB){
     return recipeA.id - recipeB.id;
 }
 
-int Recipe::compareByName(const Recipe& other){
-    return this->recipeName.compare(other.recipeName);
+int Recipe::compareByName(const Recipe& recipeA, const Recipe& recipeB){
+    return recipeA.recipeName.compare(recipeB.recipeName);
 }
 
-int Recipe::compareByCategory(const Recipe& other){
-    return this->category - other.category;
+int Recipe::compareByAuthor(const Recipe& recipeA, const Recipe& recipeB){
+    return recipeA.author.compareTo(recipeB.author);
 }
 
-int Recipe::compareByPreparationTime(const Recipe& other){
-    return this->preparationTime - other.preparationTime;
+int Recipe::compareByCategory(const Recipe& recipeA, const Recipe& recipeB){
+    return recipeA.category - recipeB.category;
 }
 
-int Recipe::compareByCreationDate(const Recipe& other){
-    return this->creationDate.compareTo(other.creationDate);
+int Recipe::compareByPreparationTime(const Recipe& recipeA, const Recipe& recipeB){
+    return recipeA.preparationTime - recipeB.preparationTime;
+}
+
+int Recipe::compareByCreationDate(const Recipe& recipeA, const Recipe& recipeB){
+    return recipeA.creationDate.compareTo(recipeB.creationDate);
 }
 
 nlohmann::json Recipe::toJson() const {
     nlohmann::json js{
         {"id", this->id},
         {"recipe name", this->recipeName},
+        {"author", this->author.toJson()},
         {"category", this->category},
         {"preparation time", this->preparationTime},
         {"procedure list", this->procedureList.toJson()},
@@ -163,6 +202,7 @@ nlohmann::json Recipe::toJson() const {
 void Recipe::fromJson(const nlohmann::json& js) {
     this->id = js.at("id").get<int>();
     this->recipeName = js.at("recipe name").get<std::string>();
+    this->author.fromJson(js.at("author"));
     this->category = js.at("category").get<Category>();
     this->preparationTime = js.at("preparation time").get<int>();
     this->procedureList.fromJson(js.at("procedure list").at("data"));
@@ -173,6 +213,7 @@ void Recipe::fromJson(const nlohmann::json& js) {
 Recipe& Recipe::operator = (const Recipe& other){
     this->id = other.id;
     this->recipeName = other.recipeName;
+    this->author = other.author;
     this->category = other.category;
     this->preparationTime = other.preparationTime;
     this->procedureList = other.procedureList;
@@ -182,10 +223,11 @@ Recipe& Recipe::operator = (const Recipe& other){
     return *this;
 }
 
-std::istream& operator >> (std::istream&, Recipe&){
-    //PENDIENTE: CREAR .JSON
+std::istream& operator >> (std::istream& is, Recipe& r){
+    
 }
 
-std::ostream& operator << (std::ostream&, const Recipe&){
-    //PENDIENTE: CREAR .JSON
+std::ostream& operator << (std::ostream& os, const Recipe& r){
+    os << r.toString();
+    return os;
 }
