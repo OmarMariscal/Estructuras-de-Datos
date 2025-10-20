@@ -2,7 +2,8 @@
 #define __LIST_H__
 
 #include <string>
-#include <exception>
+
+#include "ownexceptions.hpp"
 
 using namespace std;
 
@@ -32,6 +33,7 @@ class List{
 
         bool isValidPosition(const Position&) const;
         void add(const List<T>&);
+        Position getNodeAt(int) const;
 
         Position anchor = nullptr;
 
@@ -55,13 +57,21 @@ class List{
 
         string toString() const;
 
-        void sortData();
+
+        void sortDataBubble();
+        void sortDataInsert();
+        void sortDataSelect();
+        void sortDataShell();
+
         void deleteAll();
 
         List<T>& operator = (const List<T>&);
-        
-        List<T>& operator += (const List<T>&);
-        List<T> operator + (const List<T>&);
+
+        void sortDataBubble(int(const T&, const T&));
+        void sortDataInsert(int(const T&, const T&));
+        void sortDataSelect(int(const T&, const T&));
+        void sortDataShell(int(const T&, const T&));
+
 };
 
 //Implementación
@@ -74,7 +84,7 @@ List<T>::Node::Node(const T& element) : data(element){}
 
 template<class T>
 T& List<T>::Node::getData(){
-    return this->T;
+    return this->data;
 }
 
 template<class T>
@@ -100,7 +110,7 @@ bool List<T>::isValidPosition(const Position& pointer) const{
     Position aux = this->anchor;
 
     while(aux != nullptr){
-        if(aux == p){
+        if(aux == pointer){
             return true;
         }   
         aux = aux->getNext();     
@@ -115,8 +125,9 @@ void List<T>::add(const List<T>& other){
 
 
     while(aux != nullptr){
-        if(newNode = new Node(aux->getData()))
-            throw std::exception("Memoria no Disponbile, add");
+        newNode = new Node(aux->getData());
+        if(newNode == nullptr)
+            throw DataContainersExceptions::MemoryDeficiency("Memoria no Disponible");
 
         if(lastInsert == nullptr)
             this->anchor = newNode;
@@ -149,12 +160,12 @@ bool List<T>::isEmpty() const{
 
 template <class T>
 void List<T>::insertData(const typename List<T>::Position& position, const T& element){
-    if( p != nullptr && !this->isValidPosition(position))
-        throw std::exception("Posicion Invalida");
+    if( position != nullptr && !this->isValidPosition(position))
+        throw DataContainersExceptions::InvalidPosition();
     
     Position newNode(new Node(element));
     if(newNode == nullptr)
-        throw std::exception("Memoria no Disponible");
+        throw DataContainersExceptions::MemoryOverflow("Memoria No Disponible");
     
     if(position == nullptr){ //Insertar al Principio
         newNode->setNext(this->anchor);
@@ -162,8 +173,8 @@ void List<T>::insertData(const typename List<T>::Position& position, const T& el
     }
 
     else{ //Cualquier otra
-        newNode->setNext(position->setNext(position->getNext()));
-        this->getPrevPos(position);
+        newNode->setNext(position->getNext());
+        position->setNext(newNode);
     }
 
 }
@@ -171,7 +182,7 @@ void List<T>::insertData(const typename List<T>::Position& position, const T& el
 template <class T>
 void List<T>::deleteData(const typename List<T>::Position& position){
     if(!this->isValidPosition(position))
-        throw std::exception("Posicion Invalida");
+        throw DataContainersExceptions::InvalidPosition();
     
     if(position == this->anchor) //Eliminar el primero
         this->anchor = position->getNext();
@@ -201,10 +212,12 @@ typename List<T>::Position List<T>::getLastPos() const{
 
 
 template <class T>
-typename List<T>::Position List<T>::getPrevPos(const typename List<T>::Position&) const{
-    Position aux(this->anchor);
+typename List<T>::Position List<T>::getPrevPos(const typename List<T>::Position& position) const{
+    if(position == nullptr)
+        return nullptr;
 
-    while(aux != nullptr && aux->getNext() != Position)
+    Position aux(this->anchor);
+    while(aux != nullptr && aux->getNext() != position)
         aux = aux->getNext();
     
     return aux;
@@ -228,7 +241,7 @@ typename List<T>::Position List<T>::findData(const T& dataSearched) const{
 template <class T>
 T& List<T>::retrieve(const typename List<T>::Position& p){
     if(!this->isValidPosition(p))
-        throw std::exception("Posicion Invalida");
+        throw DataContainersExceptions::InvalidPosition();
     return p->getData();
 }
 
@@ -245,10 +258,6 @@ string List<T>::toString() const{
     return result;
 }
 
-template <class T>
-void List<T>::sortData(){
-    //PENDIENTE
-}
 
 template <class T>
 void List<T>::deleteAll(){
@@ -261,6 +270,143 @@ void List<T>::deleteAll(){
     }
 }
 
+
+template <class T>
+void List<T>::sortDataBubble (){
+    if (this->anchor == nullptr || this->anchor->getNext() == nullptr) 
+            return;
+        
+    bool swapped;
+    Position ptr1;
+    Position lptr = nullptr;
+
+    do {
+        swapped = false;
+        ptr1 = this->anchor;
+
+        while (ptr1->getNext() != lptr) {
+            if (ptr1->getData() > ptr1->getNext()->getData()) {
+                T temp = ptr1->getData();
+                ptr1->setData(ptr1->getNext()->getData());
+                ptr1->getNext()->setData(temp);
+                swapped = true;
+            }
+            ptr1 = ptr1->getNext();
+        }
+        lptr = ptr1;
+    } while (swapped);
+}
+
+template <class T>
+void List<T>::sortDataInsert() {
+    if (this->anchor == nullptr || this->anchor->getNext() == nullptr) 
+        return;
+    
+    Position sorted = this->anchor;      
+    Position current = this->anchor->getNext(); 
+    sorted->setNext(nullptr);           
+
+    while (current != nullptr) {
+        Position next = current->getNext(); 
+
+        if (current->getData() < sorted->getData()) {
+            current->setNext(sorted);
+            sorted = current;
+        }
+        else {
+            Position temp = sorted;
+            while (temp->getNext() != nullptr && 
+                   temp->getNext()->getData() <= current->getData()) {
+                temp = temp->getNext();
+            }
+            current->setNext(temp->getNext());
+            temp->setNext(current);
+        }
+
+        current = next;
+    }
+
+    this->anchor = sorted; 
+}
+
+template <class T>
+void List<T>::sortDataSelect() {
+    if (this->anchor == nullptr || this->anchor->getNext() == nullptr) {
+        return;
+    }
+
+    Position current = this->anchor;
+    while (current != nullptr) {
+        Position minNode = current; 
+        Position scanner = current->getNext(); 
+
+        while (scanner != nullptr) {
+            if (scanner->getData() < minNode->getData()) {
+                minNode = scanner;
+            }
+            scanner = scanner->getNext(); 
+        }
+
+        if (minNode != current) {
+            T temp = current->getData();
+            current->setData(minNode->getData());
+            minNode->setData(temp);
+        }
+
+        current = current->getNext();
+    }
+}
+
+template <class T>
+void List<T>::sortDataShell() {
+    if (this->anchor == nullptr || this->anchor->getNext() == nullptr) {
+        return;
+    }
+    
+    int series[] = {4181, 2584, 1597, 987, 610, 377, 233, 144, 89, 55,
+                    34,   21,   13,   8,   5,   3,   2,   1,   0};
+    
+    int size = 0;
+    Position temp = this->anchor;
+    while (temp != nullptr) {
+        size++;
+        temp = temp->getNext();
+    }
+    
+    int pos = 0;
+    int gap = series[pos];
+    
+    while (gap > size) {
+        gap = series[++pos];
+    }
+    
+    while (gap > 0) {
+        for (int i = gap; i < size; i++) {
+            Position nodeI = this->getNodeAt(i);
+            T tempData = nodeI->getData();
+            
+            int j = i;
+            while (j >= gap) {
+                Position nodeJMinusGap = this->getNodeAt(j - gap);
+                
+                if (nodeJMinusGap->getData() > tempData) {
+                    Position nodeJ = this->getNodeAt(j);
+                    nodeJ->setData(nodeJMinusGap->getData());
+                    j -= gap;
+                } else {
+                    break;
+                }
+            }
+            
+            Position nodeJ = this->getNodeAt(j);
+            nodeJ->setData(tempData);
+        }
+        
+        gap = series[++pos];
+    }
+}
+
+
 template <class T>
 List<T>& List<T>::operator = (const List<T>& other){
     this->deleteAll();
@@ -269,5 +415,153 @@ List<T>& List<T>::operator = (const List<T>& other){
     return *this;
 }
 
+template <class T>
+void List<T>::sortDataBubble(int cmp(const T&, const T&)) {
+    if (this->anchor == nullptr || this->anchor->getNext() == nullptr) {
+        return;
+    }
+    
+    bool flag;
+    Position lptr = nullptr; 
+    
+    do {
+        flag = false;
+        Position ptr1 = this->anchor;
+        
+        while (ptr1->getNext() != lptr) {
+            if (cmp(ptr1->getData(), ptr1->getNext()->getData()) > 0) {
+                T temp = ptr1->getData();
+                ptr1->setData(ptr1->getNext()->getData());
+                ptr1->getNext()->setData(temp);
+                flag = true;
+            }
+            ptr1 = ptr1->getNext();
+        }
+        lptr = ptr1; 
+    } while (flag);
+}
+
+template <class T>
+void List<T>::sortDataInsert(int cmp(const T&, const T&)) {
+    if (this->anchor == nullptr || this->anchor->getNext() == nullptr) 
+        return;
+    
+    Position sorted = this->anchor;      
+    Position current = this->anchor->getNext(); 
+    sorted->setNext(nullptr);           
+
+    while (current != nullptr) {
+        Position next = current->getNext(); 
+
+        if (cmp(current->getData(), sorted->getData()) < 0) {
+            current->setNext(sorted);
+            sorted = current;
+        }
+        else {
+            Position temp = sorted;
+            while (temp->getNext() != nullptr && 
+                   cmp(temp->getNext()->getData(), current->getData()) <= 0) {
+                temp = temp->getNext();
+            }
+            current->setNext(temp->getNext());
+            temp->setNext(current);
+        }
+
+        current = next;
+    }
+
+    this->anchor = sorted; 
+}
+
+template <class T>
+void List<T>::sortDataSelect(int cmp(const T&, const T&)) {
+    if (this->anchor == nullptr || this->anchor->getNext() == nullptr) {
+        return;
+    }
+
+    Position current = this->anchor;
+    
+    while (current != nullptr) {
+        Position minNode = current;       
+        Position scanner = current->getNext(); 
+        
+        while (scanner != nullptr) {
+            if (cmp(scanner->getData(), minNode->getData()) < 0) {
+                minNode = scanner;
+            }
+            scanner = scanner->getNext();
+        }
+        
+        if (minNode != current) {
+            T temp = current->getData();
+            current->setData(minNode->getData());
+            minNode->setData(temp);
+        }
+        
+        current = current->getNext();
+    }
+}
+
+template <class T>
+void List<T>::sortDataShell(int cmp(const T&, const T&)) {
+    if (this->anchor == nullptr || this->anchor->getNext() == nullptr) {
+        return;
+    }
+    
+    int series[] = {4181, 2584, 1597, 987, 610, 377, 233, 144, 89, 55,
+                    34,   21,   13,   8,   5,   3,   2,   1,   0};
+    
+    int size = 0;
+    Position temp = this->anchor;
+    while (temp != nullptr) {
+        size++;
+        temp = temp->getNext();
+    }
+    
+    int pos = 0;
+    int gap = series[pos];
+    
+    while (gap > size) {
+        gap = series[++pos];
+    }
+    
+    while (gap > 0) {
+        for (int i = gap; i < size; i++) {
+            Position nodeI = this->getNodeAt(i);
+            T tempData = nodeI->getData();
+            
+            int j = i;
+            while (j >= gap) {
+                Position nodeJMinusGap = this->getNodeAt(j - gap);
+                
+                if (cmp(nodeJMinusGap->getData(), tempData) > 0) {
+                    Position nodeJ = this->getNodeAt(j);
+                    nodeJ->setData(nodeJMinusGap->getData());
+                    j -= gap;
+                } else {
+                    break;
+                }
+            }
+            
+            Position nodeJ = this->getNodeAt(j);
+            nodeJ->setData(tempData);
+        }
+        
+        gap = series[++pos];
+    }
+}
+
+template <class T>
+typename List<T>::Position List<T>::getNodeAt(int index) const {
+    Position current = this->anchor;
+    int count = 0;
+    
+    while (current != nullptr && count < index) {
+        current = current->getNext();
+        count++;
+    }
+    
+    return current;
+}
 
 #endif // __LIST_H__
