@@ -3,12 +3,11 @@
 
 #include <string>
 
-enum Category{
-    DESAYUNO = 1,
-    COMIDA = 2,
-    CENA = 3,
-    NAVIDEÑO = 4,
+enum Category {
+  DESAYUNO = 1,
+  COMIDA = 2,
+  CENA = 3,
+  NAVIDEÑO = 4,
 };
 
-
-#endif // __CATEGORY_H__
+#endif  // __CATEGORY_H__

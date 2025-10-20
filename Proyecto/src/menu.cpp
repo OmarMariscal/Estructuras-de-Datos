@@ -403,7 +403,8 @@ void Menu::deleteRecipe() {
 
     }while(op != 'N' && !this->recipeBook.isEmpty());
 
-    this->errorMessage("Ya No Hay Recetas Registradas\nVuelva a Ingresar Más Recetas");
+    if(this->recipeBook.isEmpty())
+        this->errorMessage("Ya No Hay Recetas Registradas\nVuelva a Ingresar Más Recetas");
 }
 
 void Menu::editRecipe() {
@@ -512,8 +513,10 @@ void Menu::editRecipe() {
                 this->errorMessage("Operación Cancelada\nRegresando...");
                 return;
             }
-            if(index != -1)
+            if(index != -1){
                 oss << this->centerText(this->insertColorText("Modificación Realizada con Exito", "green"));
+                this->modify = true;
+            }
         }
 
         else
@@ -639,6 +642,7 @@ void Menu::sortRecipes(){
     oss << this->insertColorText("Seleccione una Opción: ", "yellow");
 
     op = this->readChar(oss.str(), "A,B,C,D,E,F,S");
+    oss << op << endl;
 
     switch(op){
         case 'A':

@@ -20,7 +20,7 @@ class List {
   void freeAll();
 
   void swapData(T**, T**);
-  
+
   void sortDataMerge(const int&, const int&);
   void sortDataMerge(const int&, const int&, int(const T&, const T&));
 
@@ -47,12 +47,13 @@ class List {
   int getPrevPosition(const int&) const;
   int getNextPosition(const int&) const;
 
-  //toString Completo
+  // toString Completo
   std::string toString(const bool& = false) const;
-  //toString por categoría
+  // toString por categoría
   std::string toString(const T&, int(const T&, const T&)) const;
-  //toString para diferenres impresioens:
-  std::string toString(std::string (T::*formatFunc)(const std::string&) const, const std::string& arg);
+  // toString para diferenres impresioens:
+  std::string toString(std::string (T::*formatFunc)(const std::string&) const,
+                       const std::string& arg);
 
   void deleteAll();
 
@@ -92,10 +93,8 @@ class List {
   void sortDataShell(int(const T&, const T&));
   void sortDataMerge(int(const T&, const T&));
   void sortDataQuick(int(const T&, const T&));
-  
-  void insertSortedData(const T&, int(const T&, const T&));
-  
 
+  void insertSortedData(const T&, int(const T&, const T&));
 };
 
 template <class T, int ARRAYSIZE>
@@ -245,12 +244,11 @@ int List<T, ARRAYSIZE>::getNextPosition(const int& position) const {
 template <class T, int ARRAYSIZE>
 std::string List<T, ARRAYSIZE>::toString(const bool& numered) const {
   std::ostringstream oss;
-  for (int i = 0; i <= this->last; i++){
-    if(numered)
-      oss << i + 1 << ". "; 
+  for (int i = 0; i <= this->last; i++) {
+    if (numered)
+      oss << i + 1 << ". ";
     oss << this->data[i]->toString() << std::endl;
-  } 
-  
+  }
 
   return oss.str();
 }
@@ -268,12 +266,14 @@ std::string List<T, ARRAYSIZE>::toString(const T& search,
 }
 
 template <typename T, int ARRAYSIZE>
-std::string List<T, ARRAYSIZE>::toString(std::string (T::*formatFunc)(const std::string&) const, const std::string& arg) {
-    std::ostringstream oss;
-    for (int i = 0; i < this->last; i++) {
-        oss << (this->data[i]->*formatFunc)(arg) << "\n";
-    }
-    return oss.str();
+std::string List<T, ARRAYSIZE>::toString(
+    std::string (T::*formatFunc)(const std::string&) const,
+    const std::string& arg) {
+  std::ostringstream oss;
+  for (int i = 0; i < this->last; i++) {
+    oss << (this->data[i]->*formatFunc)(arg) << "\n";
+  }
+  return oss.str();
 }
 
 template <class T, int ARRAYSIZE>
@@ -293,13 +293,14 @@ void List<T, ARRAYSIZE>::insertSortedData(const T& newData) {
 }
 
 template <class T, int ARRAYSIZE>
-void List<T, ARRAYSIZE>::insertSortedData(const T& newData, int cmp(const T&, const T&)){
+void List<T, ARRAYSIZE>::insertSortedData(const T& newData,
+                                          int cmp(const T&, const T&)) {
   int i(0);
 
-  while((i <= this->last) && cmp(newData, *this->data[i]) > 0)
+  while ((i <= this->last) && cmp(newData, *this->data[i]) > 0)
     i++;
 
-  this->insertElement(newData,i);
+  this->insertElement(newData, i);
 }
 
 template <class T, int ARRAYSIZE>
@@ -434,7 +435,8 @@ void List<T, ARRAYSIZE>::sortDataMerge(int cmp(const T&, const T&)) {
 }
 
 template <class T, int ARRAYSIZE>
-void List<T, ARRAYSIZE>::sortDataMerge(const int& leftEdge, const int& rightEdge) {
+void List<T, ARRAYSIZE>::sortDataMerge(const int& leftEdge,
+                                       const int& rightEdge) {
   // Criterio de Paro
   if (leftEdge >= rightEdge)
     return;
@@ -546,26 +548,24 @@ std::istream& operator>>(std::istream& is, List<X>& list) {
 // Extras al Modelo de la Lista:
 
 template <class T, int ARRAYSIZE>
-nlohmann::json List<T, ARRAYSIZE>::toJson() const{
-    nlohmann::json j;
-    j["data"] = nlohmann::json::array();
-    for(int i = 0; i <= this->last; i++){
-        j["data"].push_back(this->data[i]->toJson());
-
-    }
-    return j;
+nlohmann::json List<T, ARRAYSIZE>::toJson() const {
+  nlohmann::json j;
+  j["data"] = nlohmann::json::array();
+  for (int i = 0; i <= this->last; i++) {
+    j["data"].push_back(this->data[i]->toJson());
+  }
+  return j;
 }
 
 template <class T, int ARRAYSIZE>
-void List<T, ARRAYSIZE>::fromJson(const nlohmann::json& js){
+void List<T, ARRAYSIZE>::fromJson(const nlohmann::json& js) {
   this->deleteAll();
   T* obj(new T);
-  for(const auto& data : js){
+  for (const auto& data : js) {
     obj->fromJson(data);
     this->insertElement(*obj, this->last + 1);
   }
 }
-
 
 template <class T, int ARRAYSIZE>
 int List<T, ARRAYSIZE>::findDataL(const T& searchedData,
@@ -595,7 +595,6 @@ int List<T, ARRAYSIZE>::findDataB(const T& searchedData,
 
   return -1;
 }
-
 
 template <class T, int ARRAYSIZE>
 void List<T, ARRAYSIZE>::sortDataBubble(int cmp(const T&, const T&)) {
@@ -732,7 +731,7 @@ void List<T, ARRAYSIZE>::sortDataQuick(const int& leftEdge,
   if (leftEdge >= rightEdge)
     return;
 
-  if (leftEdge == rightEdge +1) {
+  if (leftEdge == rightEdge + 1) {
     if (cmp(*this->data[leftEdge], *this->data[rightEdge]) > 0)
       this->swapData(&this->data[leftEdge], &this->data[rightEdge]);
     return;

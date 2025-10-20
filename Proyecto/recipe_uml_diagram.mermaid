@@ -1,0 +1,335 @@
+classDiagram
+    %% Clase Base Abstracta
+    class BaseMenu {
+        <<abstract>>
+        #readInteger(string, int, int) int
+        #readFloat(string, float, float) float
+        #readName(string, string, string) Name
+        #readLinePrompt(string, bool) string
+        #readChar(string, string) char
+        #readCategory(string) Category
+        #standarString(string) string
+        #clearColor(string) string
+        #cleanScreen() void
+        #errorMessage(string, int) void
+        #enterToContinue() void
+        #categoryToString(Category) string
+        #windowHeader(string, int, string) string
+        #divider(string, int) string
+        #insertColorText(string, string) string
+        #centerText(string, int) string
+        +mainMenu()* void
+        +~BaseMenu()
+    }
+
+    %% Enumeración Category
+    class Category {
+        <<enumeration>>
+        DESAYUNO = 1
+        COMIDA = 2
+        CENA = 3
+        NAVIDEÑO = 4
+    }
+
+    %% Namespace Configure
+    class Configure {
+        <<namespace>>
+        +predeterminatedSizeWindows: int = 60$
+        +maximunIngredientSize: int = 20$
+        +maximunProcedureSize: int = 20$
+    }
+
+    %% Clase Date
+    class Date {
+        -year: int
+        -month: int
+        -day: int
+        -toInt() int
+        -isValid(int, int, int) bool
+        +Date()
+        +Date(Date)
+        +Date(int, int, int)
+        +getYear() int
+        +getMonth() int
+        +getDay() int
+        +toString() string
+        +setYear(int) void
+        +setMonth(int) void
+        +setDay(int) void
+        +operator==(Date) bool
+        +operator!=(Date) bool
+        +operator<(Date) bool
+        +operator>(Date) bool
+        +operator<=(Date) bool
+        +operator>=(Date) bool
+        +compareTo(Date) int
+        +compare(Date, Date)$ int
+        +operator=(Date) Date&
+        +toJson() json
+        +fromJson(json) void
+    }
+
+    %% Clase Name
+    class Name {
+        -first: string
+        -last: string
+        +Name()
+        +Name(Name)
+        +Name(string, string)
+        +setFirst(string) void
+        +setLast(string) void
+        +getFirst() string
+        +getLast() string
+        +toString() string
+        +operator=(Name) Name&
+        +operator==(Name) bool
+        +operator!=(Name) bool
+        +operator<(Name) bool
+        +operator>(Name) bool
+        +operator<=(Name) bool
+        +operator>=(Name) bool
+        +compareTo(Name) int
+        +compare(Name, Name)$ int
+        +toJson() json
+        +fromJson(json) void
+    }
+
+    %% Clase Ingredient
+    class Ingredient {
+        -nameIngredient: string
+        -amount: float
+        -unit: string
+        +Ingredient()
+        +Ingredient(Ingredient)
+        +Ingredient(string, float, string)
+        +getNameIngredient() string
+        +getAmount() float
+        +getUnit() string
+        +toString() string
+        +setNameInredient(string) void
+        +setAmount(float) void
+        +setUnit(string) void
+        +operator==(Ingredient) bool
+        +operator!=(Ingredient) bool
+        +operator<(Ingredient) bool
+        +operator>(Ingredient) bool
+        +operator<=(Ingredient) bool
+        +operator>=(Ingredient) bool
+        +compare(Ingredient) int
+        +compareTo(Ingredient, Ingredient)$ int
+        +compareByAmount(Ingredient, Ingredient)$ int
+        +compareByUnit(Ingredient, Ingredient)$ int
+        +toJson() json
+        +fromJson(json) void
+        +operator=(Ingredient) Ingredient&
+    }
+
+    %% Clase StringWrapper
+    class StringWrapper {
+        -valor: string
+        +StringWrapper()
+        +StringWrapper(string)
+        +StringWrapper(char*)
+        +StringWrapper(StringWrapper)
+        +getValor() string
+        +setValor(string) void
+        +toString() string
+        +operator string()
+        +c_str() char*
+        +size() size_t
+        +length() size_t
+        +empty() bool
+        +clear() void
+        +append(string) StringWrapper&
+        +operator+(StringWrapper) StringWrapper
+        +operator+=(StringWrapper) StringWrapper&
+        +operator==(StringWrapper) bool
+        +operator!=(StringWrapper) bool
+        +operator<(StringWrapper) bool
+        +toJson() json
+        +fromJson(json) void
+    }
+
+    %% Template List
+    class List~T, ARRAYSIZE~ {
+        -data: T**
+        -last: int
+        -copyAll(List) void
+        -freeAll() void
+        -swapData(T**, T**) void
+        -sortDataMerge(int, int) void
+        -sortDataQuick(int, int) void
+        +List()
+        +~List()
+        +isEmpty() bool
+        +isFull() bool
+        +isSorted() bool
+        +insertElement(T, int) void
+        +deleteData(int) void
+        +retrieve(int) T*
+        +getFirstPosition() int
+        +getLastPosition() int
+        +getPrevPosition(int) int
+        +getNextPosition(int) int
+        +toString(bool) string
+        +deleteAll() void
+        +isValidPosition(int) bool
+        +findDataL(T) int
+        +findDataB(T) int
+        +insertSortedData(T) void
+        +sortDataBubble() void
+        +sortDataInsert() void
+        +sortDataSelect() void
+        +sortDataShell() void
+        +sortDataMerge() void
+        +sortDataQuick() void
+        +toJson() json
+        +fromJson(json) void
+    }
+
+    %% Clase Recipe
+    class Recipe {
+        -id: int
+        -recipeName: string
+        -author: Name
+        -category: Category
+        -preparationTime: int
+        -procedureList: List~StringWrapper~
+        -ingredientList: List~Ingredient~
+        -creationDate: Date
+        +Recipe()
+        +Recipe(Recipe)
+        +Recipe(int, string, Name, Category, int, List~StringWrapper~, List~Ingredient~, Date)
+        +getId() int
+        +getRecipeName() string
+        +getAuthor() Name
+        +getCategory() Category
+        +getPreparationTime() int
+        +getProcedureList() List~StringWrapper~&
+        +getIngredientList() List~Ingredient~&
+        +getCreationDate() Date
+        +toString(string) string
+        +setId(int) void
+        +setRecipeName(string) void
+        +setAuthor(Name) void
+        +setCategory(Category) void
+        +setPreparationTime(int) void
+        +addIngredient(Ingredient) void
+        +deleteIngredient(Ingredient) void
+        +clearIngredients() void
+        +searchIngredient(Ingredient) Ingredient*
+        +addStepToProcedure(string) void
+        +deleteStepFromProcedure(int) void
+        +clearProcedure() void
+        +operator==(Recipe) bool
+        +operator<(Recipe) bool
+        +operator>(Recipe) bool
+        +compare(Recipe, Recipe)$ int
+        +compareByName(Recipe, Recipe)$ int
+        +compareByAuthor(Recipe, Recipe)$ int
+        +compareByCategory(Recipe, Recipe)$ int
+        +compareByPreparationTime(Recipe, Recipe)$ int
+        +compareByCreationDate(Recipe, Recipe)$ int
+        +toJson() json
+        +fromJson(json) void
+        +operator=(Recipe) Recipe&
+    }
+
+    %% Clase Menu
+    class Menu {
+        -recipeBook: List~Recipe~&
+        -sortedBy: string
+        -modify: bool
+        -handleOption(string) bool
+        -showStartupAnimation(int, bool, string, string, string, string) void
+        -insertSortedDataByCategory(Recipe) void
+        -searcher(string, int) Recipe*
+        -addRecipe() void
+        -deleteRecipe() void
+        -editRecipe() void
+        -showRecipes() void
+        -searchMenu() void
+        -sortRecipes() void
+        -saveToDisk() void
+        -readFromDisk() void
+        -exportRecipe() void
+        -exitMenu() void
+        +Menu()
+        +Menu(Menu)
+        +Menu(List~Recipe~, string, bool)
+        +mainMenu() void
+    }
+
+    %% Clase IngredientMenu
+    class IngredientMenu {
+        -ingredientList: List~Ingredient~&
+        -recipeName: string
+        +IngredientMenu()
+        +IngredientMenu(List~Ingredient~, string)
+        +IngredientMenu(IngredientMenu)
+        +addIngredients() void
+        +deleteIngredients() void
+        +modifyIngredient() void
+        +mainMenu() void
+    }
+
+    %% Clase ProcedureMenu
+    class ProcedureMenu {
+        -process: List~StringWrapper~&
+        -recipeName: string
+        +ProcedureMenu()
+        +ProcedureMenu(List~StringWrapper~, string)
+        +ProcedureMenu(ProcedureMenu)
+        +mainMenu() void
+        +addProcedure() void
+        +deleteProcedure() void
+        +editProcedure() void
+    }
+
+    %% Namespace OwnExceptions
+    class OwnExceptions {
+        <<namespace>>
+        +MemoryDeficiency
+        +MemoryOverflow
+        +InvalidPosition
+        +InvalidOption
+        +EmptyString
+        +OperationCanceledException
+        +NumberNotPositive
+        +InvalidDate
+        +RepeatedIngredient
+        +NonExistenIngredient
+        +IdNotAvalible
+        +RecipeNotFound
+        +InvalidInsertCategory
+    }
+
+    %% Relaciones de Herencia
+    BaseMenu <|-- Menu
+    BaseMenu <|-- IngredientMenu
+    BaseMenu <|-- ProcedureMenu
+
+    %% Relaciones de Composición
+    Recipe *-- Name : contiene
+    Recipe *-- Date : contiene
+    Recipe *-- Category : usa
+    Recipe *-- "1" List~Ingredient~ : contiene
+    Recipe *-- "1" List~StringWrapper~ : contiene
+
+    %% Relaciones de Agregación
+    Menu o-- List~Recipe~ : gestiona
+    IngredientMenu o-- List~Ingredient~ : gestiona
+    ProcedureMenu o-- List~StringWrapper~ : gestiona
+
+    %% Relaciones de Dependencia
+    BaseMenu ..> Category : usa
+    BaseMenu ..> Name : usa
+    BaseMenu ..> Configure : usa
+    BaseMenu ..> OwnExceptions : usa
+    Menu ..> Recipe : usa
+    Menu ..> IngredientMenu : usa
+    Menu ..> ProcedureMenu : usa
+    List ..> OwnExceptions : usa
+    Recipe ..> Configure : usa
+    IngredientMenu ..> Configure : usa
+    ProcedureMenu ..> Configure : usa
