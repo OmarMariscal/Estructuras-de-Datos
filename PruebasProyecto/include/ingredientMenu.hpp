@@ -4,13 +4,13 @@
 #include <string>
 #include <sstream>
 
-#include "list.hpp"
+#include "simplelinkedlist.hpp"
 #include "ingredient.hpp"
 #include "basemenu.hpp"
 
 class IngredientMenu : protected BaseMenu{
     private:
-        List<Ingredient, Configure::maximunIngredientSize>& ingredientList;
+        SimpleLinkedList<Ingredient>& ingredientList;
         std::string recipeName;
     
     public:
@@ -19,7 +19,7 @@ class IngredientMenu : protected BaseMenu{
         void modifyIngredient();
         
         IngredientMenu();
-        IngredientMenu(List<Ingredient, Configure::maximunIngredientSize>&, const std::string&);
+        IngredientMenu(SimpleLinkedList<Ingredient>&, const std::string&);
         IngredientMenu(const IngredientMenu&);
 
         void mainMenu();

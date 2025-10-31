@@ -26,7 +26,7 @@ void IngredientMenu::addIngredients(){
                     dataString = this->readLinePrompt(oss.str());
                     newIngredient.setNameInredient(dataString);
 
-                    if(this->ingredientList.findDataL(newIngredient) != -1)
+                    if(this->ingredientList.findData(newIngredient) != nullptr)
                         this->errorMessage("El Ingrediente Ya Esta en la Lista\nIntente Agregar Uno Nuevo");
                     else
                         break;
@@ -71,6 +71,7 @@ void IngredientMenu::deleteIngredients(){
     char op;
     int dataInt;
     string dataString;
+    SimpleLinkedList<Ingredient>::Position aux;
     Ingredient searchedIngredient;
 
     do{
@@ -88,9 +89,9 @@ void IngredientMenu::deleteIngredients(){
             dataString = this->readLinePrompt(oss.str());
 
             searchedIngredient.setNameInredient(dataString);    
-            dataInt = this->ingredientList.findDataL(searchedIngredient);
+            aux = this->ingredientList.findData(searchedIngredient);
 
-            if(dataInt == -1){
+            if(aux == nullptr){
                 oss << "Ingrediente " << this->insertColorText("No Encontrado", "red") << endl;
             }
 
@@ -98,7 +99,7 @@ void IngredientMenu::deleteIngredients(){
                 oss << this->insertColorText("¿Esta Seguro que Desea Eliminar Este Ingrediente? (S/N): ", "yellow");
                 op = this->readChar(oss.str(), "S,N");
                 if(op == 'S'){
-                    this->ingredientList.deleteData(dataInt);
+                    this->ingredientList.deleteData(aux);
                     oss << this->centerText(this->insertColorText("!Ingrediente Eliminado Con Exito!", "green"));
                 }
                 else
@@ -123,6 +124,7 @@ void IngredientMenu::modifyIngredient(){
     char op, atributeModify;
     Ingredient searched;
     float dataFloat;
+    SimpleLinkedList<Ingredient>::Position aux(nullptr);
     int dataInt;
     
     try{
@@ -140,9 +142,9 @@ void IngredientMenu::modifyIngredient(){
                 
                 dataString = this->readLinePrompt(oss.str());
                 searched.setNameInredient(dataString);
-                dataInt = this->ingredientList.findDataL(searched);
+                aux = this->ingredientList.findData(searched);
 
-                if(dataInt == -1){
+                if(aux == nullptr){
                     oss << "Ingrediente " << this->insertColorText("No Encontrado", "red") << endl;
                 }
 
@@ -158,17 +160,17 @@ void IngredientMenu::modifyIngredient(){
                         case 'A':
                             oss << this->insertColorText("    Ingrese el Nuevo Nombre del Ingrediente: ", "cyan");
                             dataString = this->readLinePrompt(oss.str());
-                            this->ingredientList.retrieve(dataInt)->setNameInredient(dataString);
+                            this->ingredientList.retrieve(dataInt).setNameInredient(dataString);
                             break;
                         case 'B':
                             oss << this->insertColorText("    Ingrese la Nueva Cantidad del Ingrediente: ", "cyan");
                             dataFloat = this->readFloat(oss.str(),0,99999);
-                            this->ingredientList.retrieve(dataInt)->setAmount(dataFloat);                        
+                            this->ingredientList.retrieve(dataInt).setAmount(dataFloat);                        
                             break;
                         case 'C':
                             oss << this->insertColorText("    Ingrese la Nueva Unidad de Medida Ingrediente: ", "cyan");
                             dataString = this->readLinePrompt(oss.str());
-                            this->ingredientList.retrieve(dataInt)->setUnit(dataString);                    
+                            this->ingredientList.retrieve(dataInt).setUnit(dataString);                    
                             break;
                     }
 
@@ -185,9 +187,9 @@ void IngredientMenu::modifyIngredient(){
     }
 }
 
-IngredientMenu::IngredientMenu() : ingredientList(*new List<Ingredient, Configure::maximunIngredientSize>), recipeName("default") {}
+IngredientMenu::IngredientMenu() : ingredientList(*new SimpleLinkedList<Ingredient>), recipeName("default") {}
 
-IngredientMenu::IngredientMenu(List<Ingredient, Configure::maximunIngredientSize>& l, const std::string& r) : ingredientList(l), recipeName(r) {}
+IngredientMenu::IngredientMenu(SimpleLinkedList<Ingredient>& l, const std::string& r) : ingredientList(l), recipeName(r) {}
 
 IngredientMenu::IngredientMenu(const IngredientMenu& other) : ingredientList(other.ingredientList), recipeName(other.recipeName) {}
 
