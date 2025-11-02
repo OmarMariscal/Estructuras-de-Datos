@@ -72,12 +72,12 @@ class NotInfixData : public std::runtime_error {
 };
 }  // namespace NotationTransformerExceptions
 
-
-namespace NodeExceptions{
-    class MemoryNotAvaliable : std::runtime_error{
-        public:
-            explicit MemoryNotAvaliable( const std::string& msg = "Excepcion del Nodo") : runtime_error(msg){}
-    };
-} //namespace NodeExceptions
+namespace NodeExceptions {
+class MemoryNotAvaliable : std::runtime_error {
+ public:
+  explicit MemoryNotAvaliable(const std::string& msg = "Excepcion del Nodo")
+      : runtime_error(msg) {}
+};
+}  // namespace NodeExceptions
 
 #endif  // __OWNEXCEPTIONS_H__

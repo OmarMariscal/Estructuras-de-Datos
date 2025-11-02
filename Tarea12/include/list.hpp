@@ -143,7 +143,8 @@ void List<T>::Node::setData(const T& e) {
   if (this->dataPtr == nullptr) {
     this->dataPtr = new T(e);
     if (this->dataPtr == nullptr)
-      throw NodeExceptions::MemoryNotAvaliable("Memoria no disponible, setData");
+      throw NodeExceptions::MemoryNotAvaliable(
+          "Memoria no disponible, setData");
   } else
     *this->dataPtr = e;
 }
@@ -348,7 +349,7 @@ string List<T>::toString(const T& searched, int cmp(const T&, const T&)) const {
   Position aux(this->header->getNext());
 
   while (aux != this->header) {
-    if (cmp(searched, aux->getData()) == 0) 
+    if (cmp(searched, aux->getData()) == 0)
       result += aux->getData().toString() + "\n";
     aux = aux->getNext();
   }

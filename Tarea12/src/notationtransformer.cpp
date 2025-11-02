@@ -98,22 +98,13 @@ bool NotationTransformer::isValidExpresion(const Queue<char>& infixExpresion) {
   return true;
 }
 
-NotationTransformer::NotationTransformer()
-    : 
-    infixQueue(*new Queue<char>),
-    postfixQueue(*new Queue<char>),  
-    operatorStack(*new Stack<char>) {}
+NotationTransformer::NotationTransformer() {}
 
 NotationTransformer::NotationTransformer(const NotationTransformer& other)
-    : infixQueue(other.infixQueue),
-      postfixQueue(*new Queue<char>),
-      operatorStack(*new Stack<char>) {}
+    : infixQueue(other.infixQueue) {}
 
-NotationTransformer::NotationTransformer(const Queue<char>& iQ)
-    : postfixQueue(*new Queue<char>),
-      infixQueue(*new Queue<char>),
-      operatorStack(*new Stack<char>) {
-  setInflixQueue(iQ);
+NotationTransformer::NotationTransformer(const Queue<char>& iQ) {
+  this->setInflixQueue(iQ);
 }
 
 NotationTransformer::~NotationTransformer() = default;
@@ -149,12 +140,13 @@ void NotationTransformer::transformToPosfija() {
                                        // de mayor o igual valor
       bool isRightAssociative = (caracter == '^');
 
-      while (!operatorStack.isEmpty() &&
-        operatorStack.getTop() != '(' &&
-        ((!isRightAssociative && getPrecedence(caracter) <= getPrecedence(operatorStack.getTop())) ||
-        (isRightAssociative && getPrecedence(caracter) < getPrecedence(operatorStack.getTop())))) 
+      while (
+          !operatorStack.isEmpty() && operatorStack.getTop() != '(' &&
+          ((!isRightAssociative &&
+            getPrecedence(caracter) <= getPrecedence(operatorStack.getTop())) ||
+           (isRightAssociative &&
+            getPrecedence(caracter) < getPrecedence(operatorStack.getTop()))))
         postfixQueue.enqueue(operatorStack.pop());
-            
 
       operatorStack.push(caracter);  // Guardamos el operador
       continue;

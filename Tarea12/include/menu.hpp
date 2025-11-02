@@ -1,18 +1,17 @@
 #ifndef __MENU_H__
 #define __MENU_H__
 
-
+#include <cstdlib>
 #include <iomanip>
 #include <iostream>
-#include <cstdlib>
-#include <sstream>
 #include <limits>
+#include <sstream>
 
 #include <basemenu.hpp>
-#include "stringwrapped.hpp"
 #include "list.hpp"
 #include "notationtransformer.hpp"
 #include "ownexceptions.hpp"
+#include "stringwrapped.hpp"
 
 class Menu : BaseMenu {
  private:
@@ -36,5 +35,4 @@ class Menu : BaseMenu {
   void mainMenu();
 };
 
-
-#endif // __MENU_H__
+#endif  // __MENU_H__

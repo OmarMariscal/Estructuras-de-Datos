@@ -10,9 +10,9 @@
 
 class NotationTransformer {
  private:
-  Queue<char>& infixQueue;
-  Queue<char>& postfixQueue;
-  Stack<char>& operatorStack;
+  Queue<char> infixQueue;
+  Queue<char> postfixQueue;
+  Stack<char> operatorStack;
 
   bool isOperator(const char&) const;
   int getPrecedence(const char&) const;
@@ -22,7 +22,7 @@ class NotationTransformer {
   NotationTransformer();
   NotationTransformer(const NotationTransformer&);
   NotationTransformer(const Queue<char>&);
-  
+
   ~NotationTransformer();
 
   void setInflixQueue(const Queue<char>&);
