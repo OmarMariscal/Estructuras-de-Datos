@@ -62,7 +62,7 @@ void ProcedureMenu::addProcedure(){
 
             oss << newStep << endl;
             
-            this->process.insertElement(newStep, this->process.getLastPosition()+1);
+            this->process.insertLastData(newStep);
 
             oss << this->divider("-");
             oss << "✅ ";
@@ -119,7 +119,7 @@ void ProcedureMenu::deleteProcedure(){
                     op = this->readChar(oss.str(), "S,N");
                     oss << op << endl;
                     if(op == 'S'){
-                        this->process.deleteData(dataInt);
+                        this->process.deleteData(this->process.getNodeAt(dataInt));
                         oss << this->centerText(this->insertColorText("!Paso Eliminado Con Exito!", "green"));
                     }
                     else
@@ -151,7 +151,6 @@ void ProcedureMenu::editProcedure(){
     ostringstream oss;
     string dataString;
     char op;
-    StringWrapper* searched;
     int dataInt;
     
     try{
@@ -169,9 +168,9 @@ void ProcedureMenu::editProcedure(){
                 dataInt = this->readInteger(oss.str(), 0, 999999);
 
                 try{
-                    searched = this->process.retrieve(dataInt - 1);
+                    StringWrapper& searched(this->process.retrieve(dataInt - 1));
                     oss << this->insertColorText("v    Ingrese la Modificación para el Paso", "yellow");
-                    *searched = this->readLinePrompt(oss.str());
+                    searched = this->readLinePrompt(oss.str());
                     oss << this->centerText(this->insertColorText("¡Modificación Hecha Con Exito!", "green"));
                 } catch(const DataContainersExceptions::InvalidPosition& ex){
                     oss << this->centerText("Paso" + this->insertColorText("No Encontrado", "red"));
@@ -187,6 +186,6 @@ void ProcedureMenu::editProcedure(){
 
 }
 
-ProcedureMenu::ProcedureMenu() : process(* new List<StringWrapper, Configure::maximunProcedureSize>), recipeName("default") {}
-ProcedureMenu::ProcedureMenu(List<StringWrapper, Configure::maximunIngredientSize>& l, const std::string& r) : process(l), recipeName(r) {}
+ProcedureMenu::ProcedureMenu() : process(* new SimpleLinkedList<StringWrapper>), recipeName("default") {}
+ProcedureMenu::ProcedureMenu(SimpleLinkedList<StringWrapper>& l, const std::string& r) : process(l), recipeName(r) {}
 ProcedureMenu::ProcedureMenu(const ProcedureMenu& other) : process(other.process), recipeName(other.recipeName) {}

@@ -2,6 +2,7 @@
 #define __SIMPLELINKEDLIST_H__
 
 #include <string>
+#include <sstream>
 #include "../lib/nlohmann/json.hpp"
 
 #include "ownexceptions.hpp"
@@ -34,10 +35,11 @@ class SimpleLinkedList{
 
         bool isValidPosition(const Position&) const;
         void add(const SimpleLinkedList<T>&);
-        Position getNodeAt(int) const;
         void simpleInsertData(const Position&, const T&);
 
         Position anchor = nullptr;
+        Position tail = nullptr;           
+        int totalElements = 0;
 
     public:
         SimpleLinkedList();
@@ -48,20 +50,25 @@ class SimpleLinkedList{
         bool isEmpty() const;
 
         void insertData(const Position&, const T&);
+        void insertLastData(const T&);
         void insertSortedData(const T&);
 
+
         void deleteData(const Position&);
+        
+        int getTotalElements() const;
         Position getFirstPos() const;
         Position getLastPos() const;
         Position getPrevPos(const Position&) const;
         Position getNextPos(const Position&) const;
+        Position getNodeAt(const int&);
 
         Position findData(const T&) const;
         T& retrieve(const Position&);
         T& retrieve(const int&);
 
         string toString() const;
-
+        string toString(const bool&) const;
 
         void sortDataBubble();
         void sortDataInsert();
@@ -81,7 +88,6 @@ class SimpleLinkedList{
         void sortDataShell(int(const T&, const T&));
 
         void insertSortedData(const T&, int(const T&, const T&));
-
 };
 
 //Implementación
@@ -131,45 +137,65 @@ bool SimpleLinkedList<T>::isValidPosition(const Position& pointer) const{
 
 template <class T>
 void SimpleLinkedList<T>::add(const SimpleLinkedList<T>& other){
-    Position aux(other.anchor), lastInsert(this->getLastPos()), newNode(nullptr);
-
+    Position aux = other.anchor;
+    Position lastInsert = this->tail; 
+    Position newNode = nullptr;
 
     while(aux != nullptr){
-        newNode = new Node(aux->getData());
+        newNode = new (nothrow) Node(aux->getData());
         if(newNode == nullptr)
             throw DataContainersExceptions::MemoryDeficiency("Memoria no Disponible");
 
-        if(lastInsert == nullptr)
+        if(lastInsert == nullptr) {       
             this->anchor = newNode;
-        else
+        } else {
             lastInsert->setNext(newNode);
+        }
         
         lastInsert = newNode;
         aux = aux->getNext();
+        this->totalElements++;
     }
 
+    if (lastInsert != nullptr)
+        this->tail = lastInsert;
 }
 
 template <class T>
-void SimpleLinkedList<T>::simpleInsertData(const Position& newNode, const T& e){    
-    if(newNode == nullptr){ //Insertar al Principio
+void SimpleLinkedList<T>::simpleInsertData(const Position& prev, const T& e){  
+
+    Position newNode = new (nothrow) Node(e);
+    if (newNode == nullptr)
+        throw DataContainersExceptions::MemoryOverflow("Memoria No Disponible");    
+
+    if(prev == nullptr){ 
         newNode->setNext(this->anchor);
         this->anchor = newNode;
+        if (this->tail == nullptr)
+            this->tail = newNode;
+    }
+    else{ 
+        if (!this->isValidPosition(prev)) {
+            delete newNode;
+            throw DataContainersExceptions::InvalidPosition();
+        }
+
+        newNode->setNext(prev->getNext());
+        prev->setNext(newNode);
+
+        if (prev == this->tail)
+            this->tail = newNode;
     }
 
-    else{ //Cualquier otra
-        newNode->setNext(newNode->getNext());
-        newNode->setNext(newNode);
-    }
-    
+    this->totalElements++;
 }
 
 
 template <class T>
-SimpleLinkedList<T>::SimpleLinkedList(){}
+SimpleLinkedList<T>::SimpleLinkedList() : anchor(nullptr), tail(nullptr), totalElements(0) {}
 
 template <class T>
-SimpleLinkedList<T>::SimpleLinkedList(const SimpleLinkedList<T>& other){
+SimpleLinkedList<T>::SimpleLinkedList(const SimpleLinkedList<T>& other) : anchor(nullptr), tail(nullptr), totalElements(0){
     this->add(other);
 }
 
@@ -188,11 +214,12 @@ void SimpleLinkedList<T>::insertData(const typename SimpleLinkedList<T>::Positio
     if( position != nullptr && !this->isValidPosition(position))
         throw DataContainersExceptions::InvalidPosition();
     
-    Position newNode(new (nothrow) Node(element));
-    if(newNode == nullptr)
-        throw DataContainersExceptions::MemoryOverflow("Memoria No Disponible");
-    
     this->simpleInsertData(position, element);
+}
+
+template <class T>
+void SimpleLinkedList<T>::insertLastData(const T& e){
+    this->simpleInsertData(this->tail, e);
 }
 
 template <class T>
@@ -202,27 +229,34 @@ void SimpleLinkedList<T>::insertSortedData(const T& e){
     while(aux != nullptr && e > aux->getData())
         aux = (prevPos = aux)->getNext();
 
-    Position newNode(new (nothrow) Node(e));
-    
-    if(newNode == nullptr)
-        throw DataContainersExceptions::MemoryOverflow("Memoria No Disponible");
-    
     this->simpleInsertData(prevPos, e);
-
 }
 
 template <class T>
 void SimpleLinkedList<T>::deleteData(const typename SimpleLinkedList<T>::Position& position){
-    if(!this->isValidPosition(position))
+    if(position == nullptr || !this->isValidPosition(position))
         throw DataContainersExceptions::InvalidPosition();
     
-    if(position == this->anchor) //Eliminar el primero
+    if(position == this->anchor) { 
         this->anchor = position->getNext();
-    
-    else //Cualquier otra Posición
-        this->getPrevPos(position)->setNext(position->getNext());
+        if (position == this->tail)
+            this->tail = this->anchor; 
+
+    } else { 
+        Position prev = this->getPrevPos(position);
+        prev->setNext(position->getNext());
+
+        if (position == this->tail)
+            this->tail = prev;
+    }
     
     delete position;
+    this->totalElements--;
+}
+
+template <class T>
+int SimpleLinkedList<T>::getTotalElements() const{
+    return this->totalElements;
 }
 
 template <class T>
@@ -232,14 +266,7 @@ typename SimpleLinkedList<T>::Position SimpleLinkedList<T>::getFirstPos() const{
 
 template <class T>
 typename SimpleLinkedList<T>::Position SimpleLinkedList<T>::getLastPos() const{
-    if(this->isEmpty())
-        return nullptr;
-    
-    Position aux (this->anchor);
-    while(aux->getNext() != nullptr)
-        aux = aux->getNext();
-
-    return aux;
+    return this->tail; 
 }
 
 
@@ -253,13 +280,12 @@ typename SimpleLinkedList<T>::Position SimpleLinkedList<T>::getPrevPos(const typ
         aux = aux->getNext();
     
     return aux;
-
 }
+
 template <class T>
 typename SimpleLinkedList<T>::Position SimpleLinkedList<T>::getNextPos(const typename SimpleLinkedList<T>::Position& position) const{
    return this->isValidPosition(position) ? position->getNext() : nullptr;
 }
-
 
 template <class T>
 typename SimpleLinkedList<T>::Position SimpleLinkedList<T>::findData(const T& dataSearched) const{
@@ -272,19 +298,23 @@ typename SimpleLinkedList<T>::Position SimpleLinkedList<T>::findData(const T& da
 
 template <class T>
 T& SimpleLinkedList<T>::retrieve(const typename SimpleLinkedList<T>::Position& p){
-    if(!this->isValidPosition(p))
+    if(p == nullptr || !this->isValidPosition(p))
         throw DataContainersExceptions::InvalidPosition();
     return p->getData();
 }
 
 template <class T>
 T& SimpleLinkedList<T>::retrieve(const int& pos){
+    if(pos < 0 || pos >= this->totalElements)
+        throw DataContainersExceptions::InvalidPosition();
+
     Position aux(this->anchor);
-    for(int i = 0; i <= pos; i++){
-        aux->getNext();
-        if(aux == nullptr)
-            throw DataContainersExceptions::InvalidPosition();
+    int i = 0;
+    while (i < pos) {
+        aux = aux->getNext();
+        ++i;
     }
+
     return aux->getData();
 }
 
@@ -301,6 +331,21 @@ string SimpleLinkedList<T>::toString() const{
     return result;
 }
 
+template <class T>
+std::string SimpleLinkedList<T>::toString(const bool& numered) const {
+    Position aux(this->anchor);
+    std::ostringstream oss;
+    int i(1);
+  while(aux != nullptr){
+    if(numered)
+      oss << i++ << ". "; 
+    oss << aux->getData().toString() << std::endl;
+    aux = aux->getNext();
+  } 
+  
+  return oss.str();
+}
+
 
 template <class T>
 void SimpleLinkedList<T>::deleteAll(){
@@ -311,6 +356,10 @@ void SimpleLinkedList<T>::deleteAll(){
         this->anchor = aux->getNext();
         delete aux;
     }
+
+    this->anchor = nullptr;
+    this->tail = nullptr;
+    this->totalElements = 0;
 }
 
 
@@ -370,6 +419,10 @@ void SimpleLinkedList<T>::sortDataInsert() {
     }
 
     this->anchor = sorted; 
+    // actualizar tail: será el último nodo recorrido desde anchor
+    Position t = this->anchor;
+    while (t != nullptr && t->getNext() != nullptr) t = t->getNext();
+    this->tail = t;
 }
 
 template <class T>
@@ -398,6 +451,8 @@ void SimpleLinkedList<T>::sortDataSelect() {
 
         current = current->getNext();
     }
+
+
 }
 
 template <class T>
@@ -409,12 +464,7 @@ void SimpleLinkedList<T>::sortDataShell() {
     int series[] = {4181, 2584, 1597, 987, 610, 377, 233, 144, 89, 55,
                     34,   21,   13,   8,   5,   3,   2,   1,   0};
     
-    int size = 0;
-    Position temp = this->anchor;
-    while (temp != nullptr) {
-        size++;
-        temp = temp->getNext();
-    }
+    int size = this->totalElements;
     
     int pos = 0;
     int gap = series[pos];
@@ -426,14 +476,17 @@ void SimpleLinkedList<T>::sortDataShell() {
     while (gap > 0) {
         for (int i = gap; i < size; i++) {
             Position nodeI = this->getNodeAt(i);
+            if (nodeI == nullptr) continue;
             T tempData = nodeI->getData();
             
             int j = i;
             while (j >= gap) {
                 Position nodeJMinusGap = this->getNodeAt(j - gap);
+                if (nodeJMinusGap == nullptr) break;
                 
                 if (nodeJMinusGap->getData() > tempData) {
                     Position nodeJ = this->getNodeAt(j);
+                    if (nodeJ == nullptr) break;
                     nodeJ->setData(nodeJMinusGap->getData());
                     j -= gap;
                 } else {
@@ -442,7 +495,8 @@ void SimpleLinkedList<T>::sortDataShell() {
             }
             
             Position nodeJ = this->getNodeAt(j);
-            nodeJ->setData(tempData);
+            if (nodeJ != nullptr)
+                nodeJ->setData(tempData);
         }
         
         gap = series[++pos];
@@ -451,33 +505,41 @@ void SimpleLinkedList<T>::sortDataShell() {
 
 template <class T>
 nlohmann::json SimpleLinkedList<T>::toJson() const{
-    nlohmann::json js;
     Position aux(this->anchor);
+    nlohmann::json j;
+    j["data"] = nlohmann::json::array();
     while(aux != nullptr){
-        js << aux->getData().toJson();
+        j["data"].push_back(aux->getData().toJson());
         aux = aux->getNext();
     }
-
-    return js;
+    return j;
 }
 
 template <class T>
 void SimpleLinkedList<T>::fromJson(const nlohmann::json& js){
-    T obj;
-    for(auto i : js.at("data")){
-        obj.fromJson(i);
-        this->insertData(obj);
+    this->deleteAll();
+
+    if (!js.is_object() || !js.contains("data") || !js["data"].is_array())
+        throw DataContainersExceptions::InvalidJsonFormat();
+
+    Position last = nullptr;
+    for (const auto& item : js["data"]) {
+        T obj;                
+        obj.fromJson(item);  
+        this->simpleInsertData(last, obj);
+        if (last == nullptr) {
+            last = this->anchor;
+        } else {
+            last = last->getNext();
+        }
     }
-
 }
-
-
 
 template <class T>
 SimpleLinkedList<T>& SimpleLinkedList<T>::operator = (const SimpleLinkedList<T>& other){
+    if (this == &other) return *this;
     this->deleteAll();
     this->add(other);
-
     return *this;
 }
 
@@ -537,6 +599,10 @@ void SimpleLinkedList<T>::sortDataInsert(int cmp(const T&, const T&)) {
     }
 
     this->anchor = sorted; 
+    // actualizar tail
+    Position t = this->anchor;
+    while (t != nullptr && t->getNext() != nullptr) t = t->getNext();
+    this->tail = t;
 }
 
 template <class T>
@@ -577,12 +643,7 @@ void SimpleLinkedList<T>::sortDataShell(int cmp(const T&, const T&)) {
     int series[] = {4181, 2584, 1597, 987, 610, 377, 233, 144, 89, 55,
                     34,   21,   13,   8,   5,   3,   2,   1,   0};
     
-    int size = 0;
-    Position temp = this->anchor;
-    while (temp != nullptr) {
-        size++;
-        temp = temp->getNext();
-    }
+    int size = this->totalElements;
     
     int pos = 0;
     int gap = series[pos];
@@ -594,14 +655,17 @@ void SimpleLinkedList<T>::sortDataShell(int cmp(const T&, const T&)) {
     while (gap > 0) {
         for (int i = gap; i < size; i++) {
             Position nodeI = this->getNodeAt(i);
+            if (nodeI == nullptr) continue;
             T tempData = nodeI->getData();
             
             int j = i;
             while (j >= gap) {
                 Position nodeJMinusGap = this->getNodeAt(j - gap);
+                if (nodeJMinusGap == nullptr) break;
                 
                 if (cmp(nodeJMinusGap->getData(), tempData) > 0) {
                     Position nodeJ = this->getNodeAt(j);
+                    if (nodeJ == nullptr) break;
                     nodeJ->setData(nodeJMinusGap->getData());
                     j -= gap;
                 } else {
@@ -610,7 +674,8 @@ void SimpleLinkedList<T>::sortDataShell(int cmp(const T&, const T&)) {
             }
             
             Position nodeJ = this->getNodeAt(j);
-            nodeJ->setData(tempData);
+            if (nodeJ != nullptr)
+                nodeJ->setData(tempData);
         }
         
         gap = series[++pos];
@@ -618,7 +683,10 @@ void SimpleLinkedList<T>::sortDataShell(int cmp(const T&, const T&)) {
 }
 
 template <class T>
-typename SimpleLinkedList<T>::Position SimpleLinkedList<T>::getNodeAt(int index) const {
+typename SimpleLinkedList<T>::Position SimpleLinkedList<T>::getNodeAt(const int& index) {
+    if(index < 0 || index >= this->totalElements)
+        throw DataContainersExceptions::InvalidPosition();
+    
     Position current = this->anchor;
     int count = 0;
     
@@ -636,11 +704,6 @@ void SimpleLinkedList<T>::insertSortedData(const T& e, int cmp(const T&, const T
 
     while(aux != nullptr && cmp(e, aux->getData()) > 0)
         aux = (prevPos = aux)->getNext();
-
-    Position newNode(new (nothrow) Node(e));
-    
-    if(newNode == nullptr)
-        throw DataContainersExceptions::MemoryOverflow("Memoria No Disponible");
     
     this->simpleInsertData(prevPos, e);
 }

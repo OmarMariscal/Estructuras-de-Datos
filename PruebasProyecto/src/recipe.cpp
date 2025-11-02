@@ -1,10 +1,10 @@
 #include "recipe.hpp"
 
-Recipe::Recipe() : id(-1), recipeName("default"), category(DESAYUNO), preparationTime(-1), procedureList(*new List<StringWrapper, Configure::maximunIngredientSize>), ingredientList(*new List<Ingredient, Configure::maximunIngredientSize>), creationDate(Date()) {}
+Recipe::Recipe() : id(-1), recipeName("default"), category(DESAYUNO), preparationTime(-1),  creationDate(Date()) {}
 
 Recipe::Recipe(const Recipe& other) : id(other.id), recipeName(other.recipeName), author(other.author), category(other.category), preparationTime(other.preparationTime), procedureList(other.procedureList), ingredientList(other.ingredientList), creationDate(other.creationDate) {}
 
-Recipe::Recipe(const int& i, const std::string& rN, const Name& n, const Category& c, const int& pT, const List<StringWrapper, Configure::maximunIngredientSize>& pL, const List<Ingredient, Configure::maximunIngredientSize>& iL, const Date& cD) : id(i), recipeName(rN), author(n), category(c), preparationTime(pT), procedureList(pL), ingredientList(iL), creationDate(cD) {}
+Recipe::Recipe(const int& i, const std::string& rN, const Name& n, const Category& c, const int& pT, const SimpleLinkedList<StringWrapper>& pL, const SimpleLinkedList<Ingredient>& iL, const Date& cD) : id(i), recipeName(rN), author(n), category(c), preparationTime(pT), procedureList(pL), ingredientList(iL), creationDate(cD) {}
 
 int Recipe::getId() const{
     return this->id;
@@ -26,11 +26,11 @@ int Recipe::getPreparationTime() const{
     return this->preparationTime;
 }
 
-List<StringWrapper, Configure::maximunIngredientSize>& Recipe::getProcedureList(){
+SimpleLinkedList<StringWrapper>& Recipe::getProcedureList(){
     return this->procedureList;
 }
 
-List<Ingredient, Configure::maximunIngredientSize>& Recipe::getIngredientList(){
+SimpleLinkedList<Ingredient>& Recipe::getIngredientList(){
     return this->ingredientList;
 }
 
@@ -65,7 +65,7 @@ std::string Recipe::toString(const std::string& format) const{
     oss << std::setw(53) << "" << std::endl;
     oss << std::setfill(' ');
     oss << "🧾 \033[35mProcedimiento \033[37m: " << std::endl;
-    oss << this->procedureList.toString(true);
+    oss << this->procedureList.toString();
     }
     else if(format == "table") {
         // Truncar strings largos para que quepan en columnas
@@ -83,7 +83,7 @@ std::string Recipe::toString(const std::string& format) const{
             << std::setw(12) << category << " | "
             << std::setw(18) << truncAuthor << " | "
             << std::right << std::setw(4) << preparationTime << " min | "
-            << std::left << std::setw(6) << ingredientList.getLastPosition() + 1 << " ing.";
+            << std::left << std::setw(6) << ingredientList.getTotalElements() << " ing.";
     }
 
     return oss.str();
@@ -115,11 +115,11 @@ void Recipe::setPreparationTime(const int& preparationTime){
     this->preparationTime = preparationTime;
 }
 
-void Recipe::setProcedureList(const List<StringWrapper, Configure::maximunIngredientSize>& procedureList){
+void Recipe::setProcedureList(const SimpleLinkedList<StringWrapper>& procedureList){
     this->procedureList = procedureList;
 }
 
-void Recipe::setIngredientList(const List<Ingredient, Configure::maximunIngredientSize>& ingredientList){
+void Recipe::setIngredientList(const SimpleLinkedList<Ingredient>& ingredientList){
     this->ingredientList = ingredientList;
 }
 
@@ -128,15 +128,15 @@ void Recipe::setCreationDate(const Date& date){
 }
 
 void Recipe::addIngredient(const Ingredient& ingredient){
-    if(this->ingredientList.findDataL(ingredient) != -1)
+    if(this->ingredientList.findData(ingredient) != nullptr)
         throw RecipeExceptions::RepeatedIngredient();
     this->ingredientList.insertSortedData(ingredient);
 }
 
 void Recipe::deleteIngredient(const Ingredient& ingredient){
-    if(this->ingredientList.findDataL(ingredient) == -1)
+    if(this->ingredientList.findData(ingredient) == nullptr)
         throw RecipeExceptions::NonExistenIngredient();
-    this->ingredientList.deleteData(this->ingredientList.findDataL(ingredient));
+    this->ingredientList.deleteData(this->ingredientList.findData(ingredient));
 }
 
 void Recipe::clearIngredients(){
@@ -144,9 +144,9 @@ void Recipe::clearIngredients(){
 }
 
 Ingredient* Recipe::searchIngredient(const Ingredient& ingredient){
-    if(this->ingredientList.findDataL(ingredient) == -1)
+    if(this->ingredientList.findData(ingredient) == nullptr)
         return nullptr;
-    return this->ingredientList.retrieve(this->ingredientList.findDataL(ingredient));
+    return &this->ingredientList.retrieve(this->ingredientList.findData(ingredient));
 }
 
 void Recipe::addStepToProcedure(const std::string& step){
@@ -156,9 +156,9 @@ void Recipe::addStepToProcedure(const std::string& step){
 }
 
 void Recipe::deleteStepFromProcedure(const int& index){
-    if(!this->procedureList.isValidPosition(index - 1))
+    if(index < 0 || index > this->procedureList.getTotalElements())
         throw DataContainersExceptions::InvalidPosition("No existe el paso " + std::to_string(index+1));
-    this->procedureList.deleteData(index-1);
+    this->procedureList.deleteData(this->procedureList.getNodeAt(index));
 }
 
 void Recipe::clearProcedure(){

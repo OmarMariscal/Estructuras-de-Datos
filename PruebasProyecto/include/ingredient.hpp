@@ -5,7 +5,6 @@
 #include <string>
 #include <sstream>
 #include <iomanip>
-#include <windows.h>
 
 #include "../lib/nlohmann/json.hpp"
 

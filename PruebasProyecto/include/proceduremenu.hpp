@@ -5,7 +5,7 @@
 #include <sstream>
 
 #include "basemenu.hpp"
-#include "list.hpp"
+#include "simplelinkedlist.hpp"
 #include "stringwrapped.hpp"
 #include "ownexceptions.hpp"
 #include "configure.hpp"
@@ -13,11 +13,11 @@
 
 class ProcedureMenu : protected BaseMenu{
     private:
-        List<StringWrapper, Configure::maximunIngredientSize>& process;
+        SimpleLinkedList<StringWrapper>& process;
         std::string recipeName;
     public:
         ProcedureMenu();
-        ProcedureMenu(List<StringWrapper, Configure::maximunIngredientSize>&, const std::string&);
+        ProcedureMenu(SimpleLinkedList<StringWrapper>&, const std::string&);
         ProcedureMenu(const ProcedureMenu&);
 
         void mainMenu();

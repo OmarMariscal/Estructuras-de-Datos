@@ -23,6 +23,11 @@ namespace DataContainersExceptions {
         const std::string& msg = "La posicion Ingresada es Invalida")
         : std::runtime_error(msg) {}
     };
+    
+    class InvalidJsonFormat : public std::runtime_error{
+        public:
+        explicit InvalidJsonFormat(const std::string& msg = "El formato del archivo Json es incompatinle") : std::runtime_error(msg) {}
+    };
 }  // namespace DataContainersExceptions
 
 namespace InputExceptions {
@@ -91,5 +96,12 @@ namespace MenuExceptions{
             explicit InvalidInsertCategory(const std::string& msg = "La categoria de inserción es inválida") : runtime_error(msg){}
     };
 }
+
+namespace NodeExceptions{
+    class MemoryNotAvaliable : std::runtime_error{
+        public:
+            explicit MemoryNotAvaliable( const std::string& msg = "Excepcion del Nodo") : runtime_error(msg){}
+    };
+} //namespace NodeExceptions
 
 #endif  // __OWNEXCEPTIONS_H__

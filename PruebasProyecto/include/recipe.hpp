@@ -9,7 +9,7 @@
 #include "../lib/nlohmann/json.hpp"
 
 #include "category.hpp"
-#include "list.hpp"
+#include "simplelinkedlist.hpp"
 #include "ingredient.hpp"
 #include "name.hpp"
 #include "date.hpp"
@@ -23,22 +23,22 @@ class Recipe{
         Name author;
         Category category;
         int preparationTime; 
-        List<StringWrapper, Configure::maximunIngredientSize> procedureList;
-        List<Ingredient, Configure::maximunIngredientSize> ingredientList;
+        SimpleLinkedList<StringWrapper> procedureList;
+        SimpleLinkedList<Ingredient> ingredientList;
         Date creationDate;
 
     public:
         Recipe();
         Recipe(const Recipe&);
-        Recipe(const int&, const std::string&, const Name&, const Category&, const int&, const List<StringWrapper, Configure::maximunIngredientSize>&, const List<Ingredient, Configure::maximunIngredientSize>&, const Date&);
+        Recipe(const int&, const std::string&, const Name&, const Category&, const int&, const SimpleLinkedList<StringWrapper>&, const SimpleLinkedList<Ingredient>&, const Date&);
         
         int getId() const;
         std::string getRecipeName() const;
         Name getAuthor() const;
         Category getCategory() const;
         int getPreparationTime() const;
-        List<StringWrapper, Configure::maximunIngredientSize>& getProcedureList();
-        List<Ingredient, Configure::maximunIngredientSize>& getIngredientList();
+        SimpleLinkedList<StringWrapper>& getProcedureList();
+        SimpleLinkedList<Ingredient>& getIngredientList();
         Date getCreationDate() const;
 
         std::string toString(const std::string& = "full") const;
@@ -49,8 +49,8 @@ class Recipe{
         void setAuthor(const Name&);
         void setCategory(const Category&);
         void setPreparationTime(const int&);
-        void setProcedureList(const List<StringWrapper, Configure::maximunIngredientSize>&);
-        void setIngredientList(const List<Ingredient, Configure::maximunIngredientSize>&);
+        void setProcedureList(const SimpleLinkedList<StringWrapper>&);
+        void setIngredientList(const SimpleLinkedList<Ingredient>&);
         void setCreationDate(const Date&);
 
         //Algoritmicos 
