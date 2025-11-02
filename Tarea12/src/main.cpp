@@ -1,6 +1,8 @@
-#include "notationtransformermenu.hpp"
+#include <windows.h>
+#include "menu.hpp"
 int main() {
-  NotationTransformerMenu menu;
+  SetConsoleOutputCP(CP_UTF8);  
+  Menu menu;
 
   return 0;
 }

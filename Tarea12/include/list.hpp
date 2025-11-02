@@ -179,7 +179,8 @@ void List<T>::add(const List<T>& other) {
   Position aux(other.header->getNext()), newNode;
 
   while (aux != other.header) {
-    if (newNode = new Node(aux->getData()) == newNode == nullptr)
+    newNode = new (nothrow) Node(aux->getData());
+    if (newNode == nullptr)
       throw DataContainersExceptions::MemoryDeficiency("Memoria no Disponible");
 
     newNode->setPrev(this->header->getPrev());

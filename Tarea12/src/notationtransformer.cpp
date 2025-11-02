@@ -99,9 +99,10 @@ bool NotationTransformer::isValidExpresion(const Queue<char>& infixExpresion) {
 }
 
 NotationTransformer::NotationTransformer()
-    : postfixQueue(*new Queue<char>),
-      infixQueue(*new Queue<char>),
-      operatorStack(*new Stack<char>) {}
+    : 
+    infixQueue(*new Queue<char>),
+    postfixQueue(*new Queue<char>),  
+    operatorStack(*new Stack<char>) {}
 
 NotationTransformer::NotationTransformer(const NotationTransformer& other)
     : infixQueue(other.infixQueue),
@@ -114,6 +115,8 @@ NotationTransformer::NotationTransformer(const Queue<char>& iQ)
       operatorStack(*new Stack<char>) {
   setInflixQueue(iQ);
 }
+
+NotationTransformer::~NotationTransformer() = default;
 
 void NotationTransformer::setInflixQueue(const Queue<char>& infixNotation) {
   if (this->isValidExpresion(infixNotation))  // Si es válida
@@ -144,12 +147,15 @@ void NotationTransformer::transformToPosfija() {
 
     if (this->isOperator(caracter)) {  // Si es operador, vaciamos los que sean
                                        // de mayor o igual valor
+      bool isRightAssociative = (caracter == '^');
+
       while (!operatorStack.isEmpty() &&
-             (this->getPrecedence(caracter) <=
-              this->getPrecedence(operatorStack.getTop())) &&
-             operatorStack.getTop() != ')') {
+        operatorStack.getTop() != '(' &&
+        ((!isRightAssociative && getPrecedence(caracter) <= getPrecedence(operatorStack.getTop())) ||
+        (isRightAssociative && getPrecedence(caracter) < getPrecedence(operatorStack.getTop())))) 
         postfixQueue.enqueue(operatorStack.pop());
-      }
+            
+
       operatorStack.push(caracter);  // Guardamos el operador
       continue;
     } else if (caracter ==
@@ -173,7 +179,7 @@ void NotationTransformer::transformToPosfija() {
 Queue<char> NotationTransformer::stringToQueue(const std::string& s) {
   Queue<char> q;
 
-  for (int i = 0; i < s.size(); ++i) {
+  for (int i(0); i < s.size(); ++i) {
     char c = s[i];
     if (c == ' ')  // Ignorar Espacios
       continue;

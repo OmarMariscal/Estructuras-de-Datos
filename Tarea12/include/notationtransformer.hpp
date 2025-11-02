@@ -22,6 +22,8 @@ class NotationTransformer {
   NotationTransformer();
   NotationTransformer(const NotationTransformer&);
   NotationTransformer(const Queue<char>&);
+  
+  ~NotationTransformer();
 
   void setInflixQueue(const Queue<char>&);
   void transformToPosfija();
