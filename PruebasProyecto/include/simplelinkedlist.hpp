@@ -36,6 +36,7 @@ class SimpleLinkedList{
         bool isValidPosition(const Position&) const;
         void add(const SimpleLinkedList<T>&);
         void simpleInsertData(const Position&, const T&);
+        void updateTail():
 
         Position anchor = nullptr;
         Position tail = nullptr;           
@@ -188,6 +189,20 @@ void SimpleLinkedList<T>::simpleInsertData(const Position& prev, const T& e){
     }
 
     this->totalElements++;
+}
+
+template <class T>
+void SimpleLinkedList<T>::updateTail(){
+    Position aux(this->anchor);
+    if(aux == nullptr){
+        this->tail = nullptr;
+        return;
+    }
+
+    while(aux->getNext() != nullptr)
+        aux = aux->getNext();
+    
+    this->tail = aux;
 }
 
 
@@ -419,10 +434,7 @@ void SimpleLinkedList<T>::sortDataInsert() {
     }
 
     this->anchor = sorted; 
-    // actualizar tail: será el último nodo recorrido desde anchor
-    Position t = this->anchor;
-    while (t != nullptr && t->getNext() != nullptr) t = t->getNext();
-    this->tail = t;
+    this->updateTail();
 }
 
 template <class T>
@@ -599,10 +611,8 @@ void SimpleLinkedList<T>::sortDataInsert(int cmp(const T&, const T&)) {
     }
 
     this->anchor = sorted; 
-    // actualizar tail
-    Position t = this->anchor;
-    while (t != nullptr && t->getNext() != nullptr) t = t->getNext();
-    this->tail = t;
+    
+    this->updateTail();
 }
 
 template <class T>
