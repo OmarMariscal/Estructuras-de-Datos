@@ -199,9 +199,7 @@ void SimpleLinkedList<T>::updateTail(){
         return;
     }
 
-    while(aux->getNext() != nullptr)
-        aux = aux->getNext();
-    
+    while(aux->getNext() != nullptr) aux = aux->getNext();
     this->tail = aux;
 }
 
@@ -611,7 +609,6 @@ void SimpleLinkedList<T>::sortDataInsert(int cmp(const T&, const T&)) {
     }
 
     this->anchor = sorted; 
-    
     this->updateTail();
 }
 
