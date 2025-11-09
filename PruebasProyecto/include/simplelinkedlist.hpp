@@ -36,7 +36,7 @@ class SimpleLinkedList{
         bool isValidPosition(const Position&) const;
         void add(const SimpleLinkedList<T>&);
         void simpleInsertData(const Position&, const T&);
-        void updateTail():
+        void updateTail();
 
         Position anchor = nullptr;
         Position tail = nullptr;           
@@ -528,9 +528,6 @@ nlohmann::json SimpleLinkedList<T>::toJson() const{
 template <class T>
 void SimpleLinkedList<T>::fromJson(const nlohmann::json& js){
     this->deleteAll();
-
-    if (!js.is_object() || !js.contains("data") || !js["data"].is_array())
-        throw DataContainersExceptions::InvalidJsonFormat();
 
     Position last = nullptr;
     for (const auto& item : js["data"]) {

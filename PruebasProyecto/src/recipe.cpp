@@ -233,8 +233,8 @@ void Recipe::fromJson(const nlohmann::json& js) {
     this->author.fromJson(js.at("author"));
     this->category = js.at("category").get<Category>();
     this->preparationTime = js.at("preparation time").get<int>();
-    this->procedureList.fromJson(js.at("procedure list").at("data"));
-    this->ingredientList.fromJson(js.at("ingredient list").at("data"));
+    this->procedureList.fromJson(js.at("procedure list"));
+    this->ingredientList.fromJson(js.at("ingredient list"));
     this->creationDate.fromJson(js.at("creation date"));
 }
 

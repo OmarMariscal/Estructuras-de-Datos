@@ -236,18 +236,18 @@ Recipe* Menu::searcher(const string& prompt, int& index) {
         oss << "\n" << this->insertColorText("    Ingrese el ID a Buscar: ", "cyan");
         dataInt = this->readInteger(oss.str(),0,99999);
         searchedRecipe.setId(dataInt);
-        index = this->recipeBook.findDataL(searchedRecipe);
+        index = this->recipeBook.findIndex(searchedRecipe);
         break;
     case 'B':
         oss << "\n" << this->insertColorText("    Ingrese el Nombre de la Receta a Buscar: ", "cyan");
         dataString = this->readLinePrompt(oss.str());
         searchedRecipe.setRecipeName(dataString);
-        index = this->recipeBook.findDataL(searchedRecipe, Recipe::compareByName);
+        index = this->recipeBook.findIndex(searchedRecipe, Recipe::compareByName);
         break;
     case 'C':
         dataName = this->readName(oss.str(), this->insertColorText("    Ingrese el Nombre del Chef: ", "cyan"), this->insertColorText("    Inhrese el Apellido del Chef: ", "cyan"));
         searchedRecipe.setAuthor(dataName);
-        index = this->recipeBook.findDataL(searchedRecipe, Recipe::compareByAuthor);
+        index = this->recipeBook.findIndex(searchedRecipe, Recipe::compareByAuthor);
         break;
     case 'D':
         oss << this->insertColorText("    Ingrese la Categoría : ", "cyan");
@@ -255,13 +255,13 @@ Recipe* Menu::searcher(const string& prompt, int& index) {
 
         dataCategory = this->readCategory(oss.str());
         searchedRecipe.setCategory(dataCategory);
-        index = this->recipeBook.findDataL(searchedRecipe, Recipe::compareByCategory);
+        index = this->recipeBook.findIndex(searchedRecipe, Recipe::compareByCategory);
         break;
     case 'R':
         return nullptr;
     }
 
-    return index == -1 ? nullptr : this->recipeBook.retrieve(index);
+    return index == -1 ? nullptr : &this->recipeBook.retrieve(this->recipeBook.getNodeAt(index));
 
 }
 
@@ -291,9 +291,9 @@ void Menu::addRecipe() {
             while(true){
                 dataInt = this->readInteger(oss.str(), 0, 9999999);
                 newRecipe.setId(dataInt);
-                dataInt2 = this->recipeBook.findDataL(newRecipe);
+                dataInt2 = this->recipeBook.findIndex(newRecipe);
                 if(dataInt2 != -1){
-                    dataString = this->recipeBook.retrieve(dataInt2)->toString();
+                    dataString = this->recipeBook.retrieve(this->recipeBook.getNodeAt(dataInt2)).toString();
                     this->errorMessage("El ID ya esta registrado: \n" + dataString + "\nIntentelo Nuevamente");
                 }
                 else
@@ -389,7 +389,7 @@ void Menu::deleteRecipe() {
             oss << ver << endl;
 
             if(ver == 'S'){
-                this->recipeBook.deleteData(index);
+                this->recipeBook.deleteData(this->recipeBook.getNodeAt(index));
                 oss << this->centerText(this->insertColorText("¡Receta Eliminada Con Exito!", "green")) << endl;
                 this->modify = true;
             }
@@ -456,9 +456,9 @@ void Menu::editRecipe() {
                         oss << this->insertColorText("    Ingrese el nuevo ID: ", "yellow");
                         dataInt = this->readInteger(oss.str(),0,99999);
                         searched.setId(dataInt);
-                        dataInt2 = this->recipeBook.findDataL(searched);
+                        dataInt2 = this->recipeBook.findIndex(searched);
                         if(dataInt2 != -1)
-                            this->errorMessage("ID ya registrado: \n" + this->recipeBook.retrieve(dataInt2)->toString());
+                            this->errorMessage("ID ya registrado: \n" + this->recipeBook.retrieve(this->recipeBook.getNodeAt(dataInt2)).toString());
                         else{
                             objetive->setId(dataInt);
                             oss << dataInt << endl;
@@ -614,7 +614,7 @@ void Menu::searchMenu() {
 }
 
 void Menu::sortRecipes(){
-    if(this->recipeBook.getLastPosition() + 1 < 2){
+    if(this->recipeBook.getTotalElements() < 2){
         this->errorMessage("No Hay Suficientes Recetas Registradas.\nNo Se Requiere Ordenamiento.");
         return;
     }
@@ -866,7 +866,7 @@ void Menu::mainMenu() {
     } while(repeater);
 }
 
-Menu::Menu() : recipeBook(* new List<Recipe>), sortedBy("id"), modify(false) {
+Menu::Menu() : recipeBook(* new DoubleLinkedList<Recipe>), sortedBy("id"), modify(false) {
     this->showStartupAnimation();
     this->mainMenu();
 }
@@ -876,7 +876,7 @@ Menu::Menu(const Menu& other) : recipeBook(other.recipeBook) {
     this->mainMenu();
 }
 
-Menu::Menu(List<Recipe>& l, const std::string& s, const bool& m) : recipeBook(l), sortedBy(s), modify(m) {
+Menu::Menu(DoubleLinkedList<Recipe>& l, const std::string& s, const bool& m) : recipeBook(l), sortedBy(s), modify(m) {
     this->showStartupAnimation();
     this->mainMenu();
 }

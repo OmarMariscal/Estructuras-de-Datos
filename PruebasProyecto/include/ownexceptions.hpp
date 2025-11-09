@@ -104,4 +104,11 @@ namespace NodeExceptions{
     };
 } //namespace NodeExceptions
 
+namespace JsonExceptions{
+    class InvalidJsonFile : std::runtime_error{
+        public:
+            explicit InvalidJsonFile(const std::string& msg = "Archivo formato json inválido") : runtime_error(msg){}      
+    };
+}
+
 #endif  // __OWNEXCEPTIONS_H__

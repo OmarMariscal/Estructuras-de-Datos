@@ -11,7 +11,7 @@
 
 #include "basemenu.hpp"
 #include "ownexceptions.hpp"
-#include "list.hpp"
+#include "doublelinkedlist.hpp"
 #include "recipe.hpp"
 #include "configure.hpp"
 #include "ingredientMenu.hpp"
@@ -19,7 +19,7 @@
 
 class Menu : protected BaseMenu{
     private:
-        List<Recipe>& recipeBook;
+        DoubleLinkedList<Recipe>& recipeBook;
         std::string sortedBy = "id";
         bool modify = false;
 
@@ -53,7 +53,7 @@ class Menu : protected BaseMenu{
         //Constructores
         Menu();
         Menu(const Menu&);
-        Menu(List<Recipe>&, const std::string&, const bool&);
+        Menu(DoubleLinkedList<Recipe>&, const std::string&, const bool&);
 };
 
 
