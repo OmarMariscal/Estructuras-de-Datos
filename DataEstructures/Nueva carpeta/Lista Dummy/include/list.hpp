@@ -2,7 +2,6 @@
 #define __LIST_H__
 
 #include <string>
-
 #include "ownexceptions.hpp"
 
 using namespace std;
