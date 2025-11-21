@@ -12,45 +12,37 @@ bool Menu::handleOption(const string& prompt) {
     switch(op){
         case 'A':
             this->addRecipe();
-            return true;
             break;
         case 'B':
             this->deleteRecipe();
-            return true;
             break;
         case 'C':
             this->editRecipe();
-            return true;
             break;
         case 'D':
             this->searchMenu();
-            return true;
             break;
         case 'E':
             this->showRecipes();
-            return true;
             break;
         case 'F':
             this->sortRecipes();
-            return true;
             break;
         case 'G':
             this->saveToDisk();
-            return true;
             break;
         case 'H':
             this->readFromDisk();
-            return true;
             break;
         case 'I':
             this->exportRecipe();
-            return true;
             break;
         case 'S':
             this->exitMenu();
             return false;
             break;
     }
+    return true;
 }
 
 void Menu::showStartupAnimation(int duration_ms,
@@ -58,7 +50,7 @@ void Menu::showStartupAnimation(int duration_ms,
                                 const std::string& alumno,
                                 const std::string& profesor,
                                 const std::string& materia,
-                                const std::string& fecha) const
+                                const std::string& fecha)
 {
     // ASCII logo (personalizable)
     const char* logo[] = {
@@ -100,7 +92,7 @@ void Menu::showStartupAnimation(int duration_ms,
     };
 
     // Clear and draw top margin
-    system("CLS");
+    this->cleanScreen();
     for (int i = 0; i < topMarginLines; ++i) std::cout << "\n";
 
     // Top border
@@ -185,7 +177,7 @@ void Menu::showStartupAnimation(int duration_ms,
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
 
     // Clear screen before entering menu (optional)
-    system("CLS");
+    this->cleanScreen();
 }
 
 
@@ -206,7 +198,7 @@ void Menu::insertSortedDataByCategory(const Recipe& newData) {
         throw MenuExceptions::InvalidInsertCategory();
 }
 
-Recipe* Menu::searcher(const string& prompt, int& index) {
+Recipe* Menu::searcher(const string& prompt) {
     ostringstream oss;
     char op;
     int dataInt;
@@ -217,7 +209,7 @@ Recipe* Menu::searcher(const string& prompt, int& index) {
 
     string colorOpts("cyan");
     Recipe searchedRecipe;
-    
+    Recipe* found(nullptr);
 
     oss << prompt << endl;
     oss << this->insertColorText("Mediante Que Parámetro Quiere Buscar Su Receta: ", "green") << endl;
@@ -230,39 +222,42 @@ Recipe* Menu::searcher(const string& prompt, int& index) {
     
     op = this->readChar(oss.str(), "A,B,C,D,R");
     oss << op << endl;
-
+    
+    try{
     switch (op){
-    case 'A':
-        oss << "\n" << this->insertColorText("    Ingrese el ID a Buscar: ", "cyan");
-        dataInt = this->readInteger(oss.str(),0,99999);
-        searchedRecipe.setId(dataInt);
-        index = this->recipeBook.findIndex(searchedRecipe);
-        break;
-    case 'B':
-        oss << "\n" << this->insertColorText("    Ingrese el Nombre de la Receta a Buscar: ", "cyan");
-        dataString = this->readLinePrompt(oss.str());
-        searchedRecipe.setRecipeName(dataString);
-        index = this->recipeBook.findIndex(searchedRecipe, Recipe::compareByName);
-        break;
-    case 'C':
-        dataName = this->readName(oss.str(), this->insertColorText("    Ingrese el Nombre del Chef: ", "cyan"), this->insertColorText("    Inhrese el Apellido del Chef: ", "cyan"));
-        searchedRecipe.setAuthor(dataName);
-        index = this->recipeBook.findIndex(searchedRecipe, Recipe::compareByAuthor);
-        break;
-    case 'D':
-        oss << this->insertColorText("    Ingrese la Categoría : ", "cyan");
-        oss << "    Categoría: " << this->insertColorText("[1] ", "magenta") << this->insertColorText("Desayuno", "green") << this->insertColorText("[2] ", "magenta") << this->insertColorText("Comida", "green") << this->insertColorText("[3] ", "magenta") << this->insertColorText("Cena", "green") << this->insertColorText("[4] ", "magenta") << this->insertColorText("Navideño", "green") << ": "; 
+        case 'A':
+                oss << "\n" << this->insertColorText("    Ingrese el ID a Buscar: ", "cyan");
+                dataInt = this->readInteger(oss.str(),0,99999);
+                searchedRecipe.setId(dataInt);
+                found = &this->recipeBook.retrieve(this->recipeBook.findData(searchedRecipe));
+                break;
+            case 'B':
+                oss << "\n" << this->insertColorText("    Ingrese el Nombre de la Receta a Buscar: ", "cyan");
+                dataString = this->readLinePrompt(oss.str());
+                searchedRecipe.setRecipeName(dataString);
+                found = &this->recipeBook.retrieve(this->recipeBook.findData(searchedRecipe, Recipe::compareByName));
+                break;
+            case 'C':
+                dataName = this->readName(oss.str(), this->insertColorText("    Ingrese el Nombre del Chef: ", "cyan"), this->insertColorText("    Inhrese el Apellido del Chef: ", "cyan"));
+                searchedRecipe.setAuthor(dataName);
+                found = &this->recipeBook.retrieve(this->recipeBook.findData(searchedRecipe, Recipe::compareByAuthor));
+                break;
+            case 'D':
+                oss << this->insertColorText("    Ingrese la Categoría : ", "cyan");
+                oss << "    Categoría: " << this->insertColorText("[1] ", "magenta") << this->insertColorText("Desayuno", "green") << this->insertColorText("[2] ", "magenta") << this->insertColorText("Comida", "green") << this->insertColorText("[3] ", "magenta") << this->insertColorText("Cena", "green") << this->insertColorText("[4] ", "magenta") << this->insertColorText("Navideño", "green") << ": "; 
 
-        dataCategory = this->readCategory(oss.str());
-        searchedRecipe.setCategory(dataCategory);
-        index = this->recipeBook.findIndex(searchedRecipe, Recipe::compareByCategory);
-        break;
-    case 'R':
+                dataCategory = this->readCategory(oss.str());
+                searchedRecipe.setCategory(dataCategory);
+                found = &this->recipeBook.retrieve(this->recipeBook.findData(searchedRecipe, Recipe::compareByCategory));
+                break;
+            case 'R':
+                return nullptr;
+            }
+    } catch(const DataContainersExceptions::InvalidPosition& ex){
         return nullptr;
     }
 
-    return index == -1 ? nullptr : &this->recipeBook.retrieve(this->recipeBook.getNodeAt(index));
-
+    return found;
 }
 
 void Menu::addRecipe() {
@@ -289,7 +284,7 @@ void Menu::addRecipe() {
         try{
             oss << this->insertColorText("    Ingrese el ID Numérico del Platillo: ", "cyan");
             while(true){
-                dataInt = this->readInteger(oss.str(), 0, 9999999);
+                dataInt = this->readPositiveInteger(oss.str());
                 newRecipe.setId(dataInt);
                 dataInt2 = this->recipeBook.findIndex(newRecipe);
                 if(dataInt2 != -1){
@@ -347,7 +342,7 @@ void Menu::addRecipe() {
             this->modify = true;
 
         } catch(const InputExceptions::OperationCanceledException& ex){
-            this->errorMessage("Operación Canelada\nRegresando...");
+            this->errorMessage("Operación cancelada\nRegresando...");
             return;
         }
         oss << this->centerText(this->insertColorText(" ✅ !Receta Agrega Con Éxito¡", "green"));
@@ -365,7 +360,6 @@ void Menu::deleteRecipe() {
     
     ostringstream oss;
     char op, ver;
-    int index = 23;
     Recipe* objetive = nullptr;
     this->cleanScreen();
     
@@ -374,7 +368,9 @@ void Menu::deleteRecipe() {
         oss.str("");
         oss.clear();
         oss << this->windowHeader("RECETARIO DIGITAL - ELIMINAR UNA RECETA");
-        objetive = this->searcher(oss.str(), index);
+        objetive = this->searcher(oss.str());
+
+        
 
         if(objetive == nullptr){
             oss << "Receta " << this->insertColorText("No Encontrada", "red") << endl;
@@ -389,7 +385,7 @@ void Menu::deleteRecipe() {
             oss << ver << endl;
 
             if(ver == 'S'){
-                this->recipeBook.deleteData(this->recipeBook.getNodeAt(index));
+                this->recipeBook.deleteData(this->recipeBook.findData(*objetive));
                 oss << this->centerText(this->insertColorText("¡Receta Eliminada Con Exito!", "green")) << endl;
                 this->modify = true;
             }
@@ -401,9 +397,13 @@ void Menu::deleteRecipe() {
             op = this->readChar(oss.str(), "S,N");
         }
 
+        if(this->recipeBook.isEmpty()){
+            this->errorMessage("Ya No Hay Recetas Registradas\nVuelva a Ingresar Más Recetas");
+            break;
+        }
+
     }while(op != 'N' && !this->recipeBook.isEmpty());
 
-    this->errorMessage("Ya No Hay Recetas Registradas\nVuelva a Ingresar Más Recetas");
 }
 
 void Menu::editRecipe() {
@@ -419,7 +419,6 @@ void Menu::editRecipe() {
     Category dataCategory;
     Date dataDate;
     ostringstream oss;
-    int index;
     Recipe* objetive;
     Recipe searched;
     
@@ -429,7 +428,7 @@ void Menu::editRecipe() {
         
         this->cleanScreen();
         oss << this->windowHeader("✍️ RECETARIO DIGITA - EDITAR RECETA");
-        objetive = this->searcher(oss.str(), index);
+        objetive = this->searcher(oss.str());
 
         if(objetive != nullptr){
             oss << objetive->toString() << endl;
@@ -486,7 +485,7 @@ void Menu::editRecipe() {
                     case 'E':
                     
                         oss << this->insertColorText("    Ingrese el Nuevo Tiempo de Preparación en Minutos: ", "yellow");
-                        dataInt = this->readInteger(oss.str(), 0, 999999);
+                        dataInt = this->readPositiveInteger(oss.str());
                         oss << dataInt << endl;
                         objetive->setPreparationTime(dataInt);
                         break;
@@ -512,8 +511,16 @@ void Menu::editRecipe() {
                 this->errorMessage("Operación Cancelada\nRegresando...");
                 return;
             }
-            if(index != -1)
+            if(objetive != nullptr){
+                oss.str("");
+                oss.clear();
+                
+                this->cleanScreen();
+                oss << this->windowHeader("✍️ RECETARIO DIGITA - EDITAR RECETA");
+                oss << objetive->toString() << endl;
                 oss << this->centerText(this->insertColorText("Modificación Realizada con Exito", "green"));
+
+            }
         }
 
         else
@@ -595,13 +602,12 @@ void Menu::searchMenu() {
     ostringstream oss;
     Recipe* searched;
     char op;
-    int aux;
     
     do{
         oss.str("");
         oss.clear();
         oss << this->windowHeader(" 🔍 RECETARIO DIGITAL - BUSCAR RECETA");
-        searched = this->searcher(oss.str(), aux);
+        searched = this->searcher(oss.str());
 
         if(searched == nullptr)
             oss << this->centerText( "Receta " + this->insertColorText("No Encontrada", "red"));
@@ -672,7 +678,7 @@ void Menu::sortRecipes(){
     oss << this->centerText(this->insertColorText("¡Datos Ordenados Con Éxito!", "green"));
     this->cleanScreen();
     cout << oss.str();
-    system("PAUSE");
+    this->enterToContinue(false);
 }
 
 void Menu::saveToDisk() {
@@ -711,7 +717,7 @@ void Menu::saveToDisk() {
     this->cleanScreen();
     oss << this->insertColorText("Regresando...", "magenta");
     cout << oss.str() << endl;
-    system("PAUSE");
+    this->enterToContinue(false);
 
 }
 
@@ -723,7 +729,7 @@ void Menu::readFromDisk() {
     oss << this->insertColorText("ADVERTENCIA: Si se leen datos con registros en la aplicación\n estos serán sobrescritos", "red") << endl;
     oss << this->centerText(this->insertColorText("Ingrese '/r' para cancelar", "cyan")) << endl;
     oss << this->divider("-");
-    oss << this->insertColorText("Ingrese el Nombre de la Base de Datos .json (sin la extensión):", "yellow");
+    oss << this->insertColorText("Ingrese el Nombre de la Base de Datos .json (sin la extensión): ", "yellow");
     
     try{
         dataString = this->readLinePrompt(oss.str());
@@ -763,7 +769,7 @@ void Menu::readFromDisk() {
     this->cleanScreen();
     oss << this->insertColorText("Regresando...","magenta");
     cout << oss.str() << endl;
-    system("PAUSE");
+    this->enterToContinue(false);
 }
 
 void Menu::exportRecipe(){
@@ -774,7 +780,6 @@ void Menu::exportRecipe(){
 
     ostringstream oss;
     Recipe* r;
-    int index;
     string dataString;
     char op;
 
@@ -782,7 +787,7 @@ void Menu::exportRecipe(){
         oss.str("");
         oss.clear();
         oss << this->windowHeader("RECETARIO DIGITAL - EXPORTAR UNA RECETA.");
-        r = this->searcher(oss.str(), index);
+        r = this->searcher(oss.str());
 
         if(r == nullptr){
             oss << this->centerText(this->insertColorText("Receta No Encontrada", "red")) << endl;
@@ -827,13 +832,13 @@ void Menu::exitMenu(){
     oss.str("");
     oss.clear();
     oss << this->divider();
-    oss << this->centerText(this->insertColorText("Saliendo del Programa.", "cyan")) << endl;
+    oss << this->centerText(this->insertColorText("Saliendo del Programa.", "cyan"));
     oss << this->centerText(this->insertColorText("Que Tenga un Lindo Día :D", "cyan")) << endl;
     oss << this->divider();
 
     this->cleanScreen();
     cout << oss.str();
-    system("PAUSE");
+    this->enterToContinue(false);
 }
 
 void Menu::mainMenu() {

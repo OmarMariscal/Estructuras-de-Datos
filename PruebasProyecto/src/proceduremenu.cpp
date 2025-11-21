@@ -100,26 +100,22 @@ void ProcedureMenu::deleteProcedure(){
                 oss << this->process.toString(true) << endl;
                 oss << this->divider();
             }
-            oss << this->centerText("Ingrese 'fin' para regresar");
+            oss << this->centerText("Ingrese '/r' para regresar");
             oss << this->insertColorText("    Ingrese el Número del Paso a Eliminar: ", "cyan");
             
             while(true){
                 try{
                     dataString = this->readLinePrompt(oss.str());
-                    if( this->standarString(dataString) == "FIN"){
-                        oss << this->centerText(this->insertColorText("Regresando...", "blue"));
-                        return;
-                    }
-
+                    oss << dataString << endl;
                     dataInt = stoi(dataString) - 1;
-                
-                    this->process.retrieve(dataInt);
-                    oss << dataInt << endl;
-                    oss << this->insertColorText("¿Esta Seguro que Desea Eliminar Este Ingrediente? (S/N): ", "yellow");
+                    searchedStep = this->process.retrieve(dataInt);
+
+                    oss << this->insertColorText("¿Esta Seguro que Desea Eliminar Este Paso? (S/N): ", "yellow");
                     op = this->readChar(oss.str(), "S,N");
                     oss << op << endl;
+
                     if(op == 'S'){
-                        this->process.deleteData(this->process.getNodeAt(dataInt));
+                        this->process.deleteData(this->process.findData(searchedStep));
                         oss << this->centerText(this->insertColorText("!Paso Eliminado Con Exito!", "green"));
                     }
                     else
@@ -134,18 +130,21 @@ void ProcedureMenu::deleteProcedure(){
                     this->errorMessage("Entrada No Numérica\nInténtelo Nuevamente");
                 }
         }
-            oss << " ❌ ¿Desea Eliminar Más Ingredientes? (S/N): ";
+            oss << " ❌ ¿Desea Eliminar Más Pasos? (S/N): ";
 
             op = this->readChar(oss.str(), "S,N");
         
-    } while(op != 'N' && !this->process.isEmpty());
+        if(this->process.isEmpty()){
+            this->errorMessage("Ya No Hay Pasos Registrados.\nRegresando...");
+            break;
+        }
 
-    this->errorMessage("Ya No Hay Pasos Registrados.\nRegresando...");
+    } while(op != 'N' && !this->process.isEmpty());
 }
 
 void ProcedureMenu::editProcedure(){
         if(this->process.isEmpty()){
-            this->errorMessage("No Hay Ingredientes en Esta Receta\nRegresando...");
+            this->errorMessage("No Hay Pasos en Esta Receta\nRegresando...");
             return;
         }
     ostringstream oss;
@@ -165,18 +164,20 @@ void ProcedureMenu::editProcedure(){
                 oss << this->insertColorText("    Ingrese '/r' Para Cancelar", "red") << endl;
                 oss << this->insertColorText("    Ingrese el Índice del Paso a Modificar: ", "cyan");
                 
-                dataInt = this->readInteger(oss.str(), 0, 999999);
+                dataInt = this->readPositiveInteger(oss.str());
+                oss << dataInt << endl;
 
                 try{
                     StringWrapper& searched(this->process.retrieve(dataInt - 1));
-                    oss << this->insertColorText("v    Ingrese la Modificación para el Paso", "yellow");
+                    oss << this->insertColorText("    Ingrese la Modificación para el Paso: ", "yellow");
                     searched = this->readLinePrompt(oss.str());
+                    oss << searched << endl;
                     oss << this->centerText(this->insertColorText("¡Modificación Hecha Con Exito!", "green"));
                 } catch(const DataContainersExceptions::InvalidPosition& ex){
                     oss << this->centerText("Paso" + this->insertColorText("No Encontrado", "red"));
                 }
     
-                oss << " ❌ ¿Desea Modificar Más Ingredientes? (S/N): ";
+                oss << " ❌ ¿Desea Modificar Más Pasos? (S/N): ";
                 op = this->readChar(oss.str(), "S,N");
 
         } while(op != 'N');       

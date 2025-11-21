@@ -7,9 +7,10 @@ int BaseMenu::readInteger(string oss, const int& lowerLimit, const int& upperLim
   int result;
   while (true) {
     try {
-      system("CLS");
+      this->cleanScreen();
       cout << oss;
       getline(cin, aux);
+
 
       if (aux == "/r")
         throw InputExceptions::OperationCanceledException("Cancelado por usuario");
@@ -28,12 +29,41 @@ int BaseMenu::readInteger(string oss, const int& lowerLimit, const int& upperLim
   return result;
 }
 
+int BaseMenu::readPositiveInteger(const std::string& prompt,
+                                  const bool& ceroAllowed) {
+  string aux("");
+  int result;
+  while (true) {
+    try {
+      this->cleanScreen();
+      cout << prompt;
+      getline(cin, aux);
+
+      if (aux == "/r")
+        throw InputExceptions::OperationCanceledException(
+            "Cancelado por usuario");
+
+      result = stoi(aux);
+
+      if (result < 0 || (result == 0 && !ceroAllowed))
+        throw InputExceptions::InvalidOption("Numero Fuera de Rango");
+      break;
+    } catch (const InputExceptions::InvalidOption& ex) {
+      this->errorMessage("Numero Fuera de Rango\nVuelva a Intentarlo");
+    } catch (const invalid_argument& msg) {
+      this->errorMessage(
+          "Entrada No Numérica\nAsegúrese de Ingresar Un Número Válido");
+    }
+  }
+  return result;
+}
+
 float BaseMenu::readFloat(const std::string& oss, const float& lowerLimit, const float& upperLimit) {
   std::string aux("");
   float result;
   while (true) {
     try {
-      system("CLS");
+      this->cleanScreen();
       std::cout << oss;
       std::getline(std::cin, aux);
 
@@ -50,7 +80,7 @@ float BaseMenu::readFloat(const std::string& oss, const float& lowerLimit, const
     } catch (const std::out_of_range& ex) {
       this->errorMessage("Entrada Fuera de Rango\nInténtelo Nuevamente");
     } catch (const InputExceptions::InvalidOption& msg) {
-      system("CLS");
+      this->cleanScreen();
       std::cout << msg.what() << std::endl;
     }
   }
@@ -72,13 +102,13 @@ Name BaseMenu::readName(string prompt, const string& petition, const string& pet
 string BaseMenu::readLinePrompt(const string& prompt, bool allowEmpty) {
   string result;
   while (true) {
-    system("CLS");
+    this->cleanScreen();
     cout << prompt;
     getline(cin, result);
     if(result == "/r")
         throw InputExceptions::OperationCanceledException();
     if (!allowEmpty && result.empty()) {
-      system("CLS");
+      this->cleanScreen();
       this->errorMessage("No Puede Estar Vacío\nIntente Nuevamente.");
       continue;
     }
@@ -166,7 +196,11 @@ std::string BaseMenu::clearColor(const std::string& s){
 }
 
 void BaseMenu::cleanScreen(){
-    system("CLS");
+  #ifdef _WIN32
+    system("cls");
+  #else
+    system("clear");
+  #endif
 }
 
 void BaseMenu::errorMessage(const std::string& prompt, const int& windowWidth){
@@ -201,16 +235,22 @@ void BaseMenu::errorMessage(const std::string& prompt, const int& windowWidth){
         printCenteredLine(line);
 
     printBorder();  
-    system("PAUSE");
+    this->enterToContinue(false);
 }
 
-void BaseMenu::enterToContinue() {
-    cout << "+----------------------------------+" << endl;
-    cout << "|         Presiones [ENTER]        |" << endl;
-    cout << "|           Para Continuar         |" << endl;
-    cout << "+----------------------------------+" << endl;
-    cin.ignore();
-    cin.get();
+void BaseMenu::enterToContinue(const bool& complete) {
+    if(complete){
+      cout << "+----------------------------------+" << endl;
+      cout << "|         Presione [ENTER]         |" << endl;
+      cout << "|           Para Continuar         |" << endl;
+      cout << "+----------------------------------+" << endl;
+    }
+    else{
+        cout <<"Presiona [Enter] Para Continuar" << endl;
+    }
+    
+    string dummy;
+    getline(cin, dummy);
 }
 
 

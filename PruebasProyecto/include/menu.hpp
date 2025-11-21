@@ -4,7 +4,6 @@
 #include <string>
 #include <sstream>
 #include <iomanip>
-#include <windows.h>
 #include <fstream>
 #include <thread>
 #include <chrono>
@@ -29,13 +28,13 @@ class Menu : protected BaseMenu{
                                 const std::string& alumno = "Omar Mariscal",
                                 const std::string& profesor = "Alfredo Gutiérrez",
                                 const std::string& materia = " Estructuras de Datos",
-                                const std::string& fecha = Date().toString()) const;
+                                const std::string& fecha = Date().toString());
 
         void insertSortedDataByCategory(const Recipe&);
 
         //Pantallass
             //Pantallas Intermedias
-            Recipe* searcher(const std::string&, int&);
+            Recipe* searcher(const std::string&);
 
             //Pantallas Principales
         void addRecipe();

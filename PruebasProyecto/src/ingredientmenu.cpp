@@ -14,6 +14,8 @@ void IngredientMenu::addIngredients(){
                 oss.clear();
 
                 oss << this->windowHeader("🥑 RECETARIO DIGITAL - AÑADIENDO INGREDIENTES");
+                oss << this->centerText("Ingrese el comando " + this->insertColorText("'/r'", "red") + " para cancelar");
+                oss << this->divider("-");
                 if(!this->ingredientList.isEmpty()){
                     oss << this->centerText("👍" + this->insertColorText("Lista de Ingredientes Actual para " + recipeName, "magenta"));
                     oss << this->ingredientList.toString() << endl;
@@ -54,7 +56,7 @@ void IngredientMenu::addIngredients(){
                 op = this->readChar(oss.str(), "S,N");
 
         } while(op != 'N');
-
+     
     } catch(const InputExceptions::OperationCanceledException& ex){
         this->errorMessage("Agregado de Ingrediente Cancelado.\nAvanzando...");
         return;
@@ -71,40 +73,48 @@ void IngredientMenu::deleteIngredients(){
     char op;
     int dataInt;
     string dataString;
-    SimpleLinkedList<Ingredient>::Position aux;
-    Ingredient searchedIngredient;
+    Ingredient searchedIngredient, aux;
 
     do{
             oss.str("");
             oss.clear();
 
             oss << this->windowHeader("🥑 RECETARIO DIGITAL - ELIMINAR INGREDIENTES");
+            oss << this->centerText("Ingrese " + this->insertColorText("'/r'", "red") + "para regresar");
+            oss << this->divider("-");
+
             if(!this->ingredientList.isEmpty()){
                 oss << this->centerText("👍" + this->insertColorText("Lista de Ingredientes Actual para " + recipeName, "magenta"));
                 oss << this->ingredientList.toString() << endl;
                 oss << this->divider();
             }
-            oss << this->centerText("Ingrese 'fin' para regresar");
-            oss << this->insertColorText("    Ingrese el Nombre del Ingrediente a Eliminar: ", "cyan") << endl;
-            dataString = this->readLinePrompt(oss.str());
 
+                oss << this->insertColorText("    Ingrese el Nombre del Ingrediente a Eliminar: ", "cyan") << endl;            
+                try{
+                dataString = this->readLinePrompt(oss.str());
+                oss << dataString << endl;                
+            } catch(const InputExceptions::OperationCanceledException& ex){
+                this->errorMessage("Eliminación de Ingrediente Cancelado.\nAvanzando...");
+                return;
+            }
             searchedIngredient.setNameInredient(dataString);    
-            aux = this->ingredientList.findData(searchedIngredient);
 
-            if(aux == nullptr){
-                oss << "Ingrediente " << this->insertColorText("No Encontrado", "red") << endl;
-            }
+            oss << this->insertColorText("¿Esta Seguro que Desea Eliminar Este Ingrediente? (S/N): ", "yellow");
+            op = this->readChar(oss.str(), "S,N");
+            oss << op << endl;
 
-            else{
-                oss << this->insertColorText("¿Esta Seguro que Desea Eliminar Este Ingrediente? (S/N): ", "yellow");
-                op = this->readChar(oss.str(), "S,N");
-                if(op == 'S'){
-                    this->ingredientList.deleteData(aux);
+            if(op == 'S'){
+                try{
+                    this->ingredientList.deleteData(this->ingredientList.findData(searchedIngredient));
                     oss << this->centerText(this->insertColorText("!Ingrediente Eliminado Con Exito!", "green"));
+                } catch(const DataContainersExceptions::InvalidPosition& ex){
+                    oss << "Ingrediente " << this->insertColorText("No Encontrado", "red") << endl;
                 }
-                else
-                    oss << this->centerText(this->insertColorText("Eliminacion Cancelada", "red"));
             }
+            else{
+                oss << this->centerText(this->insertColorText("Eliminacion Cancelada", "red"));
+            }
+
 
             oss << " ❌ ¿Desea Eliminar Más Ingredientes? (S/N): ";
 
@@ -119,13 +129,12 @@ void IngredientMenu::modifyIngredient(){
             this->errorMessage("No Hay Ingredientes en Esta Receta\nRegresando...");
             return;
         }
+        
     ostringstream oss;
     string dataString;
     char op, atributeModify;
     Ingredient searched;
     float dataFloat;
-    SimpleLinkedList<Ingredient>::Position aux(nullptr);
-    int dataInt;
     
     try{
         do{
@@ -133,52 +142,62 @@ void IngredientMenu::modifyIngredient(){
                 oss.clear();
 
                 oss << this->windowHeader("🥐 RECETARIO DIGITAL - MODIFICAR INGREDIENTES");
+                oss << this->centerText("Ingrese " + this->insertColorText("'/r'", "red") + "para regresar");
+                oss << this->divider("-");
                 
                 oss << this->centerText("👍" + this->insertColorText("Lista de Ingredientes Actual para " + recipeName, "magenta"));
                 oss << this->ingredientList.toString() << endl;
                 oss << this->divider();
 
                 oss << this->insertColorText("    Ingrese el nombre del Ingrediente a Modificar: ", "cyan");
-                
                 dataString = this->readLinePrompt(oss.str());
+                oss << dataString << endl;
+
                 searched.setNameInredient(dataString);
-                aux = this->ingredientList.findData(searched);
 
-                if(aux == nullptr){
-                    oss << "Ingrediente " << this->insertColorText("No Encontrado", "red") << endl;
-                }
-
-                else{
+                try{
+                    Ingredient& found = this->ingredientList.retrieve(this->ingredientList.findData(searched));
+                
                     oss << " 🖊️ Seleccione que Atributo Modificar" << endl;
                     oss << this->insertColorText("    [A] ", "cyan") << "Nombre del Ingrediente" << endl;
                     oss << this->insertColorText("    [B] ", "cyan") << "Cantidad del Ingrediente" << endl;
                     oss << this->insertColorText("    [C] ", "cyan") << "Unidad de Medida" << endl;
-                    
+                    oss << this->insertColorText("Ingrese una Opción: ", "yellow");
                     atributeModify = this->readChar(oss.str(), "A,B,C");
+                    oss << atributeModify << endl;
 
                     switch(atributeModify){
                         case 'A':
                             oss << this->insertColorText("    Ingrese el Nuevo Nombre del Ingrediente: ", "cyan");
                             dataString = this->readLinePrompt(oss.str());
-                            this->ingredientList.retrieve(dataInt).setNameInredient(dataString);
+                            oss << dataString << endl;
+                            
+                            searched = found;
+                            this->ingredientList.deleteData(this->ingredientList.findData(searched));
+                            searched.setNameInredient(dataString);
+                            this->ingredientList.insertSortedData(searched);
                             break;
                         case 'B':
                             oss << this->insertColorText("    Ingrese la Nueva Cantidad del Ingrediente: ", "cyan");
                             dataFloat = this->readFloat(oss.str(),0,99999);
-                            this->ingredientList.retrieve(dataInt).setAmount(dataFloat);                        
+                            oss << dataFloat << endl;
+                            found.setAmount(dataFloat);                        
                             break;
                         case 'C':
                             oss << this->insertColorText("    Ingrese la Nueva Unidad de Medida Ingrediente: ", "cyan");
                             dataString = this->readLinePrompt(oss.str());
-                            this->ingredientList.retrieve(dataInt).setUnit(dataString);                    
+                            oss << dataString << endl;
+                            found.setUnit(dataString);                    
                             break;
                     }
 
                     oss << this->centerText(this->insertColorText("¡Modificación Hecha Con Exito!", "green"));
+
+                } catch(const DataContainersExceptions::InvalidPosition& ex){
+                    oss << "Ingrediente " << this->insertColorText("No Encontrado", "red") << endl;
                 }
 
                 oss << " ❌ ¿Desea Modificar Más Ingredientes? (S/N): ";
-
                 op = this->readChar(oss.str(), "S,N");
 
         } while(op != 'N');       

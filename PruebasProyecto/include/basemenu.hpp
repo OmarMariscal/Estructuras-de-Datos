@@ -11,6 +11,7 @@
 class BaseMenu{
     protected:
         virtual int readInteger(std::string, const int&, const int&);
+        virtual int readPositiveInteger(const std::string&, const bool& = false);
         virtual float readFloat(const std::string&, const float&, const float&);
         virtual Name readName(std::string, const std::string& = "Ingrese el Nombre: ", const std::string& = "Ingrese el Apellido");
         virtual std::string readLinePrompt(const std::string&, bool = false);
@@ -23,7 +24,7 @@ class BaseMenu{
         virtual void errorMessage(const std::string&, const int& = Configure::predeterminatedSizeWindows);
 
          //Métodos Auxiliares
-        virtual void enterToContinue();
+        virtual void enterToContinue(const bool& = true);
         virtual std::string categoryToString(const Category&) const;
         virtual std::string windowHeader(const std::string&, const int& = Configure::predeterminatedSizeWindows,  const std::string& = "═") const;
         virtual std::string divider( const std::string& = "═", const int& = Configure::predeterminatedSizeWindows) const;

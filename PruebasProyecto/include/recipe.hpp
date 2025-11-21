@@ -4,7 +4,6 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-#include <windows.h>
 
 #include "../lib/nlohmann/json.hpp"
 
